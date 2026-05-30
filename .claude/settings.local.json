@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx convex *)",
+      "Bash(npx vite *)",
+      "Bash(npx tsc *)",
+      "Bash(ls d:/gitClone/MLN111-SPST/*.json)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('manager: npm/yarn'\\); [print\\(f'  {k}'\\) for k in list\\(d.get\\('dependencies',{}\\).keys\\(\\)\\)[:5]]\")"
+    ]
+  }
+}
