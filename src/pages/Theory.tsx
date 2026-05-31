@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { useLocation } from 'react-router-dom';
 import { Globe, ShieldCheck, BarChart3, CheckCircle, AlertTriangle, ArrowRight, Lightbulb, Target, Users, Landmark, Cpu, Play, Brain, Compass, Activity } from 'lucide-react';
-import animationThumbnail from '../public/animation_thumbnail.png';
+const animationThumbnail = '/animation_thumbnail.png';
 
 const SECTIONS = [
   { id: 's1', title: 'I. Khái niệm & Bản chất', icon: Brain },
