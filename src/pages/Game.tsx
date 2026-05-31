@@ -24,9 +24,9 @@ import {
 } from "lucide-react";
 
 import { SCENARIOS } from "../gameData";
-import ovtkMp3 from "../public/sound/astral.mp3";
-import liberationMp3 from "../public/sound/symphony.mp3";
-import winMp3 from "../public/sound/win.mp3";
+const ovtkMp3 = "/sound/astral.mp3";
+const liberationMp3 = "/sound/symphony.mp3";
+const winMp3 = "/sound/win.mp3";
 
 const calculateQuickScore = (remainingMs: number) => {
   return Math.floor(remainingMs / 10); // Tính điểm: thời gian còn lại (ms) chia 10 (tối đa ~6000 điểm)
