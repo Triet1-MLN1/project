@@ -8,7 +8,7 @@ export default function Footer() {
           <div className="text-2xl font-bold text-on-surface font-headline mb-4 flex items-center gap-3">
             <div className="relative">
               <div className="absolute inset-0 bg-primary/20 blur-md rounded-full animate-pulse"></div>
-              <img src="/src/public/triet_hoc_logo.png" alt="Marxist Hub Logo" className="w-10 h-10 object-contain relative z-10 drop-shadow-[0_0_10px_rgba(255,42,85,0.8)]" />
+              <img src="/triet_hoc_logo.png" alt="Marxist Hub Logo" className="w-10 h-10 object-contain relative z-10 drop-shadow-[0_0_10px_rgba(255,42,85,0.8)]" />
             </div>
             <span className="uppercase tracking-tighter glitch-continuous">Marxist Hub</span>
           </div>

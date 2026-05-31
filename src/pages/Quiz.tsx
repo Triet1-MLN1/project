@@ -449,7 +449,7 @@ export default function Quiz() {
               <motion.img
                 className="absolute inset-0 w-full h-full object-cover"
                 alt="Cyberpunk Marxist Background"
-                src="/src/public/quote_marxist_cyberpunk.png"
+                src="/quote_marxist_cyberpunk.png"
                 referrerPolicy="no-referrer"
                 initial={{ scale: 1.1 }}
                 whileInView={{ scale: 1 }}

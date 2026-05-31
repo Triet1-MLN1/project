@@ -39,7 +39,7 @@ export default function TopNavBar() {
       >
         <div className="flex justify-between items-center px-8 py-4 w-full max-w-full">
           <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-            <img src="/src/public/triet_hoc_logo.png" alt="Logo" className="w-8 h-8 md:w-10 md:h-10 object-contain drop-shadow-lg" />
+            <img src="/triet_hoc_logo.png" alt="Logo" className="w-8 h-8 md:w-10 md:h-10 object-contain drop-shadow-lg" />
             <span className="text-xl md:text-2xl font-bold uppercase tracking-tighter text-primary font-headline glitch-continuous">
               Marxist Hub
             </span>

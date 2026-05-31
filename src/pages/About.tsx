@@ -199,7 +199,7 @@ export default function About() {
         <MatrixRain />
         
         <div className="absolute top-0 right-0 w-full md:w-3/5 h-full opacity-30 dark:opacity-60 z-10">
-          <img className="w-full h-full object-cover" alt="Cyberpunk Matrix Metropolis" src="/src/public/about_hero_cyberpunk.png" />
+          <img className="w-full h-full object-cover" alt="Cyberpunk Matrix Metropolis" src="/about_hero_cyberpunk.png" />
           <div className="absolute inset-0 bg-gradient-to-r from-background via-background/60 to-transparent"></div>
           <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent"></div>
         </div>
@@ -265,7 +265,7 @@ export default function About() {
           <motion.div variants={fadeInUp} className="relative h-full min-h-[400px]">
             <div className="absolute inset-0 bg-gradient-to-br from-tertiary/20 to-primary/20 rounded-[2rem] transform rotate-3 scale-105 border border-white/5 opacity-50 transition-transform group-hover:rotate-6"></div>
             <div className="bg-surface-variant/20 p-2 rounded-[2rem] relative overflow-hidden h-full flex items-center justify-center border border-primary/20 shadow-[0_0_40px_rgba(255,42,85,0.2)] z-10 backdrop-blur-sm group">
-              <img className="w-full h-full object-cover rounded-[1.5rem] opacity-90 contrast-125 saturate-150 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100" alt="Digitized Brain" src="/src/public/about_concept_cyberpunk.png" />
+              <img className="w-full h-full object-cover rounded-[1.5rem] opacity-90 contrast-125 saturate-150 transition-all duration-700 group-hover:scale-105 group-hover:opacity-100" alt="Digitized Brain" src="/about_concept_cyberpunk.png" />
               {/* Grid overlay */}
               <div className="absolute inset-0 bg-[linear-gradient(rgba(0,240,255,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(0,240,255,0.1)_1px,transparent_1px)] bg-[size:40px_40px] pointer-events-none mix-blend-overlay"></div>
               {/* Scanline overlay */}
@@ -312,7 +312,7 @@ export default function About() {
                 <div className="relative group">
                   <div className="absolute inset-0 border-[6px] border-tertiary/30 rounded-full animate-[spin_10s_linear_infinite] border-t-tertiary"></div>
                   <div className="absolute inset-4 border-[4px] border-primary/30 rounded-full animate-[spin_15s_linear_infinite_reverse] border-b-primary"></div>
-                  <img className="w-full aspect-square object-cover rounded-full p-8 relative z-10 opacity-90 saturate-150 contrast-125 group-hover:scale-105 transition-transform duration-500" alt="AI Neural Net" src="/src/public/home_hero_cyberpunk.png" />
+                  <img className="w-full aspect-square object-cover rounded-full p-8 relative z-10 opacity-90 saturate-150 contrast-125 group-hover:scale-105 transition-transform duration-500" alt="AI Neural Net" src="/home_hero_cyberpunk.png" />
                   <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
                     <span className="text-4xl font-black text-white mix-blend-overlay drop-shadow-[0_0_10px_rgba(255,255,255,0.8)] tracking-[0.2em] glitch-effect">99.9%</span>
                   </div>

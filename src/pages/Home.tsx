@@ -170,7 +170,7 @@ export default function Home() {
             <motion.img
               className="absolute inset-0 w-full h-full object-cover opacity-80"
               alt="Cyberpunk Urban abstract"
-              src="/src/public/home_hero_cyberpunk.png"
+              src="/home_hero_cyberpunk.png"
               initial={{ scale: 1.2, opacity: 0 }}
               animate={{ scale: 1, opacity: 0.3 }}
               transition={{ duration: 1.8, ease: 'easeOut' }}
@@ -181,7 +181,7 @@ export default function Home() {
             <motion.img
               className="absolute inset-0 w-full h-full object-cover opacity-70"
               alt="Cyberpunk consciousness"
-              src="/src/public/home_hero_cyberpunk.png"
+              src="/home_hero_cyberpunk.png"
               initial={{ scale: 1.2, opacity: 0 }}
               animate={{ scale: 1, opacity: 0.4 }}
               transition={{ duration: 1.8, ease: 'easeOut', delay: 0.3 }}
