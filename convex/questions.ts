@@ -2,7 +2,7 @@ import { v } from "convex/values";
 import { mutation, query, action } from "./_generated/server";
 import { rawQuestions } from "./questionsData";
 import { catchphraseData } from "./catchphraseData";
-import { GoogleGenAI } from "@google/genai";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
 /* ─── Seed ─────────────────────────────────────────────────────── */
 export const seed = mutation({
@@ -82,12 +82,13 @@ export const explain = action({
       return "⚠️ Chưa cấu hình GEMINI_API_KEY. Hãy đặt biến môi trường trong Convex Dashboard.";
     }
 
-    const genAi = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY, apiVersion: "v1beta" });
+    const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
 
     const optionsText = args.options.join("\n");
     const isCorrect = args.selectedAnswer === args.correctAnswer;
 
-    const prompt = `Bạn là trợ lý AI về Kinh tế chính trị học Mác-Lênin (đặc biệt Chương 6: Công nghiệp hóa, hiện đại hóa). Hãy giải thích ngắn gọn (3-5 câu) câu hỏi trắc nghiệm sau:
+    const prompt = `Bạn là trợ lý AI về Triết học Mác-Lênin (đặc biệt: Tồn tại xã hội và Ý thức xã hội). Hãy giải thích ngắn gọn (3-5 câu) câu hỏi trắc nghiệm sau:
 
 CÂU HỎI:
 ${args.question}
@@ -99,29 +100,15 @@ ${optionsText}
 ${!isCorrect ? `ĐÁP ÁN ĐÃ CHỌN: ${args.selectedAnswer} (SAI)` : `ĐÁP ÁN ĐÃ CHỌN: ${args.selectedAnswer} (ĐÚNG)`}
 
 Yêu cầu:
-1. Giải thích tại sao đáp án ${args.correctAnswer} là đúng (dựa trên kiến thức Kinh tế chính trị học Mác-Lênin)
+1. Giải thích tại sao đáp án ${args.correctAnswer} là đúng (dựa trên kiến thức Triết học Mác-Lênin)
 ${!isCorrect ? `2. Giải thích tại sao đáp án ${args.selectedAnswer} là sai` : ""}
 3. Ngắn gọn, dễ hiểu, dùng tiếng Việt
 4. Có thể dùng markdown để format`;
 
     try {
-      const response = await genAi.models.generateContent({
-        model: "gemini-2.0-flash",
-        contents: prompt,
-      });
-
-      const anyRes = response as any;
-      let text = "";
-      if (typeof anyRes?.text === "function") {
-        text = await anyRes.text();
-      } else if (typeof anyRes?.text === "string") {
-        text = anyRes.text;
-      } else {
-        const candidates = anyRes?.candidates ?? [];
-        text = candidates[0]?.content?.parts?.[0]?.text ?? "";
-      }
-
-      return text.trim() || "Không tạo được giải thích. Vui lòng thử lại.";
+      const response = await model.generateContent(prompt);
+      const text = response.response.text().trim();
+      return text || "Không tạo được giải thích. Vui lòng thử lại.";
     } catch (err) {
       console.error("questions.explain failed:", err);
       const anyErr = err as any;

@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useQuery, useMutation } from 'convex/react';
+import { useQuery, useMutation, useAction } from 'convex/react';
 import { api } from '../../convex/_generated/api';
 
 /* ─── Types ─────────────────────────────────────────────────────── */
@@ -102,16 +102,16 @@ const scaleIn = {
 /* ─── Daily quotes pool ──────────────────────────────────────────── */
 const quotes = [
   {
-    text: '"Công nghiệp hóa là chìa khóa để mở cánh cửa của sự thịnh vượng và độc lập tự chủ."',
-    author: '— Tầm nhìn phát triển kinh tế',
+    text: '"Tồn tại xã hội quyết định ý thức xã hội, nhưng ý thức xã hội có tính độc lập tương đối và tác động trở lại tồn tại xã hội."',
+    author: '— Nguyên lý cơ bản của Chủ nghĩa duy vật lịch sử',
   },
   {
-    text: '"Khoa học công nghệ là lực lượng sản xuất trực tiếp và là động lực chính của hiện đại hóa."',
-    author: '— Lý luận phát triển hiện đại',
+    text: '"Không phải ý thức của con người quyết định tồn tại của họ; trái lại, tồn tại xã hội của họ quyết định ý thức của họ."',
+    author: '— C. Mác',
   },
   {
-    text: '"Trong thời đại 4.0, không đổi mới sáng tạo nghĩa là đang tự tụt hậu phía sau."',
-    author: '— Châm ngôn chuyển đổi số',
+    text: '"Sự phát triển của phương thức sản xuất là cội nguồn sâu xa của mọi sự biến đổi xã hội."',
+    author: '— Ph. Ăng-ghen',
   },
 ];
 
@@ -130,9 +130,17 @@ export default function Quiz() {
   const [shuffleImport, setShuffleImport] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  /* AI Generator state */
+  const generateUploadUrl = useMutation(api.files.generateUploadUrl);
+  const generateQuestionsAI = useAction(api.quizAi.generateQuestions);
+  const [aiLoading, setAiLoading] = useState(false);
+  const [aiError, setAiError] = useState('');
+  const aiFileInputRef = useRef<HTMLInputElement>(null);
+
   /* Ensure questions are seeded when modal opens (lazy) */
   const openModal = () => {
     setImportError('');
+    setAiError('');
     setModalOpen(true);
     if (rawQuestions !== undefined && rawQuestions.length === 0) {
       seedMutation({}).catch(console.error);
@@ -143,7 +151,7 @@ export default function Quiz() {
   const handleSystemBank = () => {
     if (!rawQuestions || rawQuestions.length === 0) return;
     const selected = shuffleArr(rawQuestions)
-      .slice(0, 60)
+      .slice(0, 20)
       .map(q => ({
         _id: q._id,
         questionId: q.questionId,
@@ -178,14 +186,63 @@ export default function Quiz() {
       setImportError(err instanceof Error ? err.message : String(err));
     } finally {
       setImporting(false);
-      // Reset input so the same file can be re-selected if needed
       if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+
+  /* Option 3: AI Generate from File */
+  const handleAIGenerateFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    // Validate size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      setAiError('File quá lớn. Vui lòng chọn file dưới 5MB.');
+      if (aiFileInputRef.current) aiFileInputRef.current.value = '';
+      return;
+    }
+
+    setAiLoading(true);
+    setAiError('');
+    try {
+      // 1. Get upload URL
+      const postUrl = await generateUploadUrl();
+      
+      // 2. Upload file
+      const result = await fetch(postUrl, {
+        method: "POST",
+        headers: { "Content-Type": file.type },
+        body: file,
+      });
+      if (!result.ok) throw new Error("Tải file lên máy chủ thất bại.");
+      
+      const { storageId } = await result.json();
+
+      // 3. Call AI action
+      const newQuestionsRaw = await generateQuestionsAI({ storageId });
+      
+      // 4. Normalize and Start Quiz
+      const formatted = normalizeImport(newQuestionsRaw);
+      
+      // We need to shuffle if requested, but let's just always shuffle AI questions
+      const finalQuestions = shuffleArr(formatted);
+      
+      setModalOpen(false);
+      navigate('/quiz/exam', { state: { questions: finalQuestions, source: 'ai' } });
+    } catch (err: any) {
+      console.error(err);
+      setAiError(err.message || "Lỗi khi dùng AI tạo câu hỏi.");
+    } finally {
+      setAiLoading(false);
+      if (aiFileInputRef.current) aiFileInputRef.current.value = '';
     }
   };
 
   const bankReady = rawQuestions && rawQuestions.length > 0;
 
-  /* ─────────────────────────────────────── */
+  /* =========================================================================
+     4. RENDER
+     ========================================================================= */
   return (
     <main className="pt-20 min-h-screen bg-surface">
       {/* ═══ HEADER SECTION ═══ */}
@@ -337,8 +394,8 @@ export default function Quiz() {
                   Ôn tập
                 </h2>
                 <p className="text-on-surface-variant leading-relaxed mb-8 flex-grow">
-                  {/* Đã đổi từ Triết học sang Kinh tế chính trị học theo yêu cầu */}
-                  Làm bài và xem đáp án ngay, có AI hỗ trợ giải thích các khái niệm Kinh tế chính trị học và
+                  {/* Đã đổi sang nội dung Triết học */}
+                  Làm bài và xem đáp án ngay, có AI hỗ trợ giải thích các khái niệm Triết học và
                   xã hội phức tạp một cách trực quan.
                 </p>
 
@@ -391,8 +448,8 @@ export default function Quiz() {
             <div className="relative h-64 md:h-80 overflow-hidden">
               <motion.img
                 className="absolute inset-0 w-full h-full object-cover"
-                alt="Dense atmospheric forest with morning light filtering through tall trees"
-                src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmo_hmbm-dMpT9P7id-jVfSS8zsogVZ70dHpL2-QuofeDrzNIhXmKUBzTZyaryVdDAaD1p16ItLgwcwgWHIQyZJA_hHVwTaVP-gJ1sAB4UegnbWgx_VZXuXKIs-nw94JxoQ_UIlcMzNBqOi7YsHKW7yoSzTjxDEVVH5CpcYMwNFvyWPdmYRMZvsDxXGjZ2mNroKDeT3QlSRQ8yGKAVN0Sb1VpUHvqh9cweYfwsLpvdoy2FMOiAHYI5IUzFQGQn-r4nnsYM5ghfu_Ud"
+                alt="Cyberpunk Marxist Background"
+                src="/src/public/quote_marxist_cyberpunk.png"
                 referrerPolicy="no-referrer"
                 initial={{ scale: 1.1 }}
                 whileInView={{ scale: 1 }}
@@ -460,11 +517,11 @@ export default function Quiz() {
               className="fixed inset-0 z-[201] flex items-center justify-center p-4 pointer-events-none"
             >
               <div
-                className="pointer-events-auto bg-surface-container-lowest border border-outline-variant/20 rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden"
+                className="pointer-events-auto bg-surface-container-lowest border border-outline-variant/20 rounded-3xl shadow-2xl w-full max-w-5xl flex flex-col max-h-[90vh] overflow-hidden"
                 onClick={e => e.stopPropagation()}
               >
                 {/* Modal header */}
-                <div className="flex items-center justify-between px-8 pt-8 pb-4">
+                <div className="flex items-center justify-between px-8 pt-8 pb-4 shrink-0 border-b border-outline-variant/10 mb-4">
                   <div>
                     <h2 className="text-2xl font-headline font-bold text-on-surface tracking-tight">
                       Chọn nguồn câu hỏi
@@ -482,7 +539,7 @@ export default function Quiz() {
                 </div>
 
                 {/* Options */}
-                <div className="px-8 pb-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="px-8 pb-8 pt-4 grid grid-cols-1 md:grid-cols-3 gap-4 overflow-y-auto">
 
                   {/* ─── Option 1: System bank ─── */}
                   <div className="relative flex flex-col gap-4 rounded-2xl border-2 border-primary/30 bg-primary/5 p-6">
@@ -504,15 +561,15 @@ export default function Quiz() {
 
                     <div>
                       <h3 className="font-headline font-bold text-lg text-on-surface">
-                        Ngân hàng MLN122
+                        Ngân hàng câu hỏi Triết học
                       </h3>
                       <p className="text-sm text-on-surface-variant mt-1 leading-relaxed">
-                        60 câu ngẫu nhiên từ{' '}
+                        20 câu ngẫu nhiên từ{' '}
                         <span className="font-semibold text-on-surface">
                           {rawQuestions?.length ?? '…'} câu
                         </span>{' '}
-                        {/* Đã đổi từ Triết học sang Kinh tế chính trị học (Chương 6) theo yêu cầu */}
-                        trong hệ thống. Phù hợp ôn thi Kinh tế chính trị học Mác-Lênin.
+                        {/* Đã đổi sang nội dung Triết học */}
+                        trong hệ thống. Phù hợp ôn thi Triết học Mác-Lênin.
                       </p>
                     </div>
 
@@ -626,6 +683,71 @@ export default function Quiz() {
                             folder_open
                           </span>
                           Chọn file .json
+                        </>
+                      )}
+                    </button>
+                  </div>
+
+                  {/* ─── Option 3: AI Generate ─── */}
+                  <div className="relative flex flex-col gap-4 rounded-2xl border-2 border-tertiary/30 bg-tertiary/5 p-6">
+                    <div className="absolute -top-3 left-5">
+                      <span className="bg-tertiary text-on-tertiary text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-full shadow drop-shadow-[0_0_8px_rgba(0,240,255,0.4)]">
+                        Mới
+                      </span>
+                    </div>
+
+                    <div className="w-12 h-12 rounded-xl bg-tertiary flex items-center justify-center shadow-[0_0_15px_rgba(0,240,255,0.2)]">
+                      <span
+                        className="material-symbols-outlined text-xl text-on-tertiary"
+                        style={{ fontVariationSettings: "'FILL' 1" }}
+                      >
+                        smart_toy
+                      </span>
+                    </div>
+
+                    <div>
+                      <h3 className="font-headline font-bold text-lg text-on-surface">
+                        AI Sinh Đề Tự Động
+                      </h3>
+                      <p className="text-sm text-on-surface-variant mt-1 leading-relaxed">
+                        Tải lên tệp <span className="font-semibold text-on-surface">PDF</span> hoặc <span className="font-semibold text-on-surface">TXT</span>. Hệ lõi AI Mentor sẽ đọc và tự động sinh 20 câu hỏi trắc nghiệm ngay lập tức.
+                      </p>
+                    </div>
+
+                    {/* Error message */}
+                    {aiError && (
+                      <div className="text-xs text-error bg-error-container/40 border border-error/20 rounded-lg px-3 py-2 leading-relaxed">
+                        ⚠ {aiError}
+                      </div>
+                    )}
+
+                    {/* Hidden file input */}
+                    <input
+                      ref={aiFileInputRef}
+                      type="file"
+                      accept="application/pdf,text/plain"
+                      className="hidden"
+                      onChange={handleAIGenerateFileChange}
+                    />
+
+                    <button
+                      onClick={() => aiFileInputRef.current?.click()}
+                      disabled={aiLoading}
+                      className="mt-auto w-full py-3 rounded-xl bg-tertiary text-on-tertiary font-bold text-sm tracking-wide disabled:opacity-50 disabled:cursor-not-allowed hover:bg-tertiary/90 transition-colors flex justify-center items-center gap-2"
+                    >
+                      {aiLoading ? (
+                        <>
+                          <span className="material-symbols-outlined text-base animate-spin">
+                            progress_activity
+                          </span>
+                          AI đang phân tích…
+                        </>
+                      ) : (
+                        <>
+                          <span className="material-symbols-outlined text-base">
+                            upload_file
+                          </span>
+                          Tải lên PDF/TXT
                         </>
                       )}
                     </button>

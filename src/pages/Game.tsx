@@ -24,8 +24,8 @@ import {
 } from "lucide-react";
 
 import { SCENARIOS } from "../gameData";
-import ovtkMp3 from "../public/sound/ovtk.mp3";
-import liberationMp3 from "../public/sound/liberation.mp3";
+import ovtkMp3 from "../public/sound/astral.mp3";
+import liberationMp3 from "../public/sound/symphony.mp3";
 import winMp3 from "../public/sound/win.mp3";
 
 const calculateQuickScore = (remainingMs: number) => {
@@ -432,7 +432,7 @@ function GameplayView({
         <div className="space-y-6">
           <motion.div
             key={room.currentRound}
-            className="bg-white p-4 rounded-3xl shadow-xl border-4 border-primary/20 aspect-video flex items-center justify-center overflow-hidden"
+            className="bg-surface p-4 rounded-3xl shadow-xl border-4 border-primary/20 aspect-video flex items-center justify-center overflow-hidden"
           >
             <img src={scenario.image} alt="Quiz" className="max-h-full object-contain" />
           </motion.div>
@@ -874,7 +874,7 @@ export default function Game() {
   }
 
   return (
-    <div className="w-full min-h-screen flex flex-col items-center justify-start pt-20 pb-12 bg-[#F8FAFC]">
+    <div className="w-full min-h-screen flex flex-col items-center justify-start pt-20 pb-12 bg-background">
       <div className="fixed inset-0 pointer-events-none opacity-50">
         <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-primary/10 blur-[120px] rounded-full" />
         <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-amber-500/10 blur-[120px] rounded-full" />
@@ -887,12 +887,12 @@ export default function Game() {
       {/* Top Bar */}
       <div className="w-full max-w-5xl px-4 flex justify-between items-center mb-8 relative z-10">
         {isInRoom && room.status !== "lobby" && (
-          <div className="bg-white/80 backdrop-blur px-6 py-2 rounded-full border border-outline-variant shadow-sm font-bold text-primary">
+          <div className="bg-surface/80 backdrop-blur px-6 py-2 rounded-full border border-outline-variant shadow-sm font-bold text-primary">
             Phòng: {room.code}
           </div>
         )}
         <div className="ml-auto flex gap-3">
-          <button onClick={() => setShowRules(true)} className="p-3 bg-white rounded-full border border-outline-variant shadow-sm hover:text-primary transition-colors">
+          <button onClick={() => setShowRules(true)} className="p-3 bg-surface rounded-full border border-outline-variant shadow-sm hover:text-primary transition-colors">
             <BookOpen className="w-6 h-6" />
           </button>
         </div>

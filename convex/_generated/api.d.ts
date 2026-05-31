@@ -10,11 +10,14 @@
 
 import type * as catchphraseData from "../catchphraseData.js";
 import type * as chat from "../chat.js";
+import type * as files from "../files.js";
 import type * as game from "../game.js";
 import type * as gameData from "../gameData.js";
 import type * as knowledgeBase from "../knowledgeBase.js";
+import type * as listModels from "../listModels.js";
 import type * as questions from "../questions.js";
 import type * as questionsData from "../questionsData.js";
+import type * as quizAi from "../quizAi.js";
 import type * as rooms from "../rooms.js";
 import type * as seed from "../seed.js";
 
@@ -27,11 +30,14 @@ import type {
 declare const fullApi: ApiFromModules<{
   catchphraseData: typeof catchphraseData;
   chat: typeof chat;
+  files: typeof files;
   game: typeof game;
   gameData: typeof gameData;
   knowledgeBase: typeof knowledgeBase;
+  listModels: typeof listModels;
   questions: typeof questions;
   questionsData: typeof questionsData;
+  quizAi: typeof quizAi;
   rooms: typeof rooms;
   seed: typeof seed;
 }>;

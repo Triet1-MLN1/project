@@ -251,7 +251,7 @@ export default function Exam() {
               {/* Đã đổi từ Triết học Mác-Lênin sang Kinh tế chính trị học Mác-Lênin theo yêu cầu */}
               {hasStateQs && (location.state as any)?.source === 'import'
                 ? `Kết quả bài thi — ${(location.state as any)?.fileName ?? 'File import'}`
-                : 'Kết quả bài thi Kinh tế chính trị học Mác-Lênin (MLN122)'}
+                : 'Kết quả bài thi Triết học Mác-Lênin'}
             </div>
           </div>
 

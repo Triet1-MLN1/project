@@ -20,7 +20,7 @@ export default function ChatBot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
-      text: "Chào đồng chí! Tôi là Lenin 2.0 🚩. Tôi đã sẵn sàng hỗ trợ đồng chí về chủ đề **Công nghiệp hóa, hiện đại hóa và Hội nhập kinh tế quốc tế**. Đồng chí cần tra cứu lý luận hay ví dụ thực tiễn nào không?",
+      text: "Chào đồng chí! Tôi là Lenin 2.0 🚩. Tôi đã sẵn sàng hỗ trợ đồng chí về chủ đề **Tồn tại xã hội và Ý thức xã hội**. Đồng chí cần tra cứu lý luận hay ví dụ thực tiễn nào không?",
       isBot: true,
     },
   ]);
@@ -146,7 +146,7 @@ export default function ChatBot() {
                   <h3 className="font-bold text-lg leading-tight tracking-tight">Lenin 2.0</h3>
                   <p className="text-xs opacity-90 flex items-center gap-1.5 font-medium mt-0.5">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
-                    Trợ lý AI · CNH & Hội Nhập
+                    Trợ lý AI · Triết học Mác-Lênin
                   </p>
                 </div>
               </div>

@@ -1,30 +1,26 @@
 export const knowledgeChunks = [
-  // --- 11 ĐOẠN CHI TIẾT TỪ TÀI LIỆU VỀ CNH, HĐH VÀ HỘI NHẬP ---
-  `1. Khái niệm Công nghiệp hóa, Hiện đại hóa: Là quá trình chuyển đổi căn bản, toàn diện các hoạt động sản xuất, kinh doanh, dịch vụ và quản lý từ sử dụng lao động thủ công sang sử dụng phổ biến sức lao động cùng với công nghệ, phương pháp tiên tiến, hiện đại. Mục tiêu là tạo ra năng suất lao động xã hội cao, xây dựng cơ sở vật chất - kỹ thuật cho chủ nghĩa xã hội.`,
+  // --- ĐOẠN CHI TIẾT TỪ TÀI LIỆU VỀ TỒN TẠI XÃ HỘI VÀ Ý THỨC XÃ HỘI ---
+  `1. Khái niệm Tồn tại xã hội: Là toàn bộ sinh hoạt vật chất và những điều kiện sinh hoạt vật chất của xã hội. Nó là thực tại khách quan, tồn tại độc lập với ý thức xã hội và quyết định ý thức xã hội.`,
 
-  `2. Đặc điểm của CNH, HĐH tại Việt Nam: Diễn ra trong bối cảnh Cách mạng công nghiệp lần thứ tư (4.0); gắn liền với phát triển kinh tế tri thức và bảo vệ môi trường. CNH không tách rời HĐH, nhằm mục tiêu "đi tắt đón đầu" để rút ngắn khoảng cách với các nước phát triển.`,
+  `2. Các yếu tố cơ bản của Tồn tại xã hội: Bao gồm ba yếu tố chính là điều kiện tự nhiên (địa lý, khí hậu, tài nguyên), dân số và mật độ dân số, và phương thức sản xuất vật chất. Trong đó, phương thức sản xuất vật chất là yếu tố quyết định nhất.`,
 
-  `3. Nội dung cơ bản - Chuyển dịch cơ cấu kinh tế: Cơ chế là tăng tỷ trọng ngành công nghiệp và dịch vụ, giảm tỷ trọng ngành nông nghiệp trong GDP. Ví dụ: Chuyển dịch từ sản xuất nông nghiệp thuần túy sang nông nghiệp công nghệ cao và phát triển các khu công nghiệp tập trung tại các tỉnh trọng điểm.`,
+  `3. Phương thức sản xuất: Là cách thức con người tiến hành sản xuất vật chất trong những giai đoạn lịch sử nhất định. Nó bao gồm hai mặt là lực lượng sản xuất (mối quan hệ giữa con người với tự nhiên) và quan hệ sản xuất (mối quan hệ giữa con người với con người trong sản xuất).`,
 
-  `3. Nội dung cơ bản - Phát triển lực lượng sản xuất: Cơ chế là ứng dụng khoa học, công nghệ hiện đại vào mọi lĩnh vực. Ví dụ: Các doanh nghiệp dệt may đầu tư hệ thống robot tự động hóa để thay thế các dây chuyền thủ công cũ, giúp tăng sản lượng và chất lượng xuất khẩu.`,
+  `4. Khái niệm Ý thức xã hội: Là mặt tinh thần của đời sống xã hội, bao gồm toàn bộ những quan điểm, tư tưởng, tình cảm, tâm trạng, tập quán, truyền thống... nảy sinh từ tồn tại xã hội và phản ánh tồn tại xã hội trong những giai đoạn lịch sử nhất định.`,
 
-  `3. Nội dung cơ bản - Củng cố quan hệ sản xuất: Cơ chế là xây dựng hệ thống quản lý kinh tế hiện đại, đa dạng hóa các hình thức sở hữu. Hậu quả tích cực là kích thích các thành phần kinh tế (tư nhân, FDI) cùng tham gia đầu tư vào hạ tầng quốc gia.`,
+  `5. Cấu trúc của Ý thức xã hội (theo cấp độ): Tâm lý xã hội (phản ánh trực tiếp, tự phát, thường là cảm xúc, tâm trạng) và Hệ tư tưởng xã hội (phản ánh gián tiếp, tự giác, hệ thống hóa thành lý luận như triết học, đạo đức học, chính trị học).`,
 
-  `3. Về biểu hiện của hội nhập kinh tế quốc tế: Cơ chế là mở cửa nền kinh tế, tham gia vào các liên kết kinh tế khu vực và toàn cầu. Hệ quả xã hội giúp mở rộng thị trường xuất khẩu và tạo ra hàng triệu việc làm mới cho người lao động.`,
+  `6. Tính giai cấp của Ý thức xã hội: Trong xã hội có giai cấp, ý thức xã hội mang tính giai cấp. Ý thức của giai cấp thống trị thường trở thành hệ tư tưởng thống trị xã hội, bảo vệ lợi ích của giai cấp đó.`,
 
-  `3. Về vai trò của khoa học công nghệ: Cơ chế là coi KH-CN là động lực then chốt. Hệ quả là nâng cao năng lực cạnh tranh của hàng hóa nội địa trên thị trường quốc tế, giúp doanh nghiệp Việt thoát khỏi bẫy gia công giá rẻ.`,
+  `7. Mối quan hệ biện chứng (Vật chất quyết định Tinh thần): Tồn tại xã hội quyết định ý thức xã hội. Tồn tại xã hội như thế nào thì ý thức xã hội như thế ấy. Khi tồn tại xã hội (đặc biệt là phương thức sản xuất) biến đổi thì ý thức xã hội sớm muộn cũng biến đổi theo.`,
 
-  `3. Về phát triển nguồn nhân lực: Cơ chế là đào tạo đội ngũ lao động có trình độ chuyên môn cao, làm chủ công nghệ. Hệ quả xã hội là chuyển dịch cơ cấu lao động từ nông thôn sang thành thị và nâng cao mặt bằng dân trí.`,
+  `8. Tính độc lập tương đối của Ý thức xã hội (Thường lạc hậu hơn): Ý thức xã hội thường lạc hậu hơn tồn tại xã hội vì nó là sự phản ánh, nên chỉ biến đổi sau khi tồn tại xã hội đã biến đổi. Các tập quán, truyền thống thường bám rễ sâu và khó thay đổi.`,
 
-  `4. Khái niệm Hội nhập kinh tế quốc tế: Là quá trình quốc gia thực hiện gắn kết nền kinh tế của mình với nền kinh tế thế giới dựa trên sự chia sẻ lợi ích, đồng thời tuân thủ các chuẩn mực quốc tế chung. Đây là xu thế khách quan trong kỷ nguyên toàn cầu hóa.`,
+  `9. Tính độc lập tương đối của Ý thức xã hội (Có thể vượt trước): Những tư tưởng khoa học, tiên tiến có thể phản ánh đúng quy luật khách quan, từ đó dự báo được tương lai, vượt trước sự phát triển của tồn tại xã hội (VD: Chủ nghĩa Mác - Lênin).`,
 
-  `5. Mục tiêu và lực lượng hội nhập: Mục tiêu là tranh thủ vốn, công nghệ và kinh nghiệm quản lý từ bên ngoài. Lực lượng nòng cốt là các doanh nghiệp thuộc mọi thành phần kinh tế, dưới sự lãnh đạo và điều tiết của Nhà nước thông qua các hiệp định thương mại (FTA).`,
+  `10. Sự tác động trở lại của Ý thức xã hội đối với Tồn tại xã hội: Ý thức tiến bộ, cách mạng sẽ thúc đẩy sự phát triển của tồn tại xã hội. Ngược lại, ý thức lạc hậu, phản động sẽ kìm hãm sự phát triển đó. Sức mạnh của ý thức phụ thuộc vào mức độ thâm nhập của nó vào quần chúng nhân dân.`,
 
-  `5. Các hiệp định thương mại tự do (FTA) thế hệ mới: Việt Nam tham gia các hiệp định như CPTPP, EVFTA giúp xóa bỏ hàng rào thuế quan. Điều này tạo cơ hội đột phá cho xuất khẩu nhưng cũng đặt ra thách thức về tiêu chuẩn kỹ thuật và quy tắc xuất xứ khắt khe.`,
+  `11. Ý nghĩa phương pháp luận: Muốn cải tạo xã hội, xóa bỏ các tư tưởng và tập quán lạc hậu, trước hết phải cải tạo tồn tại xã hội, đặc biệt là phương thức sản xuất. Đồng thời không được coi nhẹ việc giáo dục tư tưởng, phát huy vai trò của ý thức tiến bộ.`,
 
-  `5. Ý nghĩa của hội nhập đối với CNH, HĐH: Hội nhập là điều kiện cần để thu hút FDI và chuyển giao công nghệ. Ngược lại, CNH, HĐH thành công sẽ tạo ra nội lực vững chắc để hội nhập sâu rộng mà không bị lệ thuộc vào kinh tế bên ngoài.`,
-
-  `5. Đảm bảo độc lập tự chủ trong hội nhập: Là nguyên tắc "hòa nhập nhưng không hòa tan". Việt Nam vừa mở cửa kinh tế vừa phải đảm bảo an ninh kinh tế, giữ vững định hướng xã hội chủ nghĩa và không để các lực lượng bên ngoài chi phối các ngành then chốt.`,
-
-  `6. Liên hệ thực tiễn hiện đại: Việt Nam hiện là mắt xích quan trọng trong chuỗi cung ứng toàn cầu với sự hiện diện của các tập đoàn như Samsung, LG, Intel. Tuy nhiên, thách thức hiện nay là tình trạng gia công còn lớn và ô nhiễm môi trường do các ngành công nghiệp cũ để lại.`
+  `12. Liên hệ thực tiễn hiện đại (Trào lưu chữa lành): Trào lưu "chữa lành" là một dạng ý thức xã hội (tâm lý xã hội) nảy sinh từ tồn tại xã hội hiện đại nhiều áp lực. Để "chữa lành" thực sự, cần giải quyết các vấn đề từ gốc rễ vật chất (tồn tại xã hội) chứ không chỉ an ủi tinh thần.`
 ];
