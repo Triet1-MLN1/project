@@ -130,7 +130,7 @@ export default function Theory() {
                 <Lightbulb className="w-6 h-6" /> Ý thức xã hội
               </h3>
               <p className="text-on-surface-variant leading-relaxed mb-4">
-                Là mặt tinh thần của đời sống xã hội, bao gồm tình cảm, tâm trạng, tập quán, truyền thống, quan điểm, tư tưởng... nảy sinh từ tồn tại xã hội.
+                Là mặt tinh thần của đời sống xã hội, bao gồm tình cảm, tập quán, truyền thống, quan điểm, học thuyết... nảy sinh từ tồn tại xã hội và phản ánh tồn tại xã hội.
               </p>
               <ul className="text-sm text-on-surface space-y-3">
                 <li className="flex items-start gap-2">
@@ -189,8 +189,12 @@ export default function Theory() {
                   <p className="text-sm text-on-surface-variant">Những tư tưởng khoa học, tiên tiến có thể dự báo tương lai, dẫn đường cho thực tiễn (VD: Triết học Mác).</p>
                 </div>
                 <div className="bg-surface-container-highest p-5 rounded-2xl border border-amber-500/20">
-                  <h4 className="font-bold text-amber-700 dark:text-amber-400 mb-2">Kế thừa và tác động chéo</h4>
-                  <p className="text-sm text-on-surface-variant">Tư tưởng thời đại sau kế thừa thời đại trước. Các hình thái ý thức (Tôn giáo, đạo đức, khoa học) tác động lẫn nhau.</p>
+                  <h4 className="font-bold text-amber-700 dark:text-amber-400 mb-2">Kế thừa trong lịch sử</h4>
+                  <p className="text-sm text-on-surface-variant">Tư tưởng thời đại sau kế thừa, phát triển từ thành tựu của thời đại trước. Ý thức xã hội có lịch sử riêng của nó.</p>
+                </div>
+                <div className="bg-surface-container-highest p-5 rounded-2xl border border-amber-500/20 md:col-span-2 lg:col-span-1">
+                  <h4 className="font-bold text-amber-700 dark:text-amber-400 mb-2">Tác động trở lại tồn tại xã hội</h4>
+                  <p className="text-sm text-on-surface-variant">Ý thức xã hội (đặc biệt là các hệ tư tưởng, quan điểm tiến bộ hoặc lạc hậu) có thể tác động mạnh mẽ trở lại tồn tại xã hội, định hướng hành động của con người.</p>
                 </div>
               </div>
             </div>
@@ -251,21 +255,44 @@ export default function Theory() {
             <div className="bg-surface border-2 border-primary/20 rounded-[2rem] p-6 md:p-10 shadow-sm overflow-hidden relative">
               <h3 className="font-bold text-2xl text-primary mb-4">1. Nguồn gốc của sự sợ hãi và tìm nơi nương tựa</h3>
               <p className="text-on-surface-variant leading-relaxed mb-4">
-                Tâm lý xã hội (bao gồm tình cảm, tâm trạng, thói quen, ước muốn...) hình thành dưới tác động trực tiếp của cuộc sống hằng ngày. Trong xã hội hiện đại, sự vận động cực kỳ phức tạp và những khó khăn đột ngột (như thất tình, rớt môn) chính là những tác động tiêu cực từ <strong>tồn tại xã hội</strong>.
+                Tâm lý xã hội (bao gồm tình cảm, tâm trạng, thói quen, ước muốn...) hình thành dưới tác động trực tiếp của cuộc sống hằng ngày. Trong xã hội hiện đại, áp lực học tập (trượt môn), các mối quan hệ (thất tình) tạo ra trạng thái tâm lý tiêu cực, bế tắc — đây chính là những tác động tiêu cực từ <strong>tồn tại xã hội</strong>.
               </p>
               <div className="p-4 bg-primary/5 border-l-4 border-primary rounded-r-xl italic text-on-surface mb-4">
-                V.I. Lênin từng chỉ rõ nguồn gốc xã hội của các dạng ý thức tôn giáo, thần bí trong xã hội hiện đại chính là "Sự sợ hãi đã tạo ra thần linh". Sự bất lực trước những thất bại thực tại đã đẻ ra lòng tin vào các thế lực siêu nhiên hay phép màu (vũ trụ, năng lượng gốc).
+                C.Mác và V.I. Lênin đã khẳng định tôn giáo / ảo tưởng là <strong>"thuốc phiện của nhân dân"</strong>, bởi nó chỉ mang lại sự đền bù hư ảo, ru ngủ con người, làm họ khuây khỏa nỗi đau thực tại bằng cách kỳ vọng vào những phép màu hay thế giới siêu nhiên, từ đó làm giảm ý chí đấu tranh và hoạt động thực tiễn.
+              </div>
+              <div className="p-4 bg-surface-container-highest border border-outline-variant rounded-xl">
+                <h4 className="font-bold text-primary mb-2 text-sm uppercase tracking-wide">Câu hỏi vận dụng 1 — Tại sao con người "yếu đuối tâm lý" lại đi "chữa lành"?</h4>
+                <p className="text-sm text-on-surface-variant leading-relaxed">
+                  Dù "tồn tại xã hội" hiện đại có đầy đủ tiện nghi vật chất, nhưng "ý thức xã hội" (đặc biệt là tâm lý xã hội) thường có <strong>tính lạc hậu</strong> — tâm lý ỷ lại, yếu đuối, mong chờ phép màu không tự động biến mất khi xã hội phát triển. Khi cá nhân gặp cú sốc và mất phương hướng, họ rơi vào trạng thái "bất lực trước những áp lực xã hội". Giống như nguồn gốc ra đời của tín ngưỡng thời xưa, khi không tìm được lối thoát bằng năng lực thực tiễn, con người nảy sinh tâm lý tìm kiếm một chỗ dựa tinh thần siêu nhiên, dễ dãi để tự trấn an. Việc đi "chữa lành" bằng năng lượng vũ trụ chính là kết quả của trạng thái tâm lý tự phát này.
+                </p>
               </div>
             </div>
 
             <div className="bg-surface border-2 border-tertiary/20 rounded-[2rem] p-6 md:p-10 shadow-sm overflow-hidden relative">
-              <h3 className="font-bold text-2xl text-tertiary mb-4">2. Chức năng đền bù - hư ảo (Cơ chế ru ngủ)</h3>
-              <p className="text-on-surface-variant leading-relaxed mb-4">
-                Trào lưu "Đánh thức năng lượng gốc" hay "gửi tín hiệu vào vũ trụ" thực chất mang cơ chế của một dạng ý thức tôn giáo kiểu mới. Khác với ý thức khoa học phản ánh hiện thực một cách chân thực, đây là <strong>sự phản ánh hư ảo</strong> sức mạnh của giới tự nhiên lẫn các quan hệ xã hội.
-              </p>
-              <p className="text-on-surface-variant leading-relaxed">
-                Chức năng chủ yếu là <strong>chức năng đền bù - hư ảo</strong>, gây ra ảo tưởng về sự đền bù ở một thế giới (hoặc một chiều không gian) khác đối với những gì con người không thể đạt được trong cuộc sống hiện thực. Việc lấy ảo tưởng về sự vượt trội tâm linh để bù đắp cho sự thất bại trong đời sống thực tế khiến con người xa rời hoạt động thực tiễn.
-              </p>
+              <h3 className="font-bold text-2xl text-tertiary mb-4">2. Phân tích cơ chế — Một dạng "Thuốc phiện tinh thần" mới</h3>
+              <div className="p-4 bg-tertiary/5 border-l-4 border-tertiary rounded-r-xl mb-5">
+                <p className="font-semibold text-on-surface">Khẳng định: Đây chính xác là một dạng "thuốc phiện tinh thần" mới trong bối cảnh hiện đại.</p>
+              </div>
+              <div className="space-y-4">
+                <div className="bg-surface-container-highest p-5 rounded-2xl">
+                  <h4 className="font-bold text-tertiary mb-2">Cơ chế ru ngủ (Sự đền bù hư ảo)</h4>
+                  <p className="text-sm text-on-surface-variant leading-relaxed">
+                    Các khóa học dạy "chỉ cần ngồi im và gửi tín hiệu vào vũ trụ" cung cấp một <strong>chức năng đền bù hư ảo</strong> cho những mất mát thực tế (tiền tài, tình yêu). Nó đánh trúng vào tâm lý muốn có kết quả mà không phải lao động, cải tạo thực tiễn.
+                  </p>
+                </div>
+                <div className="bg-surface-container-highest p-5 rounded-2xl">
+                  <h4 className="font-bold text-tertiary mb-2">Tách rời thực tiễn và tha hóa</h4>
+                  <p className="text-sm text-on-surface-variant leading-relaxed">
+                    Theo triết học Mác - Lênin, con người chỉ có thể phát triển và giải quyết vấn đề thông qua <strong>hoạt động thực tiễn</strong>. Trào lưu này khuyên con người trốn tránh thực tiễn ("ngồi im"), làm nhụt ý chí vươn lên. Hậu quả là người học rơi vào ảo tưởng, xa rời thực tế, thậm chí hình thành hệ tư tưởng sai lệch, chê bai những người lao động chân chính là "tần số thấp". Đây là <strong>sự tha hóa tinh thần</strong>, biến con người thành nô lệ cho những ảo ảnh do chính các nhà "thương mại hóa nỗi đau" tạo ra nhằm trục lợi.
+                  </p>
+                </div>
+                <div className="p-4 bg-surface-container-highest border border-outline-variant rounded-xl">
+                  <h4 className="font-bold text-tertiary mb-2 text-sm uppercase tracking-wide">Câu hỏi vận dụng 2 — Đây có phải "thuốc phiện tinh thần" mới không?</h4>
+                  <p className="text-sm text-on-surface-variant leading-relaxed">
+                    <strong>Có.</strong> Tôn giáo hay các niềm tin hư ảo là sự phản ánh hư ảo vào đầu óc con người về những sức mạnh trần thế. Nguồn gốc của nó là do sự bất lực của con người trước những áp lực, thất bại trong xã hội. Trào lưu "chữa lành" hiện đại vận hành theo đúng cơ chế này: ru ngủ người dùng bằng ảo tưởng để họ không đứng dậy đấu tranh thay đổi hoàn cảnh thực tế.
+                  </p>
+                </div>
+              </div>
             </div>
 
             {/* Kịch bản Video */}
