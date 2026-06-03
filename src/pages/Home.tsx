@@ -95,7 +95,7 @@ export const conceptData: Record<string, { title: string; explanation: string; r
   "y-thuc": {
     icon: "psychology", color: "text-tertiary", colorValue: "var(--color-tertiary)",
     title: "Ý thức xã hội",
-    explanation: "Là mặt tinh thần của đời sống xã hội, bao gồm toàn bộ những quan điểm, tư tưởng, tình cảm, tâm trạng nảy sinh từ tồn tại xã hội.",
+    explanation: "Là mặt tinh thần của đời sống xã hội, bao gồm tình cảm, tập quán, truyền thống, quan điểm, học thuyết... nảy sinh từ tồn tại xã hội và phản ánh tồn tại xã hội.",
     realWorldExample: "Từ môi trường sống khó khăn (tồn tại xã hội), sinh viên nảy sinh tâm lý tiết kiệm, hay lo âu (ý thức xã hội).",
     keyTakeaways: [
       "Là thế giới tinh thần bên trong.",
