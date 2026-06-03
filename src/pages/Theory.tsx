@@ -90,7 +90,7 @@ const SCENES = [
     id: 1, num: '02', emoji: '🧘',
     label: 'Ảo tưởng',
     concept: 'Chức năng đền bù hư ảo → Tha hóa tinh thần',
-    content: '1 tháng sau, bạn B đi làm thêm về rủ A đi học bài. A đang ngồi thiền, tay chắp hình hoa sen, khinh khỉnh đáp: "Tớ đang kết nối năng lượng cõi trên, không quan tâm dăm ba cái điểm số. Cậu đi làm công ăn lương là người \'tần số thấp\', tớ giờ có siêu năng lực rồi!". B lắc đầu ngán ngẩm.',
+    content: '1 tháng sau, bạn B đi làm thêm (mặc đồ phục vụ) về rủ A đi học bài. A đang ngồi thiền, tay chắp hình hoa sen, khinh khỉnh đáp: "Tớ đang kết nối năng lượng cõi trên, không quan tâm dăm ba cái điểm số. Cậu đi làm công ăn lương là người \'tần số thấp\', tớ giờ có siêu năng lực rồi!". B lắc đầu ngán ngẩm.',
     ringCls: 'ring-violet-500/60', tabActiveCls: 'bg-violet-500/15 text-violet-700 dark:text-violet-300 border-b-2 border-violet-500',
     tabCls: 'text-on-surface-variant', borderCls: 'border-violet-500/40', bgCls: 'bg-violet-500/5', titleCls: 'text-violet-600 dark:text-violet-400',
     badgeCls: 'bg-violet-500/10 text-violet-700 dark:text-violet-300',
