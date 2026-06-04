@@ -566,7 +566,7 @@ export default function Quiz() {
                       <p className="text-sm text-on-surface-variant mt-1 leading-relaxed">
                         20 câu ngẫu nhiên từ{' '}
                         <span className="font-semibold text-on-surface">
-                          {rawQuestions?.length ?? '…'} câu
+                          50 câu
                         </span>{' '}
                         {/* Đã đổi sang nội dung Triết học */}
                         trong hệ thống. Phù hợp ôn thi Triết học Mác-Lênin.
