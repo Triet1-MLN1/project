@@ -60,7 +60,14 @@ const FIVE_CHARACTERISTICS = [
     num: '03', icon: Link2,
     title: 'Có tính kế thừa trong lịch sử',
     desc: 'Tư tưởng thời đại sau kế thừa và phát triển từ thành tựu của thời đại trước. Ý thức xã hội có lịch sử phát triển riêng của nó.',
-    example: 'Khi Chủ nghĩa Mác-Lênin vào Việt Nam, chúng ta không loại bỏ cái cũ, mà kế thừa truyền thống yêu nước, lòng nhân ái ngàn đời để hình thành Tư tưởng Hồ Chí Minh.',
+    examples: [
+      {
+        tag: '🎵 Văn hoá - Âm nhạc',
+        text: 'Khi dòng nhạc Pop, Rap hiện đại du nhập vào Việt Nam, các nghệ sĩ trẻ không sao chép hoàn toàn, mà kế thừa chất liệu âm nhạc dân gian, nhạc cụ dân tộc ngàn đời để hình thành nên dòng nhạc Pop-đương đại mang đậm bản sắc Việt (như các tác phẩm của Hoàng Thùy Linh hay Đen Vâu).',
+        tagCls: 'text-violet-500 dark:text-violet-400',
+        cardCls: 'bg-violet-500/8 border border-violet-500/25',
+      },
+    ],
     img: '/bieuhien3_keithua.jpg',
     accent: 'blue', headerCls: 'text-blue-600 dark:text-blue-400',
     borderCls: 'border-l-blue-500', bgCls: 'bg-blue-500/5 border border-blue-500/20',
@@ -80,7 +87,20 @@ const FIVE_CHARACTERISTICS = [
     num: '05', icon: Zap,
     title: 'Tác động trở lại tồn tại xã hội',
     desc: 'Đây là biểu hiện quan trọng nhất. Ý thức xã hội — đặc biệt các hệ tư tưởng tiến bộ hoặc lạc hậu — có thể tác động mạnh mẽ trở lại tồn tại xã hội. Tư tưởng tiến bộ thúc đẩy xã hội phát triển; tư tưởng lạc hậu kìm hãm xã hội.',
-    example: 'Đường lối Đổi mới năm 1986 của Đảng ta. Nhờ tư tưởng đổi mới đi trước (ý thức tiên tiến), chúng ta thay đổi hoàn toàn nền kinh tế, đưa đất nước thoát khỏi khủng hoảng. Ngược lại, quan niệm "sĩ, nông, công, thương" coi khinh người kinh doanh đã từng kìm hãm kinh tế hàng thế kỷ.',
+    examples: [
+      {
+        tag: '❌ YTXH Lạc hậu — Kìm hãm xã hội',
+        text: 'Tư tưởng Nho giáo "Trọng nam khinh nữ" kéo dài hàng thế kỷ — quan niệm "Con gái là con người ta", "Phụ nữ chỉ cần giỏi việc bếp núc" — đã kìm hãm một nửa lực lượng lao động. Tỷ lệ phụ nữ mù chữ rất cao, không có tiếng nói trong gia đình và xã hội, nền kinh tế mất nguồn nhân lực chất lượng cao, xã hội trì trệ bất bình đẳng.',
+        tagCls: 'text-rose-500 dark:text-rose-400',
+        cardCls: 'bg-rose-500/8 border border-rose-500/25',
+      },
+      {
+        tag: '✅ YTXH Tiên tiến — Thúc đẩy xã hội',
+        text: 'Sau Cách mạng tháng Tám 1945, Bác Hồ đưa ra tư tưởng tiến bộ "Nâng cao dân trí", "Mọi người Việt Nam đều phải biết chữ", "Phụ nữ bình đẳng với nam giới". Kết quả: Phong trào Bình dân học vụ bùng nổ, hàng triệu người được học chữ. Ngày nay, tỷ lệ nữ sinh ĐH ngang nam, phụ nữ tham gia mọi lĩnh vực từ kinh doanh, IT đến chính trị — VN là một trong những quốc gia thúc đẩy bình đẳng giới tốt nhất khu vực.',
+        tagCls: 'text-emerald-500 dark:text-emerald-400',
+        cardCls: 'bg-emerald-500/8 border border-emerald-500/25',
+      },
+    ],
     img: '/bieuhien5_doimoi1986.jpg',
     accent: 'rose', headerCls: 'text-rose-600 dark:text-rose-400',
     borderCls: 'border-l-rose-500', bgCls: 'bg-rose-500/5 border border-rose-500/30',
@@ -543,10 +563,27 @@ export default function Theory() {
                             {/* Text column */}
                             <div className="px-5 pb-5 pt-4 flex flex-col gap-3">
                               <p className="text-base text-on-surface leading-relaxed">{item.desc}</p>
-                              <div className="p-4 bg-surface-container-highest rounded-xl">
-                                <p className={`text-sm font-bold uppercase tracking-wide ${item.headerCls} mb-2`}>🇻🇳 Ví dụ thực tiễn</p>
-                                <p className="text-base text-on-surface-variant italic leading-relaxed">"{item.example}"</p>
-                              </div>
+                              {(item as any).examples ? (
+                                <div className="flex flex-col gap-2">
+                                  <p className={`text-xs font-bold uppercase tracking-widest ${item.headerCls} mb-0.5`}>🇻🇳 Ví dụ thực tiễn</p>
+                                  {(item as any).examples.map((ex: any, i: number) => (
+                                    <div key={i} className={`p-3.5 rounded-xl ${ex.cardCls}`}>
+                                      <div className="flex items-center gap-2 mb-1.5">
+                                        <p className={`text-xs font-black uppercase tracking-wide ${ex.tagCls}`}>{ex.tag}</p>
+                                        {ex.isNew && (
+                                          <span className="text-[10px] font-bold bg-violet-500/20 text-violet-400 px-1.5 py-0.5 rounded-full border border-violet-500/30">✨ Mới</span>
+                                        )}
+                                      </div>
+                                      <p className="text-sm text-on-surface-variant italic leading-relaxed">"{ex.text}"</p>
+                                    </div>
+                                  ))}
+                                </div>
+                              ) : (
+                                <div className="p-4 bg-surface-container-highest rounded-xl">
+                                  <p className={`text-sm font-bold uppercase tracking-wide ${item.headerCls} mb-2`}>🇻🇳 Ví dụ thực tiễn</p>
+                                  <p className="text-base text-on-surface-variant italic leading-relaxed">"{item.example}"</p>
+                                </div>
+                              )}
                             </div>
                           </div>
                         </motion.div>
@@ -558,36 +595,84 @@ export default function Theory() {
             </div>
           </div>
 
-          {/* Highlight: Đổi mới 1986 — full-bleed image banner */}
+          {/* Highlight: ⭐ Điểm nhấn cao trào — Biểu hiện thứ 5 — Redesigned 2-panel */}
           <div className="relative rounded-3xl overflow-hidden group">
             {/* background image */}
-            <img src={IMG.b5} alt="Đổi mới 1986 — Việt Nam trước và sau"
+            <img src={IMG.b5} alt="Biểu hiện thứ 5 — Tác động trở lại tồn tại xã hội"
               className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" />
-            {/* heavy overlay so text is readable */}
-            <div className="absolute inset-0 bg-gradient-to-r from-[#0a0005]/95 via-[#1a0a14]/85 to-[#0a0005]/60" />
+            {/* heavy overlay */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[#0a0005]/97 via-[#1a0a14]/92 to-[#050a10]/80" />
             <div className="relative z-10 p-7 md:p-9">
-              <span className="text-sm font-bold tracking-widest uppercase text-rose-400/90 bg-rose-500/15 backdrop-blur-sm px-3 py-1.5 rounded-full border border-rose-500/30 mb-5 inline-block">
+
+              {/* Header */}
+              <span className="text-sm font-bold tracking-widest uppercase text-rose-400/90 bg-rose-500/15 backdrop-blur-sm px-3 py-1.5 rounded-full border border-rose-500/30 mb-4 inline-block">
                 ⭐ Điểm nhấn cao trào — Biểu hiện thứ 5
               </span>
-              <div className="grid md:grid-cols-2 gap-6 items-center">
-                <div>
-                  <h4 className="text-2xl md:text-3xl font-black text-white mb-3">Đổi mới 1986</h4>
-                  <p className="text-rose-100/90 leading-relaxed text-lg">
-                    Đường lối Đổi mới của Đảng ta là minh chứng rõ ràng nhất: <strong className="text-white">ý thức tiên tiến đi trước</strong> đã thay đổi hoàn toàn tồn tại xã hội, đưa đất nước thoát khỏi khủng hoảng.
-                  </p>
-                </div>
-                <div className="flex gap-4">
-                  <div className="flex-1 p-4 bg-black/40 backdrop-blur-sm rounded-2xl border border-white/10 text-center">
-                    <p className="text-sm text-rose-300/90 mb-1">Trước 1986</p>
-                    <p className="text-base text-white font-medium">Kinh tế bao cấp<br/>Khủng hoảng trầm trọng</p>
+              <h4 className="text-2xl md:text-3xl font-black text-white mb-1.5">Tác động trở lại Tồn tại xã hội</h4>
+              <p className="text-rose-100/60 text-sm mb-6 max-w-2xl">
+                YTXH lạc hậu <strong className="text-rose-300">kìm hãm</strong> — YTXH tiên tiến <strong className="text-emerald-300">thúc đẩy</strong> xã hội phát triển. Đây là 2 mặt của cùng một nguyên lý biện chứng.
+              </p>
+
+              {/* 2-panel comparison — Bình đẳng giới */}
+              <div className="grid md:grid-cols-2 gap-4 mb-5">
+
+                {/* Panel LEFT — Lạc hậu kìm hãm */}
+                <div className="bg-rose-950/70 backdrop-blur-sm border border-rose-500/40 rounded-2xl p-5">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-xl">❌</span>
+                    <p className="text-xs font-black uppercase tracking-widest text-rose-300">YTXH Lạc hậu — Kìm hãm</p>
                   </div>
-                  <div className="flex items-center text-rose-400 font-black text-xl">→</div>
-                  <div className="flex-1 p-4 bg-rose-500/20 backdrop-blur-sm rounded-2xl border border-rose-500/40 text-center">
-                    <p className="text-sm text-rose-300/90 mb-1">Sau 1986</p>
-                    <p className="text-base text-white font-bold">Kinh tế thị trường<br/>Phát triển vượt bậc</p>
+                  <p className="text-sm font-bold text-white/95 mb-2 leading-snug">"Trọng nam khinh nữ" &amp; "Con gái không cần học nhiều"</p>
+                  <p className="text-xs text-rose-200/65 leading-relaxed mb-3">Tư tưởng Nho giáo lỗi thời kéo dài hàng thế kỷ — coi trọng nam hơn nữ, gắn phụ nữ với bếp núc, không cần học hành.</p>
+                  <div className="space-y-1.5">
+                    <div className="flex items-start gap-2 p-2.5 bg-rose-500/15 rounded-xl">
+                      <span className="text-rose-400 text-xs mt-0.5 shrink-0">→</span>
+                      <p className="text-xs text-rose-100/80">Tỷ lệ phụ nữ mù chữ rất cao, không có tiếng nói trong gia đình &amp; xã hội</p>
+                    </div>
+                    <div className="flex items-start gap-2 p-2.5 bg-rose-500/15 rounded-xl">
+                      <span className="text-rose-400 text-xs mt-0.5 shrink-0">→</span>
+                      <p className="text-xs text-rose-100/80">Lãng phí ½ lực lượng lao động — nền kinh tế mất nguồn nhân lực, xã hội trì trệ bất bình đẳng</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Panel RIGHT — Tiên tiến thúc đẩy */}
+                <div className="bg-emerald-950/70 backdrop-blur-sm border border-emerald-500/40 rounded-2xl p-5">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-xl">✅</span>
+                    <p className="text-xs font-black uppercase tracking-widest text-emerald-300">YTXH Tiên tiến — Thúc đẩy</p>
+                  </div>
+                  <p className="text-sm font-bold text-white/95 mb-2 leading-snug">Tư tưởng Bình đẳng giới &amp; "Ai cũng có quyền học" của Bác Hồ (1945)</p>
+                  <p className="text-xs text-emerald-200/65 leading-relaxed mb-3">Sau Cách mạng tháng Tám, Đảng và Bác Hồ khẳng định: "Nâng cao dân trí", "Phụ nữ bình đẳng với nam giới" — phong trào Bình dân học vụ ra đời.</p>
+                  <div className="space-y-1.5">
+                    <div className="flex items-start gap-2 p-2.5 bg-emerald-500/15 rounded-xl">
+                      <span className="text-emerald-400 text-xs mt-0.5 shrink-0">→</span>
+                      <p className="text-xs text-emerald-100/80">Hàng triệu người (đặc biệt phụ nữ) đổ xô đi học chữ — tỷ lệ xóa mù chữ tăng vượt bậc</p>
+                    </div>
+                    <div className="flex items-start gap-2 p-2.5 bg-emerald-500/15 rounded-xl">
+                      <span className="text-emerald-400 text-xs mt-0.5 shrink-0">→</span>
+                      <p className="text-xs text-emerald-100/80">Ngày nay: nữ sinh ĐH ngang nam giới, phụ nữ tham gia mọi lĩnh vực — VN top bình đẳng giới khu vực</p>
+                    </div>
                   </div>
                 </div>
               </div>
+
+              {/* Footer strip — Đổi mới 1986 (ví dụ kinh tế bổ sung) */}
+              <div className="border-t border-white/10 pt-4">
+                <p className="text-xs font-bold uppercase tracking-widest text-white/40 mb-3">Ví dụ bổ sung — Góc độ Kinh tế</p>
+                <div className="flex flex-col sm:flex-row gap-3 items-center">
+                  <div className="flex-1 p-3.5 bg-black/50 backdrop-blur-sm rounded-xl border border-white/10 text-center">
+                    <p className="text-xs text-rose-300/80 mb-1 font-semibold">Trước 1986 — Bao cấp (YTXH lạc hậu)</p>
+                    <p className="text-sm text-white font-medium">Kinh tế trì trệ · Khủng hoảng trầm trọng</p>
+                  </div>
+                  <div className="text-rose-400 font-black text-xl px-1">→</div>
+                  <div className="flex-1 p-3.5 bg-emerald-500/15 backdrop-blur-sm rounded-xl border border-emerald-500/35 text-center">
+                    <p className="text-xs text-emerald-300/80 mb-1 font-semibold">Đổi mới 1986 — YTXH tiên tiến đi trước</p>
+                    <p className="text-sm text-white font-bold">Kinh tế thị trường · Phát triển vượt bậc</p>
+                  </div>
+                </div>
+              </div>
+
             </div>
           </div>
         </motion.section>
