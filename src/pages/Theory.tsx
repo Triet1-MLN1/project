@@ -850,16 +850,15 @@ export default function Theory() {
             </AnimatePresence>
           </div>
 
-          {/* Video Placeholder */}
-          <div className="relative group aspect-video bg-black rounded-3xl overflow-hidden ring-1 ring-outline-variant/50 shadow-2xl">
-            <img src={animationThumbnail} alt="Animation Thumbnail: Tần số thấp và Hóa đơn từ Vũ trụ"
-              className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-            <div className="absolute inset-0 bg-black/40 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <div className="w-16 h-16 bg-primary rounded-full flex items-center justify-center mb-4">
-                <Play className="text-white w-8 h-8 ml-1" />
-              </div>
-              <p className="text-white font-bold text-lg">Chờ ghép Video của Nhóm</p>
-            </div>
+          {/* Video Player */}
+          <div className="relative aspect-video bg-black rounded-3xl overflow-hidden ring-1 ring-outline-variant/50 shadow-2xl">
+            <iframe
+              src="https://drive.google.com/file/d/1r_fJHmmMfJzPnN07rDgfl9qOzVre2Q3b/preview"
+              className="w-full h-full border-0 rounded-3xl"
+              allow="autoplay; encrypted-media"
+              allowFullScreen
+              title="Phim ngắn: Tần số thấp và Hóa đơn từ Vũ trụ"
+            />
           </div>
         </motion.section>
 
