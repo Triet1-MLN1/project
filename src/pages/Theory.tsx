@@ -16,12 +16,13 @@ const IMG = {
   giaicap:   '/giaicap_trongnam.jpg',
   b1:        '/bieuhien1_lachauhon.jpg',
   b2:        '/bieuhien2_vuottruoc.jpg',
-  b3:        '/bieuhien3_keithua.jpg',
+  b3:        '/bieuhien3_keithua.png',
   b4:        '/bieuhien4_tacdongtrao.jpg',
-  b5:        '/bieuhien5_doimoi1986.jpg',
+  b5:        '/bieuhien5_doimoi1986.png',
   c1:        '/canh1_sohai.jpg',
   c2:        '/canh2_aotruong.jpg',
   c3:        '/canh3_tinhngot.jpg',
+  c4:        '/canh4_hauqua_kinhte.jpg',
   baihoc:    '/baihoc_canhan.jpg',
   angghen:   '/angghen.png',
   lennin:    '/lennin2.0.png',
@@ -30,8 +31,8 @@ const IMG = {
 const SECTIONS = [
   { id: 's1', title: 'I. Khái niệm & Bản chất', icon: Brain },
   { id: 's2', title: 'II. Mối quan hệ Biện chứng', icon: Activity },
-  { id: 's3', title: 'III. Ý nghĩa Phương pháp luận', icon: Compass },
-  { id: 's4', title: 'IV. Phân tích Trào lưu "Chữa lành"', icon: Play },
+  { id: 's3', title: 'III. Phân tích Trào lưu "Chữa lành"', icon: Play },
+  { id: 's4', title: 'IV. Ý nghĩa Phương pháp luận', icon: Compass },
 ];
 
 // 5 biểu hiện — với ví dụ thực tiễn từ file thoại
@@ -68,7 +69,7 @@ const FIVE_CHARACTERISTICS = [
         cardCls: 'bg-violet-500/8 border border-violet-500/25',
       },
     ],
-    img: '/bieuhien3_keithua.jpg',
+    img: '/bieuhien3_keithua.png',
     accent: 'blue', headerCls: 'text-blue-600 dark:text-blue-400',
     borderCls: 'border-l-blue-500', bgCls: 'bg-blue-500/5 border border-blue-500/20',
     badgeCls: 'bg-blue-500/15 text-blue-700 dark:text-blue-300',
@@ -101,45 +102,11 @@ const FIVE_CHARACTERISTICS = [
         cardCls: 'bg-emerald-500/8 border border-emerald-500/25',
       },
     ],
-    img: '/bieuhien5_doimoi1986.jpg',
+    img: '/bieuhien5_doimoi1986.png',
     accent: 'rose', headerCls: 'text-rose-600 dark:text-rose-400',
     borderCls: 'border-l-rose-500', bgCls: 'bg-rose-500/5 border border-rose-500/30',
     badgeCls: 'bg-rose-500/15 text-rose-700 dark:text-rose-300',
     isHero: true,
-  },
-];
-
-// 3 phân cảnh với màu cảm xúc riêng
-const SCENES = [
-  {
-    id: 0, num: '01', emoji: '😨',
-    label: 'Sợ hãi',
-    concept: 'Tồn tại xã hội tiêu cực → Tâm lý xã hội tự phát',
-    content: 'Sinh viên A khóc lóc vì điểm F và chia tay người yêu. Master "Vũ Trụ" xuất hiện đánh trúng tâm lý bất lực: "Con đang bị kẹt ở tần số thấp! Chỉ với 20 triệu, ta sẽ dạy con cách ngồi im, gửi tín hiệu để vũ trụ ship ngay bằng Giỏi và người yêu mới tới tận cửa!". A quẹt thẻ cái rụp vì sợ hãi thực tại và thèm khát chức năng đền bù hư ảo.',
-    img: '/canh1_sohai.jpg',
-    ringCls: 'ring-rose-500/60', tabActiveCls: 'bg-rose-500/15 text-rose-700 dark:text-rose-300 border-b-2 border-rose-500',
-    tabCls: 'text-on-surface-variant', borderCls: 'border-rose-500/40', bgCls: 'bg-rose-500/5', titleCls: 'text-rose-600 dark:text-rose-400',
-    badgeCls: 'bg-rose-500/10 text-rose-700 dark:text-rose-300',
-  },
-  {
-    id: 1, num: '02', emoji: '🧘',
-    label: 'Ảo tưởng',
-    concept: 'Chức năng đền bù hư ảo → Tha hóa tinh thần',
-    content: '1 tháng sau, bạn B đi làm thêm (mặc đồ phục vụ) về rủ A đi học bài. A đang ngồi thiền, tay chắp hình hoa sen, khinh khỉnh đáp: "Tớ đang kết nối năng lượng cõi trên, không quan tâm dăm ba cái điểm số. Cậu đi làm công ăn lương là người \'tần số thấp\', tớ giờ có siêu năng lực rồi!". B lắc đầu ngán ngẩm.',
-    img: '/canh2_aotruong.jpg',
-    ringCls: 'ring-violet-500/60', tabActiveCls: 'bg-violet-500/15 text-violet-700 dark:text-violet-300 border-b-2 border-violet-500',
-    tabCls: 'text-on-surface-variant', borderCls: 'border-violet-500/40', bgCls: 'bg-violet-500/5', titleCls: 'text-violet-600 dark:text-violet-400',
-    badgeCls: 'bg-violet-500/10 text-violet-700 dark:text-violet-300',
-  },
-  {
-    id: 2, num: '03', emoji: '💡',
-    label: 'Tỉnh ngộ',
-    concept: 'Thực tiễn thức tỉnh → Quay lại hoạt động thực tiễn',
-    content: 'Bưu tá đến gõ cửa. A háo hức tưởng vũ trụ gửi tiền tài, mở ra lại là giấy báo nợ thẻ tín dụng 20 triệu và giấy cảnh báo buộc thôi học. A suy sụp gọi Master thì thuê bao. B vỗ vai A, đưa cuốn Giáo trình Triết học: "Sự bất lực trước hiện thực đẻ ra lòng tin vào phép màu. Vũ trụ không ship thứ gì nếu cậu không lao động. Tỉnh lại đi, các khóa học đó chỉ là thuốc phiện tinh thần thôi!"',
-    img: '/canh3_tinhngot.jpg',
-    ringCls: 'ring-amber-500/60', tabActiveCls: 'bg-amber-500/15 text-amber-700 dark:text-amber-300 border-b-2 border-amber-500',
-    tabCls: 'text-on-surface-variant', borderCls: 'border-amber-500/40', bgCls: 'bg-amber-500/5', titleCls: 'text-amber-600 dark:text-amber-400',
-    badgeCls: 'bg-amber-500/10 text-amber-700 dark:text-amber-300',
   },
 ];
 
@@ -172,7 +139,6 @@ function SectionHeading({ icon: Icon, color, label, title }: { icon: React.Eleme
 export default function Theory() {
   const [activeId, setActiveId] = useState('s1');
   const [openChar, setOpenChar] = useState<number | null>(null);
-  const [activeScene, setActiveScene] = useState(0);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const location = useLocation();
 
@@ -335,8 +301,11 @@ export default function Theory() {
             <h1 className="font-headline text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-5">
               Tồn tại xã hội<br className="hidden md:block" /> & Ý thức xã hội
             </h1>
-            <p className="text-blue-100/70 text-base md:text-lg leading-relaxed max-w-2xl mb-6">
+            <p className="text-blue-100/70 text-base md:text-lg leading-relaxed max-w-2xl mb-3">
               Nguyên lý cốt lõi của Chủ nghĩa duy vật lịch sử: đời sống vật chất khách quan quyết định thế giới tinh thần — nhưng tinh thần có sức mạnh cải tạo lại vật chất.
+            </p>
+            <p className="text-amber-300/80 text-sm md:text-base leading-relaxed max-w-2xl mb-6 italic border-l-2 border-amber-400/50 pl-3">
+              Tại sao một sinh viên đại học lại bỏ 20 triệu để &quot;gửi tín hiệu vào vũ trụ&quot;? Triết học Mác-Lênin có câu trả lời.
             </p>
             <div className="flex flex-wrap gap-3">
               {SECTIONS.map((s) => (
@@ -399,7 +368,7 @@ export default function Theory() {
             <div className="bg-surface border-2 border-tertiary/25 rounded-3xl overflow-hidden flex flex-col">
               {/* Image strip */}
               <div className="relative h-36 overflow-hidden shrink-0">
-                <img src={IMG.doanket} alt="Tinh th&#7847;n &#273;o&#224;n k&#7871;t c&#7897;ng &#273;&#7891;ng Vi&#7879;t Nam" className="w-full h-full object-cover object-center" />
+                <img src={IMG.doanket} alt="Tinh thần đoàn kết cộng đồng Việt Nam" className="w-full h-full object-cover object-center" />
 
 
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-surface" />
@@ -677,26 +646,118 @@ export default function Theory() {
           </div>
         </motion.section>
 
-        {/* BRIDGE → Section III */}
-        <SectionBridge text="Triết học không chỉ để hiểu thế giới — mà để cải tạo nó. Vậy chúng ta rút ra bài học thực tiễn gì?" />
+        {/* BRIDGE → Section III (Case Study) */}
+        <SectionBridge text="Những nguyên lý vừa học không phải lý thuyết xa xôi — chúng đang diễn ra ngay trong cuộc sống của chúng ta. Hãy cùng giải mã một hiện tượng đang rất phổ biến trong giới trẻ hiện nay." />
 
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        {/* SECTION III — Ý nghĩa Phương pháp luận          */}
+        {/* SECTION III — Phân tích Trào lưu "Chữa lành"  */}
         {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
         <motion.section id="s3" className="scroll-mt-28"
           initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
 
-          <SectionHeading icon={Compass} color="bg-violet-500/10 text-violet-600" label="Phần 3" title="Ý nghĩa Phương pháp luận" />
+          <SectionHeading icon={Play} color="bg-purple-500/10 text-purple-600" label="Phần 3 — Vận dụng" title='Phân tích Trào lưu "Chữa lành"' />
 
-          {/* Personal Lesson Quote — split layout with image */}
+          {/* 3.0 Hook — Đặt vấn đề */}
+          <div className="bg-amber-500/5 border border-amber-500/30 rounded-3xl p-7 mb-6">
+            <div className="flex items-start gap-4 mb-5">
+              <span className="text-3xl shrink-0">🎯</span>
+              <div>
+                <span className="text-sm font-bold tracking-widest uppercase text-amber-600 dark:text-amber-400 mb-2 block">Đặt vấn đề</span>
+                <h3 className="text-xl font-bold text-on-surface mb-2">Câu chuyện Sinh viên A</h3>
+                <p className="text-base text-on-surface-variant leading-relaxed">
+                  Một sinh viên đại học, giữa thời đại hiện đại đầy đủ tiện nghi, sau khi thi trượt và chia tay người yêu — đã bỏ <strong>20 triệu đồng</strong> để tham gia khóa học &quot;gửi tín hiệu vào vũ trụ&quot; với kỳ vọng vũ trụ sẽ mang điểm số và tình yêu trở lại.
+                </p>
+              </div>
+            </div>
+            {/* Stats callout */}
+            <div className="flex items-center gap-3 mt-4 p-3 bg-amber-500/10 border border-amber-500/20 rounded-2xl">
+              <span className="text-xl shrink-0">📊</span>
+              <p className="text-xs text-amber-700 dark:text-amber-300 leading-relaxed">
+                <strong>Thực tế tại Việt Nam:</strong> Thị trường wellness/healing online ước tính thu hút hàng triệu người dùng mỗi năm, với hàng nghìn khóa học &quot;năng lượng vũ trụ&quot; được rao bán trên MXH, mức phí từ 5–50 triệu đồng/khóa — trong khi <strong>không có bất kỳ cơ sở khoa học nào</strong> được kiểm chứng.
+              </p>
+            </div>
+            <div className="grid md:grid-cols-2 gap-4 mt-5">
+              <div className="p-4 bg-amber-500/10 border border-amber-500/25 rounded-2xl">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-lg font-black text-amber-600 dark:text-amber-400">01</span>
+                  <p className="text-sm font-bold text-on-surface">Câu hỏi thứ nhất</p>
+                </div>
+                <p className="text-sm text-on-surface-variant leading-relaxed italic">
+                  &quot;Tại sao trong xã hội hiện đại đầy đủ tiện nghi, con người lại trở nên 'yếu đuối về mặt tâm lý' đến mức hễ gặp khó khăn là đi 'chữa lành' thay vì đối mặt giải quyết?&quot;
+                </p>
+              </div>
+              <div className="p-4 bg-amber-500/10 border border-amber-500/25 rounded-2xl">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-lg font-black text-amber-600 dark:text-amber-400">02</span>
+                  <p className="text-sm font-bold text-on-surface">Câu hỏi thứ hai</p>
+                </div>
+                <p className="text-sm text-on-surface-variant leading-relaxed italic">
+                  &quot;Có phải đây là một dạng 'thuốc phiện tinh thần' mới để ru ngủ con người quên đi thất bại thực tại không?&quot;
+                </p>
+              </div>
+            </div>
+            <p className="text-sm text-amber-700 dark:text-amber-400 font-semibold mt-4 text-center">
+              → Chúng ta sẽ dùng triết học Mác-Lênin để trả lời 2 câu hỏi này.
+            </p>
+          </div>
+
+          {/* 2 Analysis Boxes */}
+          <div className="grid md:grid-cols-2 gap-5 mb-6">
+            <div className="bg-surface border-2 border-primary/20 rounded-3xl p-6">
+              <div className="p-4 bg-primary/5 border-l-4 border-primary rounded-r-xl mb-4 italic text-on-surface text-base">
+                C.Mác và V.I. Lênin đã khẳng định tôn giáo / ảo tưởng là <strong>&quot;thuốc phiện của nhân dân&quot;</strong>, bởi nó chỉ mang lại sự đền bù hư ảo, ru ngủ con người, làm giảm ý chí đấu tranh và hoạt động thực tiễn.
+              </div>
+              <h4 className="font-bold text-primary mb-3 text-base uppercase tracking-wide">Câu hỏi 1 — Tại sao đi &quot;chữa lành&quot;?</h4>
+              <p className="text-base text-on-surface-variant leading-relaxed">
+                Dù tồn tại xã hội hiện đại đầy đủ tiện nghi, ý thức xã hội (tâm lý xã hội) vẫn có <strong>tính lạc hậu</strong> — tâm lý ỷ lại, mong chờ phép màu không tự biến mất. Khi cá nhân gặp cú sốc, họ rơi vào &quot;bất lực trước áp lực xã hội&quot; và tìm chỗ dựa tinh thần siêu nhiên dễ dãi.
+              </p>
+            </div>
+            <div className="bg-surface border-2 border-tertiary/20 rounded-3xl p-6">
+              <div className="p-4 bg-tertiary/5 border-l-4 border-tertiary rounded-r-xl mb-4 font-semibold text-on-surface text-base">
+                Khẳng định: Đây chính xác là một dạng &quot;thuốc phiện tinh thần&quot; mới trong bối cảnh hiện đại.
+              </div>
+              <h4 className="font-bold text-tertiary mb-3 text-base uppercase tracking-wide">Câu hỏi 2 — Cơ chế hoạt động?</h4>
+              <div className="space-y-2">
+                <div className="p-3 bg-surface-container-highest rounded-xl">
+                  <p className="text-sm font-bold text-tertiary mb-1">Đền bù hư ảo</p>
+                  <p className="text-sm text-on-surface-variant">Đánh trúng tâm lý muốn có kết quả mà không phải lao động, cải tạo thực tiễn.</p>
+                </div>
+                <div className="p-3 bg-surface-container-highest rounded-xl">
+                  <p className="text-sm font-bold text-tertiary mb-1">Tha hóa tinh thần</p>
+                  <p className="text-sm text-on-surface-variant">Khuyên &quot;ngồi im&quot;, làm nhụt ý chí, biến con người thành nô lệ cho ảo ảnh của các nhà &quot;thương mại hóa nỗi đau&quot;.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+
+
+        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        {/* SECTION IV — Ý nghĩa Phương pháp luận          */}
+        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
+        <motion.section id="s4" className="scroll-mt-28"
+          initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
+
+          <SectionHeading icon={Compass} color="bg-violet-500/10 text-violet-600" label="Phần 4 — Kết luận" title="Ý nghĩa Phương pháp luận" />
+
+          {/* Tóm kết nguyên lý — từ thoai.md PHẦN 4 */}
+          <div className="bg-violet-500/8 border border-violet-500/25 rounded-2xl px-6 py-4 mb-6 flex items-start gap-3">
+            <span className="text-2xl shrink-0">💡</span>
+            <p className="text-base md:text-lg text-on-surface leading-relaxed">
+              <strong>Tóm lại:</strong> Qua việc nghiên cứu Triết học Mác-Lênin, chúng ta hiểu rằng{' '}
+              <strong className="text-violet-400">vật chất định hình tinh thần</strong> — nhưng tinh thần cũng có{' '}
+              <strong className="text-violet-400">sức mạnh cải tạo lại vật chất</strong>. Đây là mối quan hệ biện chứng hai chiều, không phải một chiều.
+            </p>
+          </div>
+
+          {/* Personal Lesson Quote */}
+
           <div className="relative overflow-hidden border border-violet-500/20 rounded-3xl mb-8 flex flex-col md:flex-row">
-            {/* Image panel */}
             <div className="relative md:w-64 h-48 md:h-auto shrink-0 overflow-hidden">
               <img src={IMG.baihoc} alt="Bài học cá nhân — thay đổi tồn tại xã hội"
                 className="w-full h-full object-cover object-center" />
               <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-transparent to-[#0a0a14]" />
             </div>
-            {/* Text panel */}
             <div className="relative bg-gradient-to-br from-[#1a1c2e] to-[#0a0a14] p-8 md:p-10 flex-1">
               <div className="absolute -top-4 -left-4 text-violet-500/8 font-serif text-[140px] leading-none select-none pointer-events-none">"</div>
               <div className="relative z-10">
@@ -711,143 +772,51 @@ export default function Theory() {
             </div>
           </div>
 
-          {/* 2 ý nghĩa học thuật */}
-          <div className="grid md:grid-cols-2 gap-5">
-            <div className="bg-surface border-2 border-outline-variant rounded-3xl p-6 hover:border-violet-500/40 hover:shadow-lg transition-all group">
+          {/* 2 ý nghĩa học thuật — mở rộng với ví dụ lịch sử */}
+          <div className="grid md:grid-cols-2 gap-5 mb-8">
+            {/* Card 1 */}
+            <div className="bg-surface border-2 border-outline-variant rounded-3xl p-6 hover:border-violet-500/40 hover:shadow-lg transition-all group flex flex-col">
               <div className="w-12 h-12 bg-violet-500/10 text-violet-600 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform shrink-0">
                 <Landmark className="w-6 h-6" />
               </div>
               <h3 className="font-bold text-xl mb-3 text-on-surface">Cải tạo xã hội từ gốc</h3>
-              <p className="text-base text-on-surface-variant leading-relaxed">
+              <p className="text-base text-on-surface-variant leading-relaxed mb-4">
                 Để thay đổi tận gốc tư tưởng, đạo đức của một xã hội, trước tiên phải thay đổi phương thức sản xuất và hoàn cảnh sống vật chất. Không thể chỉ giáo huấn suông.
               </p>
+              <div className="mt-auto p-4 bg-violet-500/8 border border-violet-500/20 rounded-2xl">
+                <p className="text-xs font-bold text-violet-500 dark:text-violet-400 uppercase tracking-wide mb-1.5">📌 Ví dụ lịch sử Việt Nam</p>
+                <p className="text-sm text-on-surface-variant leading-relaxed">
+                  <strong>Đổi mới 1986:</strong> Đảng thay đổi phương thức sản xuất (TTXH) từ bao cấp sang kinh tế thị trường → tư duy cạnh tranh, năng động (YTXH) tự hình thành sau. Đúng nguyên lý: <em>TTXH quyết định YTXH</em>.
+                </p>
+              </div>
             </div>
-            <div className="bg-surface border-2 border-outline-variant rounded-3xl p-6 hover:border-blue-500/40 hover:shadow-lg transition-all group">
+            {/* Card 2 */}
+            <div className="bg-surface border-2 border-outline-variant rounded-3xl p-6 hover:border-blue-500/40 hover:shadow-lg transition-all group flex flex-col">
               <div className="w-12 h-12 bg-blue-500/10 text-blue-600 rounded-xl flex items-center justify-center mb-5 group-hover:scale-110 transition-transform shrink-0">
                 <Users className="w-6 h-6" />
               </div>
               <h3 className="font-bold text-xl mb-3 text-on-surface">Chú trọng giáo dục tư tưởng</h3>
-              <p className="text-base text-on-surface-variant leading-relaxed">
+              <p className="text-base text-on-surface-variant leading-relaxed mb-4">
                 Đồng thời với phát triển kinh tế, phải chú trọng xây dựng văn hóa, đạo đức. Xóa bỏ hủ tục lạc hậu và phát huy truyền thống tốt đẹp, tiếp thu tinh hoa nhân loại.
               </p>
-            </div>
-          </div>
-        </motion.section>
-
-        {/* BRIDGE → Section IV */}
-        <SectionBridge text='Bây giờ, hãy cùng nhìn vào một hiện tượng đang rất phổ biến trong giới trẻ — trào lưu "Chữa lành" — và giải mã nó bằng triết học Mác-Lênin.' />
-
-        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        {/* SECTION IV — Phân tích Trào lưu "Chữa lành"    */}
-        {/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */}
-        <motion.section id="s4" className="scroll-mt-28"
-          initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-
-          <SectionHeading icon={Play} color="bg-purple-500/10 text-purple-600" label="Phần 4 — Vận dụng" title='Phân tích Trào lưu "Chữa lành"' />
-
-          {/* Philosophical Lens */}
-          <div className="bg-surface border border-outline-variant rounded-3xl p-6 mb-6">
-            <div className="flex items-start gap-4">
-              <span className="text-2xl">🔬</span>
-              <div>
-                <h3 className="font-bold text-on-surface text-lg mb-2">Giải mã bằng Triết học Mác-Lênin</h3>
-                <p className="text-base text-on-surface-variant leading-relaxed">
-                  Trào lưu "Đánh thức năng lượng gốc" hay "gửi tín hiệu vào vũ trụ" mang cơ chế của một dạng <strong>ý thức tôn giáo kiểu mới</strong> — là <em>sự phản ánh hư ảo</em> về sức mạnh của giới tự nhiên lẫn các quan hệ xã hội.
+              <div className="mt-auto p-4 bg-blue-500/8 border border-blue-500/20 rounded-2xl">
+                <p className="text-xs font-bold text-blue-500 dark:text-blue-400 uppercase tracking-wide mb-1.5">📌 Chính sách hiện hành</p>
+                <p className="text-sm text-on-surface-variant leading-relaxed">
+                  <strong>Nghị quyết 33-NQ/TW (2014)</strong> về xây dựng văn hóa: Đảng khẳng định song song phát triển kinh tế và xây dựng VH-ĐĐ — không để YTXH lạc hậu &quot;thả nổi&quot; trong bối cảnh kinh tế thị trường.
                 </p>
               </div>
             </div>
           </div>
 
-          {/* 2 Analysis Boxes */}
-          <div className="grid md:grid-cols-2 gap-5 mb-6">
-            {/* Q1 */}
-            <div className="bg-surface border-2 border-primary/20 rounded-3xl p-6">
-              <div className="p-4 bg-primary/5 border-l-4 border-primary rounded-r-xl mb-4 italic text-on-surface text-base">
-                C.Mác và V.I. Lênin đã khẳng định tôn giáo / ảo tưởng là <strong>"thuốc phiện của nhân dân"</strong>, bởi nó chỉ mang lại sự đền bù hư ảo, ru ngủ con người, làm giảm ý chí đấu tranh và hoạt động thực tiễn.
-              </div>
-              <h4 className="font-bold text-primary mb-3 text-base uppercase tracking-wide">Câu hỏi 1 — Tại sao đi "chữa lành"?</h4>
-              <p className="text-base text-on-surface-variant leading-relaxed">
-                Dù tồn tại xã hội hiện đại đầy đủ tiện nghi, ý thức xã hội (tâm lý xã hội) vẫn có <strong>tính lạc hậu</strong> — tâm lý ỷ lại, mong chờ phép màu không tự biến mất. Khi cá nhân gặp cú sốc, họ rơi vào "bất lực trước áp lực xã hội" và tìm chỗ dựa tinh thần siêu nhiên dễ dãi.
-              </p>
+          {/* Video label */}
+          <div className="flex items-center gap-3 mb-4">
+            <div className="w-10 h-10 rounded-xl bg-error/10 text-error flex items-center justify-center shrink-0">
+              <Play className="w-5 h-5" />
             </div>
-            {/* Q2 */}
-            <div className="bg-surface border-2 border-tertiary/20 rounded-3xl p-6">
-              <div className="p-4 bg-tertiary/5 border-l-4 border-tertiary rounded-r-xl mb-4 font-semibold text-on-surface text-base">
-                Khẳng định: Đây chính xác là một dạng "thuốc phiện tinh thần" mới trong bối cảnh hiện đại.
-              </div>
-              <h4 className="font-bold text-tertiary mb-3 text-base uppercase tracking-wide">Câu hỏi 2 — Cơ chế hoạt động?</h4>
-              <div className="space-y-2">
-                <div className="p-3 bg-surface-container-highest rounded-xl">
-                  <p className="text-sm font-bold text-tertiary mb-1">Đền bù hư ảo</p>
-                  <p className="text-sm text-on-surface-variant">Đánh trúng tâm lý muốn có kết quả mà không phải lao động, cải tạo thực tiễn.</p>
-                </div>
-                <div className="p-3 bg-surface-container-highest rounded-xl">
-                  <p className="text-sm font-bold text-tertiary mb-1">Tha hóa tinh thần</p>
-                  <p className="text-sm text-on-surface-variant">Khuyên "ngồi im", làm nhụt ý chí, biến con người thành nô lệ cho ảo ảnh của các nhà "thương mại hóa nỗi đau".</p>
-                </div>
-              </div>
+            <div>
+              <p className="text-xs font-bold tracking-widest uppercase text-outline mb-0.5">Sản phẩm sáng tạo — Phân tích dưới góc nhìn Triết học</p>
+              <h3 className="font-bold text-lg text-on-surface">🎬 Trào lưu “Chữa lành” — Thuốc phiện tinh thần phiên bản 4.0?</h3>
             </div>
-          </div>
-
-          {/* 3 Emotional Scenes — Tab Stepper */}
-          <div className="bg-surface-container-highest border border-outline-variant rounded-3xl overflow-hidden mb-6">
-            <div className="p-5 border-b border-outline-variant">
-              <div className="flex items-center gap-2 mb-3">
-                <Play className="w-5 h-5 text-error" />
-                <h3 className="font-bold text-lg text-on-surface">Phim ngắn: "Tần số thấp và Hóa đơn từ Vũ trụ"</h3>
-              </div>
-              {/* Scene Tabs */}
-              <div className="flex gap-2">
-                {SCENES.map((scene) => (
-                  <button key={scene.id} onClick={() => setActiveScene(scene.id)}
-                    className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all flex-1 justify-center ${
-                      activeScene === scene.id
-                        ? `${scene.bgCls} ${scene.titleCls} ring-2 ${scene.ringCls}`
-                        : 'text-on-surface-variant hover:bg-surface-variant'
-                    }`}
-                  >
-                    <span className="text-lg">{scene.emoji}</span>
-                    <span className="hidden sm:inline">Cảnh {scene.num}:</span> {scene.label}
-                  </button>
-                ))}
-              </div>
-            </div>
-
-            <AnimatePresence mode="wait">
-              {SCENES.map((scene) => activeScene === scene.id && (
-                <motion.div key={scene.id}
-                  initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -12 }} transition={{ duration: 0.2 }}
-                  className={`flex flex-col md:flex-row border-l-4 ${scene.borderCls} overflow-hidden`}
-                >
-                  {/* Scene image */}
-                  <div className="relative md:w-56 h-48 md:h-auto shrink-0 overflow-hidden">
-                    <img src={scene.img} alt={`Cảnh ${scene.num}: ${scene.label}`}
-                      className="w-full h-full object-cover object-center" />
-                    <div className="absolute inset-0 bg-gradient-to-b md:bg-gradient-to-r from-transparent to-black/50" />
-                    <span className={`absolute top-3 left-3 text-3xl drop-shadow-lg`}>{scene.emoji}</span>
-                  </div>
-                  {/* Scene content */}
-                  <div className={`p-6 flex-1 ${scene.bgCls}`}>
-                    <div className="flex items-center gap-3 mb-3">
-                      <div>
-                        <h4 className={`font-bold text-lg ${scene.titleCls}`}>Phân cảnh {scene.num}: {scene.label}</h4>
-                        <span className={`text-sm font-bold px-2 py-1 rounded-full ${scene.badgeCls}`}>{scene.concept}</span>
-                      </div>
-                    </div>
-                    <p className="text-base text-on-surface leading-relaxed mb-4">{scene.content}</p>
-                    <div className="flex justify-between">
-                      <button onClick={() => setActiveScene(Math.max(0, activeScene - 1))}
-                        disabled={activeScene === 0}
-                        className="text-xs text-outline hover:text-on-surface disabled:opacity-30 transition-colors">← Cảnh trước</button>
-                      <button onClick={() => setActiveScene(Math.min(SCENES.length - 1, activeScene + 1))}
-                        disabled={activeScene === SCENES.length - 1}
-                        className="text-xs text-outline hover:text-on-surface disabled:opacity-30 transition-colors">Cảnh sau →</button>
-                    </div>
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
           </div>
 
           {/* Video Player */}
@@ -857,7 +826,7 @@ export default function Theory() {
               className="w-full h-full border-0 rounded-3xl"
               allow="autoplay; encrypted-media"
               allowFullScreen
-              title="Phim ngắn: Tần số thấp và Hóa đơn từ Vũ trụ"
+              title="Phim ng\u1eafn: T\u1ea7n s\u1ed1 th\u1ea5p v\u00e0 H\u00f3a \u0111\u01a1n t\u1eeb V\u0169 tr\u1ee5"
             />
           </div>
         </motion.section>
@@ -866,3 +835,4 @@ export default function Theory() {
     </div>
   );
 }
+
