@@ -383,14 +383,36 @@ export default function Theory() {
                 <p className="text-on-surface-variant leading-relaxed text-lg">
                   Là mặt tinh thần của đời sống xã hội, bao gồm tình cảm, tập quán, truyền thống, quan điểm, học thuyết... nảy sinh từ tồn tại xã hội và phản ánh tồn tại xã hội.
                 </p>
-                <div className="space-y-2.5">
-                  <div className="p-4 bg-tertiary/5 rounded-xl border border-tertiary/20">
-                    <p className="text-sm font-semibold text-tertiary mb-1">Tâm lý xã hội</p>
-                    <p className="text-sm text-on-surface-variant">Tình cảm, thói quen, tâm trạng — nảy sinh <em>trực tiếp, tự phát</em> từ điều kiện sống hàng ngày.</p>
+                {/* Trục 1: Cấp độ */}
+                <div>
+                  <p className="text-xs font-bold tracking-widest uppercase text-tertiary/60 mb-2 flex items-center gap-1.5">
+                    <span className="w-4 h-px bg-tertiary/40 inline-block" /> Theo cấp độ phản ánh
+                  </p>
+                  <div className="space-y-2">
+                    <div className="p-4 bg-tertiary/5 rounded-xl border border-tertiary/20">
+                      <p className="text-sm font-semibold text-tertiary mb-1">Tâm lý xã hội</p>
+                      <p className="text-sm text-on-surface-variant">Tình cảm, thói quen, tâm trạng — nảy sinh <em>trực tiếp, tự phát</em> từ điều kiện sống hàng ngày.</p>
+                    </div>
+                    <div className="p-4 bg-tertiary/8 rounded-xl border border-tertiary/25">
+                      <p className="text-sm font-semibold text-tertiary mb-1">Hệ tư tưởng xã hội</p>
+                      <p className="text-sm text-on-surface-variant">Quan điểm, học thuyết, lý luận — phản ánh tồn tại xã hội <em>khái quát, hệ thống, gián tiếp</em>.</p>
+                    </div>
                   </div>
-                  <div className="p-4 bg-tertiary/8 rounded-xl border border-tertiary/25">
-                    <p className="text-sm font-semibold text-tertiary mb-1">Hệ tư tưởng xã hội</p>
-                    <p className="text-sm text-on-surface-variant">Quan điểm, học thuyết, lý luận — phản ánh tồn tại xã hội <em>khái quát, hệ thống</em>.</p>
+                </div>
+                {/* Trục 2: Trình độ phản ánh */}
+                <div>
+                  <p className="text-xs font-bold tracking-widest uppercase text-tertiary/60 mb-2 flex items-center gap-1.5">
+                    <span className="w-4 h-px bg-tertiary/40 inline-block" /> Theo trình độ phản ánh
+                  </p>
+                  <div className="space-y-2">
+                    <div className="p-4 bg-tertiary/5 rounded-xl border border-tertiary/20">
+                      <p className="text-sm font-semibold text-tertiary mb-1">Ý thức xã hội thông thường</p>
+                      <p className="text-sm text-on-surface-variant">Tri thức, quan niệm hình thành <em>trực tiếp</em> từ hoạt động thực tiễn hàng ngày — chưa được khái quát hóa.</p>
+                    </div>
+                    <div className="p-4 bg-tertiary/8 rounded-xl border border-tertiary/25">
+                      <p className="text-sm font-semibold text-tertiary mb-1">Ý thức lý luận</p>
+                      <p className="text-sm text-on-surface-variant">Hệ thống quan điểm, tư tưởng đã được <em>khái quát hóa, hệ thống hóa</em> — nền tảng của hệ tư tưởng.</p>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -429,10 +451,117 @@ export default function Theory() {
               </div>
               <div>
                 <h4 className="font-bold text-on-surface mb-2 text-lg">Trong xã hội có giai cấp: Ý thức mang tính giai cấp</h4>
-                <p className="text-base text-on-surface-variant leading-relaxed">
+                <p className="text-base text-on-surface-variant leading-relaxed mb-3">
                   Trong một xã hội có giai cấp, ý thức xã hội cũng mang tính giai cấp sâu sắc. Dưới thời phong kiến, do giai cấp địa chủ nắm giữ tư liệu sản xuất, họ tạo ra hệ tư tưởng <strong>"trọng nam khinh nữ"</strong> để bảo vệ quyền lợi gia trưởng — đó chính là tính giai cấp của ý thức xã hội.
                 </p>
+                <div className="p-3 bg-error/5 border border-error/20 rounded-xl">
+                  <p className="text-xs font-bold uppercase tracking-wide text-error/70 mb-1">📌 Luận điểm kinh điển</p>
+                  <p className="text-sm text-on-surface-variant italic leading-relaxed">"Hệ tư tưởng thống trị trong xã hội luôn là hệ tư tưởng của <strong>giai cấp nắm giữ quyền thống trị</strong> về kinh tế và chính trị."</p>
+                </div>
               </div>
+            </div>
+          </div>
+
+          {/* 6 Hình thái YTXH */}
+          <div className="mt-8 bg-surface border border-outline-variant rounded-3xl p-6 md:p-8">
+            {/* Header */}
+            <div className="flex items-center gap-4 mb-6 pb-5 border-b border-outline-variant">
+              <div className="w-12 h-12 rounded-2xl bg-tertiary/10 text-tertiary flex items-center justify-center shrink-0">
+                <Lightbulb className="w-6 h-6" />
+              </div>
+              <div>
+                <p className="text-xs font-bold tracking-widest uppercase text-outline mb-1">Kết cấu nâng cao</p>
+                <h3 className="font-headline font-bold text-2xl md:text-3xl text-on-surface leading-tight">6 Hình thái Ý thức xã hội cơ bản</h3>
+              </div>
+            </div>
+
+            {/* Grid 2 cột — card lớn */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {[
+                {
+                  num: '01', emoji: '🏛️',
+                  name: 'Ý thức chính trị',
+                  desc: 'Phản ánh các mối quan hệ kinh tế, chính trị và thể hiện thái độ đối với quyền lực nhà nước.',
+                  note: 'Hình thái chủ đạo — chi phối các hình thái ý thức xã hội khác',
+                  accent: 'border-primary/30 bg-primary/5',
+                  numCls: 'text-primary/20',
+                  nameCls: 'text-primary dark:text-primary',
+                  noteCls: 'text-primary/60',
+                  noteBg: 'bg-primary/8 border-primary/20',
+                },
+                {
+                  num: '02', emoji: '⚖️',
+                  name: 'Ý thức pháp quyền',
+                  desc: 'Toàn bộ quan niệm về tính hợp pháp hay không hợp pháp, được nhà nước thể chế hóa thành luật lệ để bảo vệ lợi ích giai cấp thống trị.',
+                  note: 'Gắn trực tiếp với ý thức chính trị và quyền lực nhà nước',
+                  accent: 'border-blue-500/30 bg-blue-500/5',
+                  numCls: 'text-blue-500/20',
+                  nameCls: 'text-blue-600 dark:text-blue-400',
+                  noteCls: 'text-blue-500/60',
+                  noteBg: 'bg-blue-500/8 border-blue-500/20',
+                },
+                {
+                  num: '03', emoji: '🤝',
+                  name: 'Ý thức đạo đức',
+                  desc: 'Bao gồm các quan niệm về thiện, ác, tốt, xấu, lương tâm, danh dự... nhằm điều chỉnh hành vi con người trong các mối quan hệ xã hội.',
+                  note: 'Điều chỉnh hành vi qua áp lực đạo đức, không phải cưỡng chế',
+                  accent: 'border-emerald-500/30 bg-emerald-500/5',
+                  numCls: 'text-emerald-500/20',
+                  nameCls: 'text-emerald-600 dark:text-emerald-400',
+                  noteCls: 'text-emerald-500/60',
+                  noteBg: 'bg-emerald-500/8 border-emerald-500/20',
+                },
+                {
+                  num: '04', emoji: '🙏',
+                  name: 'Ý thức tôn giáo',
+                  desc: 'Sự phản ánh hư ảo, hoang đường về sức mạnh của tự nhiên và xã hội — sinh ra từ sự bất lực của con người trước thế giới khách quan và áp bức giai cấp.',
+                  note: '⚠️ Cơ sở lý luận trực tiếp để phân tích case study "Chữa lành"',
+                  accent: 'border-amber-500/30 bg-amber-500/5',
+                  numCls: 'text-amber-500/20',
+                  nameCls: 'text-amber-600 dark:text-amber-400',
+                  noteCls: 'text-amber-600/70',
+                  noteBg: 'bg-amber-500/10 border-amber-500/25',
+                },
+                {
+                  num: '05', emoji: '🔬',
+                  name: 'Ý thức khoa học',
+                  desc: 'Hệ thống tri thức chân thực phản ánh quy luật của tự nhiên, xã hội và tư duy — ngày càng trở thành một lực lượng sản xuất trực tiếp.',
+                  note: 'Đối lập với ý thức tôn giáo — phản ánh đúng quy luật khách quan',
+                  accent: 'border-cyan-500/30 bg-cyan-500/5',
+                  numCls: 'text-cyan-500/20',
+                  nameCls: 'text-cyan-600 dark:text-cyan-400',
+                  noteCls: 'text-cyan-500/60',
+                  noteBg: 'bg-cyan-500/8 border-cyan-500/20',
+                },
+                {
+                  num: '06', emoji: '🧠',
+                  name: 'Ý thức triết học',
+                  desc: 'Là trình độ nhận thức lý luận chung nhất về thế giới — đóng vai trò nền tảng thế giới quan và phương pháp luận cho con người.',
+                  note: 'Bao quát và khái quát nhất trong 6 hình thái',
+                  accent: 'border-violet-500/30 bg-violet-500/5',
+                  numCls: 'text-violet-500/20',
+                  nameCls: 'text-violet-600 dark:text-violet-400',
+                  noteCls: 'text-violet-500/60',
+                  noteBg: 'bg-violet-500/8 border-violet-500/20',
+                },
+              ].map((item) => (
+                <div key={item.num} className={`rounded-2xl border p-5 flex flex-col gap-3 transition-all hover:shadow-md ${item.accent}`}>
+                  {/* Top row */}
+                  <div className="flex items-center gap-3">
+                    <span className="text-3xl leading-none">{item.emoji}</span>
+                    <div className="flex-1">
+                      <p className={`text-[11px] font-black tracking-widest uppercase ${item.numCls.replace('/20', '/50')}`}>{item.num}</p>
+                      <p className={`font-bold text-base md:text-lg leading-tight ${item.nameCls}`}>{item.name}</p>
+                    </div>
+                  </div>
+                  {/* Description */}
+                  <p className="text-sm md:text-base text-on-surface-variant leading-relaxed">{item.desc}</p>
+                  {/* Note footer */}
+                  <div className={`rounded-xl px-3 py-2 border mt-auto ${item.noteBg}`}>
+                    <p className={`text-xs font-semibold leading-snug ${item.noteCls}`}>{item.note}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </motion.section>
