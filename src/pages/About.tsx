@@ -362,6 +362,91 @@ export default function About() {
         </div>
       </motion.section>
 
+      {/* Integrity & AI Usage Section */}
+      <motion.section 
+        initial="hidden" whileInView="visible" viewport={{ once: true, margin: '-50px' }} variants={staggerContainer}
+        className="px-8 mb-32 relative"
+      >
+        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12">
+          {/* Cam kết Liêm chính Học thuật */}
+          <motion.div variants={fadeInUp} className="bg-surface-container-low border border-primary/20 rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden shadow-xl flex flex-col justify-between">
+            <div className="absolute top-0 right-0 p-6 opacity-[0.03] pointer-events-none">
+              <span className="material-symbols-outlined text-[120px] text-primary">verified_user</span>
+            </div>
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-primary/10 text-primary text-xs font-bold uppercase tracking-widest rounded-md mb-6 border border-primary/30">
+                <span className="material-symbols-outlined text-sm">gavel</span>
+                Cam Kết Học Thuật
+              </div>
+              <h2 className="text-3xl font-headline font-bold text-on-surface mb-6 tracking-tight uppercase">
+                Liêm Chính <span className="text-primary">Học Thuật</span>
+              </h2>
+              <div className="space-y-4 text-on-surface-variant leading-relaxed text-base md:text-lg">
+                <p className="pl-4 border-l-2 border-primary">
+                  Chúng tôi xin cam kết hoàn toàn liêm chính trong học thuật đối với toàn bộ quá trình nghiên cứu, xây dựng và hoàn thiện dự án **Marxist Hub**.
+                </p>
+                <p className="pl-4 border-l-2 border-primary">
+                  Mọi nguồn tài liệu tham khảo, số liệu dẫn chứng và các trích dẫn triết học đều được trích dẫn chính xác từ Giáo trình Triết học Mác - Lênin chuẩn của Bộ Giáo dục và Đào tạo và các nguồn học thuật chính thống.
+                </p>
+                <p className="pl-4 border-l-2 border-primary">
+                  Chúng tôi hoàn toàn chịu trách nhiệm trước tập thể và nhà trường về tính nguyên bản của sản phẩm, cũng như việc sử dụng các công nghệ hỗ trợ đúng mục đích, minh bạch và đúng quy chuẩn đạo đức học đường.
+                </p>
+              </div>
+            </div>
+            <div className="mt-8 pt-6 border-t border-outline-variant/20 flex items-center justify-between text-xs text-outline font-mono">
+              <span>SECURITY PROTOCOL ENFORCED</span>
+              <span>VERIFIED ORIGINAL</span>
+            </div>
+          </motion.div>
+
+          {/* Phụ lục Sử dụng AI */}
+          <motion.div variants={fadeInUp} className="bg-surface-container-low border border-tertiary/20 rounded-[2.5rem] p-8 md:p-12 relative overflow-hidden shadow-xl flex flex-col justify-between">
+            <div className="absolute top-0 right-0 p-6 opacity-[0.03] pointer-events-none">
+              <span className="material-symbols-outlined text-[120px] text-tertiary">smart_toy</span>
+            </div>
+            <div>
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-tertiary/10 text-tertiary text-xs font-bold uppercase tracking-widest rounded-md mb-6 border border-tertiary/30">
+                <span className="material-symbols-outlined text-sm">settings_suggest</span>
+                AI Usage Appendix
+              </div>
+              <h2 className="text-3xl font-headline font-bold text-on-surface mb-6 tracking-tight uppercase">
+                Phụ Lục <span className="text-tertiary">Sử Dụng AI</span>
+              </h2>
+              
+              <div className="space-y-4">
+                <div className="bg-surface/50 border border-outline-variant/10 rounded-xl p-4 flex gap-4 hover:border-tertiary/20 transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-tertiary/15 flex items-center justify-center shrink-0 text-tertiary font-mono text-sm font-bold">01</div>
+                  <div>
+                    <h4 className="text-sm uppercase font-bold text-on-surface tracking-wider">Công cụ sử dụng</h4>
+                    <p className="text-sm text-on-surface-variant mt-1 font-medium">ChatGPT, Gemini, Claude, GitHub Copilot</p>
+                  </div>
+                </div>
+
+                <div className="bg-surface/50 border border-outline-variant/10 rounded-xl p-4 flex gap-4 hover:border-tertiary/20 transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-tertiary/15 flex items-center justify-center shrink-0 text-tertiary font-mono text-sm font-bold">02</div>
+                  <div>
+                    <h4 className="text-sm uppercase font-bold text-on-surface tracking-wider">Mục đích sử dụng</h4>
+                    <p className="text-sm text-on-surface-variant mt-1">Phác thảo thiết kế giao diện (UI) Cyberpunk; sinh hình ảnh minh họa cho game Đuổi hình bắt chữ; hỗ trợ tra cứu cú pháp lập trình và kiểm thử logic.</p>
+                  </div>
+                </div>
+
+                <div className="bg-surface/50 border border-outline-variant/10 rounded-xl p-4 flex gap-4 hover:border-tertiary/20 transition-colors">
+                  <div className="w-10 h-10 rounded-lg bg-tertiary/15 flex items-center justify-center shrink-0 text-tertiary font-mono text-sm font-bold">03</div>
+                  <div>
+                    <h4 className="text-sm uppercase font-bold text-on-surface tracking-wider">Phạm vi & Giới hạn</h4>
+                    <p className="text-sm text-on-surface-variant mt-1">AI đóng vai trò công cụ hỗ trợ tăng năng suất. Toàn bộ nội dung học thuật triết học, hệ thống câu hỏi, logic luật chơi và code nền tảng đều do nhóm sinh viên trực tiếp biên soạn, kiểm duyệt và đối chiếu thực tế.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="mt-8 pt-6 border-t border-outline-variant/20 flex items-center justify-between text-xs text-outline font-mono">
+              <span>TRANSPARENCY ACCREDITED</span>
+              <span>AI ASSISTED & VERIFIED</span>
+            </div>
+          </motion.div>
+        </div>
+      </motion.section>
+
     </main>
   );
 }
