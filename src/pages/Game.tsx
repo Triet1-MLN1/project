@@ -20,7 +20,8 @@ import {
   Timer,
   Send,
   Copy,
-  Zap
+  Zap,
+  Maximize2
 } from "lucide-react";
 
 import { SCENARIOS } from "../gameData";
@@ -259,6 +260,9 @@ function WaitingRoom({
   onToggleMusic: () => void;
 }) {
   const [copied, setCopied] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
+  const [showLargeQr, setShowLargeQr] = useState(false);
+
   const nonHostPlayers = players.filter((p) => !p.isHost);
   const canStart = nonHostPlayers.length > 0;
 
@@ -270,6 +274,12 @@ function WaitingRoom({
 
   const joinLink = `${window.location.origin}${window.location.pathname}?code=${room.code}`;
   const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(joinLink)}`;
+
+  const copyLink = () => {
+    navigator.clipboard.writeText(joinLink);
+    setLinkCopied(true);
+    setTimeout(() => setLinkCopied(false), 2000);
+  };
 
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl w-full px-4 mx-auto">
@@ -295,10 +305,42 @@ function WaitingRoom({
         {isHost && (
           <div className="flex flex-col items-center bg-surface-variant/20 border border-outline-variant/30 rounded-2xl p-4 mb-8 max-w-xs mx-auto text-center">
             <p className="text-sm font-bold text-on-surface-variant mb-3">Quét mã QR để tham gia phòng:</p>
-            <div className="bg-white p-3 rounded-xl border border-outline-variant/20 shadow-sm">
-              <img src={qrUrl} alt="Join QR Code" className="w-40 h-40 object-contain" />
+            <div 
+              className="relative group bg-white p-3 rounded-xl border border-outline-variant/20 shadow-sm cursor-pointer overflow-hidden"
+              onClick={() => setShowLargeQr(true)}
+            >
+              <img src={qrUrl} alt="Join QR Code" className="w-40 h-40 object-contain animate-fade-in" />
+              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center text-white text-xs font-bold gap-1">
+                <Maximize2 className="w-4 h-4" />
+                <span>Phóng to</span>
+              </div>
             </div>
-            <span className="text-[10px] text-outline mt-2 font-mono break-all max-w-[240px]">
+            
+            <div className="flex gap-2 mt-4 w-full justify-center">
+              <button
+                onClick={() => setShowLargeQr(true)}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface hover:bg-surface-variant text-on-surface border border-outline-variant text-xs font-bold transition-all shadow-sm active:scale-95"
+              >
+                <Maximize2 className="w-3.5 h-3.5" /> Phóng to QR
+              </button>
+              <button
+                onClick={copyLink}
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-surface hover:bg-surface-variant text-on-surface border border-outline-variant text-xs font-bold transition-all shadow-sm active:scale-95 min-w-[90px] justify-center"
+              >
+                {linkCopied ? (
+                  <>
+                    <Check className="w-3.5 h-3.5 text-emerald-500" />
+                    <span>Đã chép</span>
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-3.5 h-3.5" />
+                    <span>Chép link</span>
+                  </>
+                )}
+              </button>
+            </div>
+            <span className="text-[10px] text-outline mt-3 font-mono break-all max-w-[240px]">
               {joinLink}
             </span>
           </div>
@@ -346,6 +388,71 @@ function WaitingRoom({
           </button>
         </div>
       </div>
+
+      {/* Enlarged QR Modal */}
+      <AnimatePresence>
+        {showLargeQr && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/80 backdrop-blur-md z-[110] flex items-center justify-center p-4"
+            onClick={() => setShowLargeQr(false)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-surface rounded-3xl p-6 sm:p-8 max-w-md w-full border border-outline-variant shadow-2xl flex flex-col items-center relative"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setShowLargeQr(false)}
+                className="absolute top-4 right-4 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant p-2 rounded-full transition-colors"
+              >
+                <X className="w-6 h-6" />
+              </button>
+
+              <h3 className="font-headline text-xl font-bold text-center text-on-surface mb-2">
+                Quét để Tham Gia Chơi
+              </h3>
+              <p className="text-sm text-on-surface-variant text-center mb-6">
+                Mở camera điện thoại quét mã QR bên dưới để kết nối trực tiếp
+              </p>
+
+              <div className="bg-white p-5 rounded-2xl border border-outline-variant/20 shadow-md mb-6">
+                <img
+                  src={`https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(joinLink)}`}
+                  alt="Large Join QR Code"
+                  className="w-64 h-64 sm:w-80 sm:h-80 object-contain"
+                />
+              </div>
+
+              <div className="bg-primary/5 px-4 py-2.5 rounded-xl border border-primary/20 flex flex-col items-center gap-1 mb-6 w-full text-center">
+                <span className="text-xs text-outline uppercase tracking-wider font-bold">Mã phòng của bạn:</span>
+                <span className="font-mono text-3xl font-extrabold text-primary tracking-[0.2em] select-all">
+                  {room.code}
+                </span>
+              </div>
+
+              <button
+                onClick={copyLink}
+                className="w-full bg-primary text-on-primary py-4 rounded-xl font-bold hover:bg-primary/90 transition-all flex items-center justify-center gap-2 shadow-lg active:scale-95"
+              >
+                {linkCopied ? (
+                  <>
+                    <Check className="w-5 h-5 text-emerald-300" /> Đã Sao Chép Link
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-5 h-5" /> Sao Chép Link Tham Gia
+                  </>
+                )}
+              </button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
