@@ -161,7 +161,7 @@ function LobbyView({
 
       <div className="flex flex-col md:flex-row gap-8 justify-center">
         {/* Host card */}
-        <motion.div className="group bg-surface rounded-3xl p-8 lg:p-10 shadow-sm border border-outline-variant w-full md:w-1/2 flex flex-col items-center text-center">
+        <motion.div className="group bg-surface rounded-3xl p-6 sm:p-8 lg:p-10 shadow-sm border border-outline-variant w-full md:w-1/2 flex flex-col items-center text-center">
           <div className="bg-primary/10 p-5 rounded-full mb-6 text-primary group-hover:scale-110 transition-transform">
             <MonitorPlay className="w-10 h-10" />
           </div>
@@ -194,7 +194,7 @@ function LobbyView({
         </motion.div>
 
         {/* Player card */}
-        <motion.div className="group bg-surface rounded-3xl p-8 lg:p-10 shadow-sm border border-outline-variant w-full md:w-1/2 flex flex-col items-center text-center">
+        <motion.div className="group bg-surface rounded-3xl p-6 sm:p-8 lg:p-10 shadow-sm border border-outline-variant w-full md:w-1/2 flex flex-col items-center text-center">
           <div className="bg-amber-500/10 p-5 rounded-full mb-6 text-amber-500 group-hover:scale-110 transition-transform">
             <Users className="w-10 h-10" />
           </div>
@@ -429,10 +429,10 @@ function GameplayView({
       </div>
 
       <div className="space-y-6 max-w-3xl mx-auto w-full">
-        <div className="space-y-6">
+        <div className="space-y-4 md:space-y-6">
           <motion.div
             key={room.currentRound}
-            className="bg-surface p-4 rounded-3xl shadow-xl border-4 border-primary/20 aspect-video flex items-center justify-center overflow-hidden"
+            className="bg-surface p-2 sm:p-4 rounded-2xl sm:rounded-3xl shadow-xl border-4 border-primary/20 h-44 sm:h-64 md:h-auto md:aspect-video flex items-center justify-center overflow-hidden"
           >
             <img src={scenario.image} alt="Quiz" className="max-h-full object-contain" />
           </motion.div>
@@ -447,43 +447,43 @@ function GameplayView({
                 value={answer}
                 onChange={(e) => setAnswer(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && handleSendAnswer()}
-                placeholder="Nhập đáp án của bạn..."
-                className="w-full bg-surface border-4 border-outline-variant text-on-surface py-6 px-8 rounded-3xl font-bold text-2xl text-center focus:border-primary outline-none transition-all shadow-inner"
+                placeholder="Nhập đáp án..."
+                className="w-full bg-surface border-2 md:border-4 border-outline-variant text-on-surface py-3 px-5 md:py-6 md:px-8 rounded-2xl md:rounded-3xl font-bold text-base md:text-2xl text-center focus:border-primary outline-none transition-all shadow-inner"
               />
               <button
                 onClick={handleSendAnswer}
-                className="absolute right-4 top-1/2 -translate-y-1/2 bg-primary text-on-primary p-4 rounded-2xl hover:scale-110 active:scale-95 transition-all shadow-lg"
+                className="absolute right-2 top-1/2 -translate-y-1/2 bg-primary text-on-primary p-2 md:p-4 rounded-xl md:rounded-2xl hover:scale-110 active:scale-95 transition-all shadow-lg"
               >
-                <Send className="w-6 h-6" />
+                <Send className="w-5 h-5 md:w-6 md:h-6" />
               </button>
             </motion.div>
           ) : (
-            <div className="bg-primary/10 border-2 border-primary/20 p-8 rounded-3xl text-center">
-              <p className="text-xl font-bold text-primary">
+            <div className="bg-primary/10 border-2 border-primary/20 p-6 md:p-8 rounded-2xl md:rounded-3xl text-center">
+              <p className="text-lg md:text-xl font-bold text-primary">
                 {currentPlayer.isHost ? "Đang chờ người chơi trả lời..." : "Đã gửi đáp án đúng! Chờ kết quả..."}
               </p>
             </div>
           )}
 
           <div className="flex justify-center">
-            <p className="text-on-surface-variant italic font-medium bg-surface-variant/30 px-6 py-2 rounded-full">
+            <p className="text-on-surface-variant italic font-medium bg-surface-variant/30 px-4 py-1.5 md:px-6 md:py-2 rounded-full text-xs md:text-base">
               💡 Gợi ý: {scenario.suggestion}
             </p>
           </div>
 
           {/* HINT BOARD */}
-          <div className="flex flex-wrap justify-center gap-x-6 md:gap-x-8 gap-y-3 mt-4 px-2">
+          <div className="flex flex-wrap justify-center gap-x-3 md:gap-x-6 gap-y-2 mt-2 md:mt-4 px-2">
             {scenario.correctAnswer.split(" ").map((word, wordIdx, wordsArr) => {
               const startIndex = wordsArr.slice(0, wordIdx).join(" ").length + (wordIdx > 0 ? 1 : 0);
               return (
-                <div key={wordIdx} className="flex gap-x-1.5">
+                <div key={wordIdx} className="flex gap-x-1">
                   {word.split("").map((char, charIdx) => {
                     const absoluteIdx = startIndex + charIdx;
                     const isRevealed = revealedIndices.has(absoluteIdx);
                     return (
                       <div
                         key={charIdx}
-                        className={`w-9 h-11 md:w-11 md:h-14 rounded-lg flex items-center justify-center font-bold text-lg md:text-2xl shadow-sm border-b-4 transition-all duration-300
+                        className={`w-7 h-9 sm:w-9 sm:h-11 md:w-11 md:h-14 rounded-lg flex items-center justify-center font-bold text-sm sm:text-lg md:text-2xl shadow-sm border-b-4 transition-all duration-300
                           ${isRevealed ? "bg-primary text-white border-primary/80 scale-100" : "bg-surface-variant/50 border-outline-variant text-transparent scale-95"}`}
                       >
                         {isRevealed ? char.toUpperCase() : ""}

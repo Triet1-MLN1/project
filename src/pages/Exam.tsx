@@ -65,6 +65,13 @@ export default function Exam() {
   const [submitted, setSubmitted] = useState(false);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   // Seed Convex bank if needed (only when not using state questions)
   useEffect(() => {
     if (hasStateQs) return;
@@ -136,16 +143,11 @@ export default function Exam() {
 
   const handleSelect = (opt: string) => {
     if (!currentQ) return;
-    const isMulti = currentQ.answer.length > 1;
     setAnswers(prev => {
       const cur = prev[currentQ._id] ?? [];
-      if (isMulti) {
-        // toggle selection
-        const next = cur.includes(opt) ? cur.filter(a => a !== opt) : [...cur, opt];
-        return { ...prev, [currentQ._id]: next };
-      }
-      // single-answer: replace
-      return { ...prev, [currentQ._id]: [opt] };
+      // Always toggle selection (allow multi-select for all questions)
+      const next = cur.includes(opt) ? cur.filter(a => a !== opt) : [...cur, opt];
+      return { ...prev, [currentQ._id]: next };
     });
   };
 
@@ -380,6 +382,253 @@ export default function Exam() {
   }
 
   /* ─── Exam screen ─── */
+  /* ─── Exam screen ─── */
+  if (isMobile) {
+    return (
+      <div
+        style={{
+          position: 'fixed',
+          inset: 0,
+          backgroundColor: '#f5f5f5',
+          color: '#111',
+          colorScheme: 'light',
+          display: 'flex',
+          flexDirection: 'column',
+          fontFamily: 'Arial, sans-serif',
+          boxSizing: 'border-box',
+        }}
+      >
+        {/* Mobile Header: Timer and Progress */}
+        <div
+          style={{
+            backgroundColor: '#e0e0e0',
+            borderBottom: '1px solid #ccc',
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '10px 15px',
+            gap: '8px',
+            flexShrink: 0,
+          }}
+        >
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+            <span style={{ fontSize: '14px', fontWeight: 'bold' }}>
+              Câu {currentIndex + 1} / {total}
+            </span>
+            <span style={{ fontWeight: 'bold', color: '#d9534f', fontSize: '20px' }}>
+              {formatTime(timeLeft)}
+            </span>
+          </div>
+          <div style={{ width: '100%', height: '8px', backgroundColor: '#ddd', borderRadius: '4px', overflow: 'hidden' }}>
+            <div
+              style={{
+                width: `${progressPct}%`,
+                height: '100%',
+                backgroundColor: '#28a745',
+                transition: 'width 0.4s ease',
+              }}
+            />
+          </div>
+          <div style={{ fontSize: '11px', color: '#666', display: 'flex', justifyContent: 'space-between' }}>
+            <span>Đã trả lời: {answeredCount} / {total}</span>
+            <span>{currentQ.answer.length > 1 ? `(Chọn ${currentQ.answer.length} đáp án)` : '(Chọn 1 đáp án)'}</span>
+          </div>
+        </div>
+
+        {/* Mobile Content: Scrollable area with Question text, Options list, and Checkboxes */}
+        <div
+          style={{
+            flex: 1,
+            overflowY: 'auto',
+            padding: '15px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '15px',
+          }}
+        >
+          {/* Question Text Card */}
+          <div
+            style={{
+              backgroundColor: '#fff',
+              border: '1px solid #ddd',
+              borderLeft: '4px solid #dc3545',
+              padding: '15px',
+              borderRadius: '8px',
+              fontSize: '15px',
+              lineHeight: '1.6',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+            }}
+          >
+            <p style={{ fontWeight: 'bold', marginBottom: '12px' }}>{currentQ.question}</p>
+            {currentQ.options.map((text: string, idx: number) => (
+              <p key={idx} style={{ marginBottom: '8px', fontSize: '14px' }}>
+                {text}
+              </p>
+            ))}
+          </div>
+
+          {/* Interactive Checkbox List (Select answers) */}
+          <div
+            style={{
+              backgroundColor: '#fff',
+              border: '1px solid #ddd',
+              borderRadius: '8px',
+              padding: '15px',
+              boxShadow: '0 2px 4px rgba(0,0,0,0.05)',
+            }}
+          >
+            <div style={{ fontWeight: 'bold', fontSize: '14px', marginBottom: '10px', color: '#333' }}>
+              Chọn đáp án của bạn:
+            </div>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+              {optionLetters(currentQ.options.length).map((opt: string) => {
+                const isChecked = (answers[currentQ._id] ?? []).includes(opt);
+                return (
+                  <label
+                    key={opt}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '12px',
+                      fontSize: '15px',
+                      cursor: 'pointer',
+                      padding: '10px 12px',
+                      borderRadius: '6px',
+                      border: isChecked ? '1px solid #28a745' : '1px solid #eee',
+                      backgroundColor: isChecked ? '#f4faf5' : '#fff',
+                      transition: 'all 0.2s',
+                    }}
+                  >
+                    <input
+                      type="checkbox"
+                      checked={isChecked}
+                      onChange={() => handleSelect(opt)}
+                      style={{ transform: 'scale(1.2)', cursor: 'pointer' }}
+                    />
+                    <span style={{ fontWeight: 'bold' }}>{opt}</span>
+                  </label>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Footer: Navigation buttons & Submit */}
+        <div
+          style={{
+            backgroundColor: '#f5f5f5',
+            borderTop: '1px solid #ccc',
+            display: 'flex',
+            flexDirection: 'column',
+            padding: '15px',
+            gap: '10px',
+            flexShrink: 0,
+          }}
+        >
+          {/* Top part: Back / Next and Exit */}
+          <div style={{ display: 'flex', gap: '8px', width: '100%' }}>
+            <button
+              onClick={() => setCurrentIndex(i => Math.max(0, i - 1))}
+              disabled={currentIndex === 0}
+              style={{
+                flex: 1,
+                padding: '10px',
+                border: '1px solid #999',
+                backgroundColor: '#fff',
+                cursor: currentIndex === 0 ? 'default' : 'pointer',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                borderRadius: '6px',
+                opacity: currentIndex === 0 ? 0.45 : 1,
+              }}
+            >
+              Quay lại
+            </button>
+            <button
+              onClick={() => setCurrentIndex(i => Math.min(total - 1, i + 1))}
+              disabled={currentIndex === total - 1}
+              style={{
+                flex: 1,
+                padding: '10px',
+                border: '1px solid #999',
+                backgroundColor: '#fff',
+                cursor: currentIndex === total - 1 ? 'default' : 'pointer',
+                fontSize: '14px',
+                fontWeight: 'bold',
+                borderRadius: '6px',
+                opacity: currentIndex === total - 1 ? 0.45 : 1,
+              }}
+            >
+              Kế tiếp
+            </button>
+            <button
+              onClick={() => navigate('/quiz')}
+              style={{
+                padding: '10px 15px',
+                backgroundColor: '#fff',
+                border: '1px solid #ccc',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                fontSize: '14px',
+              }}
+            >
+              Thoát
+            </button>
+          </div>
+
+          {/* Bottom part: Submit action */}
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              gap: '10px',
+              borderTop: '1px solid #eee',
+              paddingTop: '10px',
+            }}
+          >
+            <label
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                color: 'blue',
+                fontWeight: 'bold',
+                fontSize: '13px',
+                cursor: 'pointer',
+              }}
+            >
+              <input
+                type="checkbox"
+                checked={wantToFinish}
+                onChange={e => setWantToFinish(e.target.checked)}
+                style={{ cursor: 'pointer' }}
+              />
+              Tôi muốn nộp bài
+            </label>
+            <button
+              onClick={handleSubmit}
+              disabled={!wantToFinish}
+              style={{
+                flex: 1,
+                backgroundColor: wantToFinish ? '#ffeb3b' : '#e0e0e0',
+                border: '1px solid #ccc',
+                padding: '10px',
+                fontWeight: 'bold',
+                cursor: wantToFinish ? 'pointer' : 'not-allowed',
+                fontSize: '14px',
+                borderRadius: '6px',
+                color: wantToFinish ? '#333' : '#999',
+                textAlign: 'center',
+              }}
+            >
+              Nộp bài (Submit)
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div
       style={{

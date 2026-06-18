@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
-import { motion, useScroll, useMotionValueEvent } from 'motion/react';
+import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'motion/react';
 export default function TopNavBar() {
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
 
   const { scrollY } = useScroll();
   const [hidden, setHidden] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
@@ -86,10 +87,52 @@ export default function TopNavBar() {
                 settings
               </span>
             </button>
+            {/* Mobile Hamburger Menu */}
+            <button
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+              className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface transition-all"
+              aria-label="Menu"
+              title="Menu"
+            >
+              <span className="material-symbols-outlined text-2xl">
+                {mobileMenuOpen ? 'close' : 'menu'}
+              </span>
+            </button>
           </div>
         </div>
       </motion.nav>
 
+      {/* Mobile Drawer */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.25, ease: "easeInOut" }}
+            className="fixed top-[73px] left-0 w-full bg-surface-container/95 backdrop-blur-xl border-b border-outline-variant/20 z-40 md:hidden shadow-lg"
+          >
+            <div className="flex flex-col p-6 gap-3">
+              {navLinks.map((link) => {
+                const isActive = location.pathname === link.path;
+                return (
+                  <Link
+                    key={link.label}
+                    to={link.path}
+                    onClick={() => setMobileMenuOpen(false)}
+                    className={`font-headline tracking-tight transition-all duration-300 px-4 py-3 rounded-xl border uppercase text-sm font-bold text-center ${isActive
+                      ? 'text-primary bg-primary/10 border-primary/50'
+                      : 'text-on-surface-variant border-transparent hover:text-primary hover:bg-primary/5'
+                      }`}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

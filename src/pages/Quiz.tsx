@@ -134,6 +134,8 @@ export default function Quiz() {
   const generateUploadUrl = useMutation(api.files.generateUploadUrl);
   const generateQuestionsAI = useAction(api.quizAi.generateQuestions);
   const [aiLoading, setAiLoading] = useState(false);
+  const [aiProgress, setAiProgress] = useState(0);
+  const [aiStatusText, setAiStatusText] = useState('');
   const [aiError, setAiError] = useState('');
   const aiFileInputRef = useRef<HTMLInputElement>(null);
 
@@ -204,7 +206,34 @@ export default function Quiz() {
 
     setAiLoading(true);
     setAiError('');
+    setAiProgress(5);
+    setAiStatusText('Đang đọc tài liệu... 📄');
+
+    let progressInterval: ReturnType<typeof setInterval> | undefined;
     try {
+      // Create simulated progress updates
+      progressInterval = setInterval(() => {
+        setAiProgress(prev => {
+          if (prev < 20) {
+            setAiStatusText('Đang gửi tệp tin lên máy chủ... 📡');
+            return prev + 3;
+          } else if (prev < 45) {
+            setAiStatusText('Phân tích cấu trúc văn bản... 🔍');
+            return prev + Math.floor(Math.random() * 4) + 1;
+          } else if (prev < 70) {
+            setAiStatusText('Trích xuất kiến thức Triết học trọng tâm... 🧠');
+            return prev + Math.floor(Math.random() * 3) + 1;
+          } else if (prev < 90) {
+            setAiStatusText('AI Mentor đang soạn thảo bộ câu hỏi trắc nghiệm... ✏️');
+            return prev + Math.floor(Math.random() * 2) + 1;
+          } else if (prev < 95) {
+            setAiStatusText('Đang kiểm duyệt và tối ưu hóa cấu trúc đề thi... ⚙️');
+            return prev + 1;
+          }
+          return prev;
+        });
+      }, 600);
+
       // 1. Get upload URL
       const postUrl = await generateUploadUrl();
       
@@ -222,17 +251,25 @@ export default function Quiz() {
       const newQuestionsRaw = await generateQuestionsAI({ storageId });
       
       // 4. Normalize and Start Quiz
-      const formatted = normalizeImport(newQuestionsRaw);
+      clearInterval(progressInterval);
+      setAiProgress(100);
+      setAiStatusText('Hoàn thành! Đang bắt đầu bài thi... 🎉');
       
-      // We need to shuffle if requested, but let's just always shuffle AI questions
+      // Small delay to let user see 100% completion
+      await new Promise(resolve => setTimeout(resolve, 800));
+
+      const formatted = normalizeImport(newQuestionsRaw);
       const finalQuestions = shuffleArr(formatted);
       
       setModalOpen(false);
       navigate('/quiz/exam', { state: { questions: finalQuestions, source: 'ai' } });
     } catch (err: any) {
+      if (progressInterval) clearInterval(progressInterval);
+      setAiProgress(0);
       console.error(err);
       setAiError(err.message || "Lỗi khi dùng AI tạo câu hỏi.");
     } finally {
+      if (progressInterval) clearInterval(progressInterval);
       setAiLoading(false);
       if (aiFileInputRef.current) aiFileInputRef.current.value = '';
     }
@@ -756,6 +793,114 @@ export default function Quiz() {
               </div>
             </motion.div>
           </>
+        )}
+      </AnimatePresence>
+
+      {/* AI Mascot & Progress Loading Overlay */}
+      <AnimatePresence>
+        {aiLoading && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-surface/95 backdrop-blur-md z-[300] flex flex-col items-center justify-center p-6 pointer-events-auto"
+          >
+            {/* Mascot Robot */}
+            <div className="relative w-48 h-48 flex items-center justify-center mb-8">
+              {/* Antenna */}
+              <motion.div 
+                className="absolute top-2 w-1.5 h-8 bg-tertiary rounded-full origin-bottom"
+                animate={{ rotate: [-5, 5, -5] }}
+                transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
+              >
+                {/* Antenna tip glowing light */}
+                <motion.div 
+                  className="absolute -top-2 -left-1 w-3.5 h-3.5 rounded-full bg-cyan-400 shadow-[0_0_12px_#22d3ee]"
+                  animate={{ opacity: [0.5, 1, 0.5] }}
+                  transition={{ repeat: Infinity, duration: 0.8 }}
+                />
+              </motion.div>
+
+              {/* Ears / Headphone */}
+              <div className="absolute top-10 w-36 h-8 bg-tertiary/20 rounded-full border border-tertiary/20 flex justify-between px-1">
+                <div className="w-4 h-6 bg-tertiary rounded-lg shadow-inner" />
+                <div className="w-4 h-6 bg-tertiary rounded-lg shadow-inner" />
+              </div>
+
+              {/* Robot Head Body */}
+              <motion.div
+                className="w-28 h-24 bg-surface-container-high border-2 border-tertiary rounded-[24px] shadow-[0_0_25px_rgba(0,240,255,0.15)] flex items-center justify-center p-3 relative z-10"
+                animate={{ y: [0, -8, 0] }}
+                transition={{ repeat: Infinity, duration: 2.5, ease: "easeInOut" }}
+              >
+                {/* Robot Face Screen */}
+                <div className="w-full h-full bg-black/90 rounded-[16px] border border-outline-variant/30 flex flex-col items-center justify-center gap-1.5 overflow-hidden p-2 relative">
+                  {/* Neon Grid Effect inside face screen */}
+                  <div className="absolute inset-0 opacity-10 pointer-events-none"
+                    style={{
+                      backgroundImage: 'linear-gradient(to right, #00f0ff 1px, transparent 1px), linear-gradient(to bottom, #00f0ff 1px, transparent 1px)',
+                      backgroundSize: '8px 8px'
+                    }}
+                  />
+                  
+                  {/* Glowing Eyes */}
+                  <div className="flex gap-6 relative z-10">
+                    <motion.div 
+                      className="w-4 h-4 rounded-full bg-cyan-400 shadow-[0_0_10px_#22d3ee] flex items-center justify-center"
+                      animate={{ scaleY: [1, 0.1, 1] }}
+                      transition={{ repeat: Infinity, repeatDelay: 3.5, duration: 0.2 }}
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full bg-white opacity-80" />
+                    </motion.div>
+                    <motion.div 
+                      className="w-4 h-4 rounded-full bg-cyan-400 shadow-[0_0_10px_#22d3ee] flex items-center justify-center"
+                      animate={{ scaleY: [1, 0.1, 1] }}
+                      transition={{ repeat: Infinity, repeatDelay: 3.5, duration: 0.2 }}
+                    >
+                      <div className="w-1.5 h-1.5 rounded-full bg-white opacity-80" />
+                    </motion.div>
+                  </div>
+
+                  {/* Robot Mouth / LED Wave */}
+                  <motion.div 
+                    className="w-12 h-1 bg-cyan-400 shadow-[0_0_8px_#22d3ee] rounded-full"
+                    animate={{ scaleX: [0.6, 1.2, 0.8, 1.1, 0.6] }}
+                    transition={{ repeat: Infinity, duration: 1.2 }}
+                  />
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Progress Information Card */}
+            <div className="w-full max-w-md bg-surface-container-lowest border border-outline-variant/20 rounded-3xl p-8 shadow-xl text-center space-y-6">
+              <div className="space-y-2">
+                <h3 className="font-headline font-bold text-2xl text-on-surface">
+                  AI Mentor Đang Soạn Đề
+                </h3>
+                <p className="text-sm text-on-surface-variant font-medium min-h-[20px] transition-all">
+                  {aiStatusText}
+                </p>
+              </div>
+
+              {/* Progress Bar & Percentage */}
+              <div className="space-y-2">
+                <div className="flex justify-between items-center text-xs font-bold text-outline uppercase tracking-wider px-1">
+                  <span>Tiến trình</span>
+                  <span className="text-tertiary font-mono font-black text-sm">{aiProgress}%</span>
+                </div>
+                <div className="w-full h-4 bg-surface-container-high rounded-full overflow-hidden border border-outline-variant/20 p-0.5">
+                  <div
+                    className="h-full rounded-full bg-gradient-to-r from-cyan-500 to-tertiary shadow-[0_0_10px_rgba(0,240,255,0.4)] transition-all duration-300"
+                    style={{ width: `${aiProgress}%` }}
+                  />
+                </div>
+              </div>
+
+              <div className="text-[11px] text-outline font-medium max-w-xs mx-auto leading-relaxed">
+                Vui lòng không đóng trình duyệt hoặc tải lại trang trong quá trình AI phân tích tài liệu.
+              </div>
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </main>
