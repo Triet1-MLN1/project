@@ -50,15 +50,28 @@ Ví dụ định dạng:
 ]
 `;
 
-    const result = await model.generateContent([
-      {
-        inlineData: {
-          data: base64Data,
-          mimeType: contentType,
+    const result = await model.generateContent({
+      contents: [
+        {
+          role: "user",
+          parts: [
+            {
+              inlineData: {
+                data: base64Data,
+                mimeType: contentType,
+              },
+            },
+            {
+              text: prompt,
+            },
+          ],
         },
+      ],
+      generationConfig: {
+        responseMimeType: "application/json",
+        maxOutputTokens: 8192,
       },
-      prompt,
-    ]);
+    });
 
     const responseText = result.response.text().trim();
     
