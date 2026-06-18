@@ -20,6 +20,32 @@ export const getDoc = query({
   },
 });
 
+const MODELS = [
+  "gemini-3.5-flash",
+  "gemini-2.5-flash-lite",
+  "gemini-2.5-flash",
+  "gemini-1.5-flash",
+  "gemini-flash-latest"
+];
+
+async function generateWithFallback(
+  fn: (modelName: string) => Promise<string>
+): Promise<string> {
+  let lastError: any = null;
+  for (const modelName of MODELS) {
+    try {
+      console.log(`Đang thử gọi model AI chat: ${modelName}`);
+      const res = await fn(modelName);
+      console.log(`Gọi thành công model chat: ${modelName}`);
+      return res;
+    } catch (err: any) {
+      console.warn(`Model chat ${modelName} thất bại:`, err.message || err);
+      lastError = err;
+    }
+  }
+  throw lastError;
+}
+
 export const answer = action({
   args: { message: v.string() },
   handler: async (ctx, args) => {
@@ -93,16 +119,18 @@ ${args.message}
 
 TRẢ LỜI:`;
 
-      // 5) Gọi Gemini để tạo câu trả lời
-      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-      const response = await model.generateContent(prompt);
-      const text = response.response.text().trim();
+      // 5) Gọi Gemini để tạo câu trả lời với cơ chế fallback
+      const text = await generateWithFallback(async (modelName) => {
+        const model = genAI.getGenerativeModel({ model: modelName });
+        const response = await model.generateContent(prompt);
+        return response.response.text().trim();
+      });
 
       if (!text) {
         return "Rất tiếc đồng chí, hiện tôi chưa tạo được câu trả lời phù hợp. Đồng chí thử hỏi lại ngắn gọn hơn nhé.";
       }
       return text;
-    } catch (err) {
+    } catch (err: any) {
       console.error("chat.answer failed", err);
 
       const anyErr = err as any;
@@ -112,17 +140,17 @@ TRẢ LỜI:`;
             undefined;
 
       // Quota / rate limit
-      if (status === 429 || anyErr?.error?.status === "RESOURCE_EXHAUSTED") {
+      if (status === 429 || anyErr?.error?.status === "RESOURCE_EXHAUSTED" || anyErr?.message?.includes("quota") || anyErr?.message?.includes("Quota")) {
         return (
-          "⚠️ Đồng chí đang bị giới hạn quota (Google Gemini API). " +
-          "Hãy kiểm tra mục Quotas/Rate limit trong Google AI Studio, hoặc đổi API key rồi thử lại."
+          "⚠️ Tất cả các model AI đều hết giới hạn quota sử dụng hôm nay (Google Gemini API). " +
+          "Đồng chí hãy kiểm tra mục Quotas/Rate limit trong Google AI Studio, hoặc thử lại vào ngày mai."
         );
       }
 
       // Model not available
       if (status === 404 || anyErr?.error?.status === "NOT_FOUND") {
         return (
-          "⚠️ Model Gemini đang cấu hình (gemini-2.5-flash/embedding-001) không khả dụng với API key này. " +
+          "⚠️ Model Gemini đang cấu hình không khả dụng với API key này. " +
           "Đồng chí hãy kiểm tra xem tài khoản đã bật quyền truy cập model trong AI Studio chưa."
         );
       }

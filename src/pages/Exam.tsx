@@ -78,9 +78,7 @@ export default function Exam() {
     if (rawQuestions === undefined) return;
     if (seeded.current) return;
     seeded.current = true;
-    if (rawQuestions.length === 0) {
-      seedMutation({}).catch(err => console.error('Failed to seed quizQuestions:', err));
-    }
+    seedMutation({}).catch(err => console.error('Failed to seed quizQuestions:', err));
   }, [rawQuestions, seedMutation, hasStateQs]);
 
   // Pick questions from Convex bank (only when not using state questions)

@@ -144,7 +144,7 @@ export default function Quiz() {
     setImportError('');
     setAiError('');
     setModalOpen(true);
-    if (rawQuestions !== undefined && rawQuestions.length === 0) {
+    if (rawQuestions !== undefined) {
       seedMutation({}).catch(console.error);
     }
   };
@@ -211,13 +211,34 @@ export default function Quiz() {
 
     let progressInterval: ReturnType<typeof setInterval> | undefined;
     try {
+      // 1. Read / Extract text content from PDF or TXT
+      let textContent = "";
+      if (file.type === "text/plain") {
+        textContent = await file.text();
+      } else if (file.type === "application/pdf") {
+        const { PDFParse } = await import("pdf-parse");
+        // Use CDN worker to avoid bundling complex workers locally
+        PDFParse.setWorker('https://cdn.jsdelivr.net/npm/pdf-parse@2.4.5/dist/pdf-parse/web/pdf.worker.min.mjs');
+        const arrayBuffer = await file.arrayBuffer();
+        const parser = new PDFParse({ data: new Uint8Array(arrayBuffer) });
+        const parsed = await parser.getText();
+        textContent = parsed.text;
+        await parser.destroy();
+      } else {
+        throw new Error("Định dạng file không hỗ trợ. Vui lòng chọn file PDF hoặc TXT.");
+      }
+
+      if (!textContent || textContent.trim().length < 50) {
+        throw new Error("Không thể trích xuất văn bản từ tệp này hoặc tệp quá ngắn.");
+      }
+
+      setAiProgress(20);
+      setAiStatusText('Đang gửi nội dung lên hệ thống phân tích... 📡');
+
       // Create simulated progress updates
       progressInterval = setInterval(() => {
         setAiProgress(prev => {
-          if (prev < 20) {
-            setAiStatusText('Đang gửi tệp tin lên máy chủ... 📡');
-            return prev + 3;
-          } else if (prev < 45) {
+          if (prev < 45) {
             setAiStatusText('Phân tích cấu trúc văn bản... 🔍');
             return prev + Math.floor(Math.random() * 4) + 1;
           } else if (prev < 70) {
@@ -234,21 +255,8 @@ export default function Quiz() {
         });
       }, 600);
 
-      // 1. Get upload URL
-      const postUrl = await generateUploadUrl();
-      
-      // 2. Upload file
-      const result = await fetch(postUrl, {
-        method: "POST",
-        headers: { "Content-Type": file.type },
-        body: file,
-      });
-      if (!result.ok) throw new Error("Tải file lên máy chủ thất bại.");
-      
-      const { storageId } = await result.json();
-
-      // 3. Call AI action
-      const newQuestionsRaw = await generateQuestionsAI({ storageId });
+      // 2. Call AI action with plain text
+      const newQuestionsRaw = await generateQuestionsAI({ textContent });
       
       // 4. Normalize and Start Quiz
       clearInterval(progressInterval);

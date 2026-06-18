@@ -8,9 +8,14 @@ import { GoogleGenerativeAI } from "@google/generative-ai";
 export const seed = mutation({
   args: {},
   handler: async (ctx) => {
-    // Check if data already exists
-    const existing = await ctx.db.query("quizQuestions").take(1);
-    if (existing.length > 0) return { seeded: false, message: "Data already exists" };
+    const existing = await ctx.db.query("quizQuestions").collect();
+    if (existing.length === rawQuestions.length) {
+      return { seeded: false, message: "Data already exists and matches current questions count" };
+    }
+
+    for (const doc of existing) {
+      await ctx.db.delete(doc._id);
+    }
 
     for (const q of rawQuestions) {
       await ctx.db.insert("quizQuestions", {
@@ -69,6 +74,32 @@ export const list = query({
   },
 });
 
+const MODELS = [
+  "gemini-3.5-flash",
+  "gemini-2.5-flash-lite",
+  "gemini-2.5-flash",
+  "gemini-1.5-flash",
+  "gemini-flash-latest"
+];
+
+async function generateWithFallback(
+  fn: (modelName: string) => Promise<string>
+): Promise<string> {
+  let lastError: any = null;
+  for (const modelName of MODELS) {
+    try {
+      console.log(`Đang thử gọi model AI giải thích: ${modelName}`);
+      const res = await fn(modelName);
+      console.log(`Gọi thành công model giải thích: ${modelName}`);
+      return res;
+    } catch (err: any) {
+      console.warn(`Model giải thích ${modelName} thất bại:`, err.message || err);
+      lastError = err;
+    }
+  }
+  throw lastError;
+}
+
 /* ─── Explain ───────────────────────────────────────────────────── */
 export const explain = action({
   args: {
@@ -83,8 +114,6 @@ export const explain = action({
     }
 
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash-lite" });
-
     const optionsText = args.options.join("\n");
     const isCorrect = args.selectedAnswer === args.correctAnswer;
 
@@ -106,14 +135,17 @@ ${!isCorrect ? `2. Giải thích tại sao đáp án ${args.selectedAnswer} là 
 4. Có thể dùng markdown để format`;
 
     try {
-      const response = await model.generateContent(prompt);
-      const text = response.response.text().trim();
+      const text = await generateWithFallback(async (modelName) => {
+        const model = genAI.getGenerativeModel({ model: modelName });
+        const response = await model.generateContent(prompt);
+        return response.response.text().trim();
+      });
       return text || "Không tạo được giải thích. Vui lòng thử lại.";
-    } catch (err) {
+    } catch (err: any) {
       console.error("questions.explain failed:", err);
       const anyErr = err as any;
-      if (anyErr?.status === 429 || anyErr?.error?.status === "RESOURCE_EXHAUSTED") {
-        return "⚠️ Đã đạt giới hạn quota Gemini API. Vui lòng thử lại sau.";
+      if (anyErr?.status === 429 || anyErr?.error?.status === "RESOURCE_EXHAUSTED" || anyErr?.message?.includes("quota") || anyErr?.message?.includes("Quota")) {
+        return "⚠️ Đã đạt giới hạn quota Gemini API hôm nay. Vui lòng thử lại sau.";
       }
       return "❌ Lỗi kết nối AI. Vui lòng thử lại sau.";
     }

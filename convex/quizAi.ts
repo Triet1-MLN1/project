@@ -2,96 +2,219 @@
 
 import { v } from "convex/values";
 import { action } from "./_generated/server";
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
+
+const MODELS = [
+  "gemini-3.5-flash",
+  "gemini-2.5-flash-lite",
+  "gemini-2.5-flash",
+  "gemini-1.5-flash",
+  "gemini-flash-latest"
+];
+
+async function generateWithFallback(
+  fn: (modelName: string) => Promise<any[]>
+): Promise<any[]> {
+  let lastError: any = null;
+  for (const modelName of MODELS) {
+    try {
+      console.log(`Đang thử gọi model AI: ${modelName}`);
+      const res = await fn(modelName);
+      console.log(`Gọi thành công model: ${modelName}`);
+      return res;
+    } catch (err: any) {
+      console.warn(`Model ${modelName} thất bại:`, err.message || err);
+      lastError = err;
+    }
+  }
+  throw new Error(
+    `Tất cả các model AI đều thất bại hoặc hết giới hạn lượt dùng trong ngày (quota). Lỗi chi tiết: ${lastError?.message || lastError}`
+  );
+}
+
+async function generateBatch(
+  genAI: GoogleGenerativeAI,
+  modelName: string,
+  textContent: string,
+  batchNum: number
+): Promise<any[]> {
+  const model = genAI.getGenerativeModel({ model: modelName });
+  
+  const halfLength = Math.floor(textContent.length / 2);
+  const textSegment = batchNum === 1
+    ? textContent.substring(0, halfLength + 2000)
+    : textContent.substring(Math.max(0, halfLength - 2000));
+
+  const prompt = `Bạn là một giáo sư Triết học xuất sắc. Hãy đọc kỹ tài liệu văn bản dưới đây và tạo ra đúng 25 câu hỏi trắc nghiệm khách quan để kiểm tra kiến thức của sinh viên.
+Đảm bảo câu hỏi có tính học thuật cao, chính xác và bao quát đều các nội dung quan trọng trong đoạn tài liệu được cung cấp.
+
+TÀI LIỆU VĂN BẢN:
+${textSegment.substring(0, 50000)}
+`;
+
+  const result = await model.generateContent({
+    contents: [
+      {
+        role: "user",
+        parts: [{ text: prompt }]
+      }
+    ],
+    generationConfig: {
+      responseMimeType: "application/json",
+      responseSchema: {
+        type: SchemaType.ARRAY,
+        items: {
+          type: SchemaType.OBJECT,
+          properties: {
+            question: { type: SchemaType.STRING },
+            options: {
+              type: SchemaType.ARRAY,
+              items: { type: SchemaType.STRING }
+            },
+            answer: { type: SchemaType.STRING }
+          },
+          required: ["question", "options", "answer"]
+        }
+      },
+      maxOutputTokens: 8192
+    }
+  });
+
+  const responseText = result.response.text().trim();
+  
+  let jsonStr = responseText;
+  if (jsonStr.startsWith("```json")) {
+    jsonStr = jsonStr.replace(/^```json\s*/, "").replace(/\s*```$/, "");
+  } else if (jsonStr.startsWith("```")) {
+    jsonStr = jsonStr.replace(/^```\s*/, "").replace(/\s*```$/, "");
+  }
+
+  const parsed = JSON.parse(jsonStr);
+  if (!Array.isArray(parsed)) {
+    throw new Error(`AI batch ${batchNum} did không trả về một array hợp lệ.`);
+  }
+  return parsed;
+}
+
+async function generateBatchFromStorage(
+  genAI: GoogleGenerativeAI,
+  modelName: string,
+  base64Data: string,
+  contentType: string,
+  batchNum: number
+): Promise<any[]> {
+  const model = genAI.getGenerativeModel({ model: modelName });
+  
+  const prompt = `Bạn là một giáo sư Triết học xuất sắc. Hãy đọc kỹ tài liệu đính kèm và tạo ra đúng 25 câu hỏi trắc nghiệm khách quan để kiểm tra kiến thức của sinh viên dựa trên tài liệu đó.
+Đảm bảo câu hỏi có tính học thuật cao, chính xác và bao quát nội dung phần ${batchNum === 1 ? "đầu" : "sau"} của tài liệu.
+`;
+
+  const result = await model.generateContent({
+    contents: [
+      {
+        role: "user",
+        parts: [
+          {
+            inlineData: {
+              data: base64Data,
+              mimeType: contentType,
+            },
+          },
+          {
+            text: prompt,
+          },
+        ],
+      },
+    ],
+    generationConfig: {
+      responseMimeType: "application/json",
+      responseSchema: {
+        type: SchemaType.ARRAY,
+        items: {
+          type: SchemaType.OBJECT,
+          properties: {
+            question: { type: SchemaType.STRING },
+            options: {
+              type: SchemaType.ARRAY,
+              items: { type: SchemaType.STRING }
+            },
+            answer: { type: SchemaType.STRING }
+          },
+          required: ["question", "options", "answer"]
+        }
+      },
+      maxOutputTokens: 8192
+    }
+  });
+
+  const responseText = result.response.text().trim();
+  
+  let jsonStr = responseText;
+  if (jsonStr.startsWith("```json")) {
+    jsonStr = jsonStr.replace(/^```json\s*/, "").replace(/\s*```$/, "");
+  } else if (jsonStr.startsWith("```")) {
+    jsonStr = jsonStr.replace(/^```\s*/, "").replace(/\s*```$/, "");
+  }
+
+  const parsed = JSON.parse(jsonStr);
+  if (!Array.isArray(parsed)) {
+    throw new Error(`AI batch ${batchNum} did không trả về một array hợp lệ.`);
+  }
+  return parsed;
+}
 
 export const generateQuestions = action({
-  args: { storageId: v.id("_storage") },
+  args: {
+    textContent: v.optional(v.string()),
+    storageId: v.optional(v.id("_storage")),
+  },
   handler: async (ctx, args) => {
     if (!process.env.GEMINI_API_KEY) {
       throw new Error("GEMINI_API_KEY is not set in backend environment variables.");
     }
 
-    const fileUrl = await ctx.storage.getUrl(args.storageId);
-    if (!fileUrl) {
-      throw new Error("File not found in storage.");
+    if (!args.textContent && !args.storageId) {
+      throw new Error("Cần cung cấp textContent hoặc storageId để sinh câu hỏi.");
     }
-
-    // Fetch the file content
-    const response = await fetch(fileUrl);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch file: ${response.statusText}`);
-    }
-
-    const arrayBuffer = await response.arrayBuffer();
-    const base64Data = Buffer.from(arrayBuffer).toString("base64");
-    
-    // Determine MIME type
-    const contentType = response.headers.get("content-type") || "application/pdf";
 
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-    const prompt = `Bạn là một giáo sư Triết học xuất sắc. Hãy đọc kỹ tài liệu đính kèm và tạo ra đúng 50 câu hỏi trắc nghiệm khách quan để kiểm tra kiến thức của sinh viên dựa trên tài liệu đó. Đảm bảo các câu hỏi phủ đều các nội dung quan trọng.
-Mỗi câu hỏi phải có:
-- "question": nội dung câu hỏi
-- "options": mảng gồm 4 đáp án (A, B, C, D)
-- "answer": đáp án đúng (vd: "A", "B", "C", "D")
-- "explanation": giải thích ngắn gọn tại sao đáp án đó đúng
-
-YÊU CẦU BẮT BUỘC: Hãy trả về DUY NHẤT một mảng JSON hợp lệ chứa đúng 50 object câu hỏi, không bao gồm bất kỳ text nào khác (không có markdown code blocks, không có lời dặn dò, CHỈ CÓ mảng JSON).
-Ví dụ định dạng:
-[
-  {
-    "question": "Câu hỏi 1?",
-    "options": ["A. Đáp án 1", "B. Đáp án 2", "C. Đáp án 3", "D. Đáp án 4"],
-    "answer": "A",
-    "explanation": "Giải thích 1"
-  }
-]
-`;
-
-    const result = await model.generateContent({
-      contents: [
-        {
-          role: "user",
-          parts: [
-            {
-              inlineData: {
-                data: base64Data,
-                mimeType: contentType,
-              },
-            },
-            {
-              text: prompt,
-            },
-          ],
-        },
-      ],
-      generationConfig: {
-        responseMimeType: "application/json",
-        maxOutputTokens: 8192,
-      },
-    });
-
-    const responseText = result.response.text().trim();
-    
-    // Clean up potential markdown blocks if AI ignored instructions
-    let jsonStr = responseText;
-    if (jsonStr.startsWith("```json")) {
-      jsonStr = jsonStr.replace(/^```json\s*/, "").replace(/\s*```$/, "");
-    } else if (jsonStr.startsWith("```")) {
-      jsonStr = jsonStr.replace(/^```\s*/, "").replace(/\s*```$/, "");
-    }
-
-    try {
-      const questions = JSON.parse(jsonStr);
-      if (!Array.isArray(questions)) {
-        throw new Error("AI returned JSON but it is not an array.");
+    if (args.textContent) {
+      if (args.textContent.trim().length < 50) {
+        throw new Error("Tài liệu trống hoặc không đủ nội dung để sinh câu hỏi.");
       }
-      return questions;
-    } catch (err) {
-      console.error("Failed to parse JSON from AI:", jsonStr);
-      throw new Error("AI did not return a valid JSON format. Please try again.");
+
+      // Call two batches in parallel to get 25 + 25 = 50 questions
+      return await generateWithFallback(async (modelName) => {
+        const [batch1, batch2] = await Promise.all([
+          generateBatch(genAI, modelName, args.textContent!, 1),
+          generateBatch(genAI, modelName, args.textContent!, 2)
+        ]);
+        return [...batch1, ...batch2];
+      });
+    } else {
+      // Handle legacy client by downloading storageId
+      const fileUrl = await ctx.storage.getUrl(args.storageId!);
+      if (!fileUrl) {
+        throw new Error("Không tìm thấy file trong storage.");
+      }
+
+      const response = await fetch(fileUrl);
+      if (!response.ok) {
+        throw new Error(`Tải file thất bại: ${response.statusText}`);
+      }
+
+      const arrayBuffer = await response.arrayBuffer();
+      const base64Data = Buffer.from(arrayBuffer).toString("base64");
+      const contentType = response.headers.get("content-type") || "application/pdf";
+
+      return await generateWithFallback(async (modelName) => {
+        const [batch1, batch2] = await Promise.all([
+          generateBatchFromStorage(genAI, modelName, base64Data, contentType, 1),
+          generateBatchFromStorage(genAI, modelName, base64Data, contentType, 2)
+        ]);
+        return [...batch1, ...batch2];
+      });
     }
   },
 });

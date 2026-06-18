@@ -52,9 +52,7 @@ export default function Review() {
   useEffect(() => {
     if (rawQuestions !== undefined && !seeded.current) {
       seeded.current = true;
-      if (rawQuestions.length === 0) {
-        seedMutation({}).catch(console.error);
-      }
+      seedMutation({}).catch(console.error);
     }
   }, [rawQuestions, seedMutation]);
 
