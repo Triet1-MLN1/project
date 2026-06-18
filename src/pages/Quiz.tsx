@@ -153,7 +153,7 @@ export default function Quiz() {
   const handleSystemBank = () => {
     if (!rawQuestions || rawQuestions.length === 0) return;
     const selected = shuffleArr(rawQuestions)
-      .slice(0, 20)
+      .slice(0, 50)
       .map(q => ({
         _id: q._id,
         questionId: q.questionId,
@@ -601,11 +601,10 @@ export default function Quiz() {
                         Ngân hàng câu hỏi Triết học
                       </h3>
                       <p className="text-sm text-on-surface-variant mt-1 leading-relaxed">
-                        20 câu ngẫu nhiên từ{' '}
+                        50 câu ngẫu nhiên từ{' '}
                         <span className="font-semibold text-on-surface">
                           50 câu
                         </span>{' '}
-                        {/* Đã đổi sang nội dung Triết học */}
                         trong hệ thống. Phù hợp ôn thi Triết học Mác-Lênin.
                       </p>
                     </div>

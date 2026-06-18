@@ -58,6 +58,12 @@ export default function Review() {
     }
   }, [rawQuestions, seedMutation]);
 
+  useEffect(() => {
+    if (rawQuestions && rawQuestions.length > 0) {
+      setQuestionCount(rawQuestions.length);
+    }
+  }, [rawQuestions]);
+
   // Auto-explain when answer is selected
   const handleAutoExplain = async (q: Question, selected: string) => {
     if (!autoExplain) return;
@@ -212,9 +218,26 @@ export default function Review() {
               fontSize: '12px',
               color: 'var(--color-on-surface-variant, #666)',
               marginTop: '4px',
+              alignItems: 'center',
             }}>
               <span>5</span>
-              <span>{total || 131}</span>
+              <button
+                type="button"
+                onClick={() => setQuestionCount(total)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--color-primary, #2d5a27)',
+                  fontWeight: 'bold',
+                  cursor: 'pointer',
+                  fontSize: '11px',
+                  textDecoration: 'underline',
+                  padding: 0,
+                }}
+              >
+                Chọn tất cả ({total})
+              </button>
+              <span>{total}</span>
             </div>
           </div>
 
