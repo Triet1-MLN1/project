@@ -128,7 +128,15 @@ function LobbyView({
 }) {
   const [hostName, setHostName] = useState("");
   const [hostPassword, setHostPassword] = useState("");
-  const [joinCode, setJoinCode] = useState("");
+  const [joinCode, setJoinCode] = useState(() => {
+    try {
+      const searchParams = new URLSearchParams(window.location.search);
+      const code = searchParams.get("code") || searchParams.get("room") || "";
+      return code.replace(/\D/g, "").slice(0, 5);
+    } catch {
+      return "";
+    }
+  });
   const [joinName, setJoinName] = useState("");
 
   const containerVariants = {
@@ -260,6 +268,9 @@ function WaitingRoom({
     setTimeout(() => setCopied(false), 2000);
   };
 
+  const joinLink = `${window.location.origin}${window.location.pathname}?code=${room.code}`;
+  const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=${encodeURIComponent(joinLink)}`;
+
   return (
     <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="max-w-2xl w-full px-4 mx-auto">
       <div className="bg-surface rounded-3xl p-8 shadow-sm border border-outline-variant">
@@ -280,6 +291,18 @@ function WaitingRoom({
             {musicEnabled ? <Volume2 className="w-6 h-6" /> : <VolumeX className="w-6 h-6" />}
           </button>
         </div>
+
+        {isHost && (
+          <div className="flex flex-col items-center bg-surface-variant/20 border border-outline-variant/30 rounded-2xl p-4 mb-8 max-w-xs mx-auto text-center">
+            <p className="text-sm font-bold text-on-surface-variant mb-3">Quét mã QR để tham gia phòng:</p>
+            <div className="bg-white p-3 rounded-xl border border-outline-variant/20 shadow-sm">
+              <img src={qrUrl} alt="Join QR Code" className="w-40 h-40 object-contain" />
+            </div>
+            <span className="text-[10px] text-outline mt-2 font-mono break-all max-w-[240px]">
+              {joinLink}
+            </span>
+          </div>
+        )}
 
         {/* Player List */}
         <div className="mb-8">
@@ -417,9 +440,20 @@ function GameplayView({
         <div className="flex items-center gap-3">
           <span className="bg-primary text-on-primary px-4 py-1 rounded-full font-bold">Câu {room.currentRound}/5</span>
           {currentPlayer.isHost && (
-            <button onClick={onEndGame} className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-full text-sm font-bold flex items-center gap-1 transition-colors">
-              <LogOut className="w-4 h-4" /> Kết thúc sớm
-            </button>
+            <div className="flex gap-2 flex-wrap">
+              <button
+                onClick={onForceRound}
+                className="bg-amber-500 hover:bg-amber-600 text-white px-3 py-1 rounded-full text-sm font-bold flex items-center gap-1 transition-colors shadow-sm"
+              >
+                <Zap className="w-3.5 h-3.5" /> Qua vòng
+              </button>
+              <button
+                onClick={onEndGame}
+                className="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded-full text-sm font-bold flex items-center gap-1 transition-colors"
+              >
+                <LogOut className="w-4 h-4" /> Kết thúc sớm
+              </button>
+            </div>
           )}
         </div>
         <div className={`flex items-center gap-2 font-mono text-2xl font-bold ${parseFloat(displayTime) < 10 ? "text-red-500 animate-pulse" : "text-primary"}`}>
