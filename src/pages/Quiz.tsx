@@ -601,11 +601,7 @@ export default function Quiz() {
                         Ngân hàng câu hỏi Triết học
                       </h3>
                       <p className="text-sm text-on-surface-variant mt-1 leading-relaxed">
-                        50 câu ngẫu nhiên từ{' '}
-                        <span className="font-semibold text-on-surface">
-                          50 câu
-                        </span>{' '}
-                        trong hệ thống. Phù hợp ôn thi Triết học Mác-Lênin.
+                        50 câu ngẫu nhiên từ ngân hàng đề. Phù hợp ôn thi Triết học Mác-Lênin.
                       </p>
                     </div>
 
