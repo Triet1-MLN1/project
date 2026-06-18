@@ -649,26 +649,82 @@ export default function Quiz() {
 
                     {/* Format hint (collapsed) */}
                     <details className="text-xs text-on-surface-variant bg-surface-variant/50 rounded-lg p-3">
-                      <summary className="cursor-pointer font-semibold select-none">
-                        Xem định dạng JSON hợp lệ
+                      <summary className="cursor-pointer font-semibold select-none flex items-center justify-between">
+                        <span>Xem định dạng JSON & Prompt AI</span>
+                        <span className="material-symbols-outlined text-sm">expand_more</span>
                       </summary>
-                      <pre className="mt-2 overflow-x-auto leading-relaxed whitespace-pre-wrap break-all">{`[
+                      
+                      <div className="mt-3">
+                        <div className="font-semibold text-[11px] text-primary uppercase tracking-wider mb-1">Mẫu cấu trúc JSON:</div>
+                        <pre className="overflow-x-auto leading-relaxed whitespace-pre-wrap break-all bg-surface/50 p-2 rounded border border-outline-variant/20">{`[
   {
-    "question": "Câu 1 đáp án",
-    "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
+    "question": "Câu hỏi trắc nghiệm?",
+    "options": ["A. Phương án 1", "B. Phương án 2", "C. Phương án 3", "D. Phương án 4"],
     "answer": "A"
   },
   {
-    "question": "Câu nhiều đáp án",
-    "options": ["A. ...", "B. ...", "C. ...", "D. ..."],
+    "question": "Câu hỏi nhiều đáp án đúng?",
+    "options": ["A. Phương án 1", "B. Phương án 2", "C. Phương án 3", "D. Phương án 4"],
     "answer": ["A", "C"]
   }
 ]`}</pre>
-                      <p className="mt-2 text-[11px] space-y-0.5">
+                      </div>
+
+                      <div className="mt-4">
+                        <div className="flex justify-between items-center mb-1">
+                          <span className="font-semibold text-[11px] text-tertiary uppercase tracking-wider">Prompt chuẩn cho AI Chat:</span>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              const promptText = `Hãy đóng vai trò là một chuyên gia Triết học Mác-Lênin. Dựa vào tài liệu nội dung tôi cung cấp, hãy soạn thảo bộ câu hỏi trắc nghiệm dưới dạng định dạng JSON chuẩn sau đây. 
+
+Đầu ra bắt buộc phải là một mảng JSON hợp lệ chứa các object câu hỏi theo đúng cấu trúc sau:
+[
+  {
+    "question": "Nội dung câu hỏi trắc nghiệm?",
+    "options": [
+      "A. Phương án A",
+      "B. Phương án B",
+      "C. Phương án C",
+      "D. Phương án D"
+    ],
+    "answer": "A"
+  },
+  {
+    "question": "Nội dung câu hỏi có nhiều đáp án đúng?",
+    "options": [
+      "A. Phương án A",
+      "B. Phương án B",
+      "C. Phương án C",
+      "D. Phương án D"
+    ],
+    "answer": ["A", "C"]
+  }
+]
+
+Yêu cầu cụ thể:
+1. Trường "options" là một mảng chứa từ 2 đến 26 phương án lựa chọn, mỗi phương án bắt đầu bằng chữ cái tương ứng (ví dụ: "A. ...", "B. ...").
+2. Trường "answer" chứa chữ cái viết hoa đại diện cho phương án đúng. Nếu câu hỏi có 1 đáp án đúng thì để dạng chuỗi (ví dụ: "A"). Nếu có từ 2 đáp án đúng trở lên, để dưới dạng mảng các chuỗi (ví dụ: ["A", "C"]).
+3. Kết quả phản hồi của bạn CHỈ chứa duy nhất khối code JSON hợp lệ, không thêm bất kỳ văn bản giải thích, lời chào hay lời dặn dò nào khác.`;
+                              navigator.clipboard.writeText(promptText);
+                              alert("Đã sao chép Prompt chuẩn cho AI chat!");
+                            }}
+                            className="text-[10px] text-tertiary font-bold hover:underline flex items-center gap-0.5"
+                          >
+                            <span className="material-symbols-outlined text-[12px]">content_copy</span>
+                            Sao chép Prompt
+                          </button>
+                        </div>
+                        <p className="text-[10px] text-on-surface-variant leading-relaxed">
+                          Sao chép prompt này, dán vào ChatGPT/Gemini/Claude cùng tài liệu học của bạn để lấy file JSON chuẩn nạp vào hệ thống.
+                        </p>
+                      </div>
+
+                      <div className="mt-4 pt-3 border-t border-outline-variant/10 text-[11px] space-y-0.5">
                         <span className="block">• Số lượng options tùy ý (2–26), hỗ trợ True/False.</span>
                         <span className="block">• Trường <code>id</code> và <code>correct_answer</code> được chấp nhận nhưng bỏ qua.</span>
                         <span className="block">• Dùng <code>A</code>,<code>B</code>,<code>C</code>,<code>D</code>… riêng lẻ thay cho <code>options</code> cũng được.</span>
-                      </p>
+                      </div>
                     </details>
 
                     {/* Error message */}
@@ -747,7 +803,7 @@ export default function Quiz() {
                         AI Sinh Đề Tự Động
                       </h3>
                       <p className="text-sm text-on-surface-variant mt-1 leading-relaxed">
-                        Tải lên tệp <span className="font-semibold text-on-surface">PDF</span> hoặc <span className="font-semibold text-on-surface">TXT</span>. Hệ lõi AI Mentor sẽ đọc và tự động sinh 20 câu hỏi trắc nghiệm ngay lập tức.
+                        Tải lên tệp <span className="font-semibold text-on-surface">PDF</span> hoặc <span className="font-semibold text-on-surface">TXT</span>. Hệ lõi AI Mentor sẽ đọc và tự động sinh 50 câu hỏi trắc nghiệm ngay lập tức.
                       </p>
                     </div>
 

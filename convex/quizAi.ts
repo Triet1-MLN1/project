@@ -31,14 +31,14 @@ export const generateQuestions = action({
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
     const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
-    const prompt = `Bạn là một giáo sư Triết học xuất sắc. Hãy đọc kỹ tài liệu đính kèm và tạo ra đúng 20 câu hỏi trắc nghiệm khách quan để kiểm tra kiến thức của sinh viên dựa trên tài liệu đó. Đảm bảo các câu hỏi phủ đều các nội dung quan trọng.
+    const prompt = `Bạn là một giáo sư Triết học xuất sắc. Hãy đọc kỹ tài liệu đính kèm và tạo ra đúng 50 câu hỏi trắc nghiệm khách quan để kiểm tra kiến thức của sinh viên dựa trên tài liệu đó. Đảm bảo các câu hỏi phủ đều các nội dung quan trọng.
 Mỗi câu hỏi phải có:
 - "question": nội dung câu hỏi
 - "options": mảng gồm 4 đáp án (A, B, C, D)
 - "answer": đáp án đúng (vd: "A", "B", "C", "D")
 - "explanation": giải thích ngắn gọn tại sao đáp án đó đúng
 
-YÊU CẦU BẮT BUỘC: Hãy trả về DUY NHẤT một mảng JSON hợp lệ chứa 20 object câu hỏi, không bao gồm bất kỳ text nào khác (không có markdown code blocks, không có lời dặn dò, CHỈ CÓ mảng JSON).
+YÊU CẦU BẮT BUỘC: Hãy trả về DUY NHẤT một mảng JSON hợp lệ chứa đúng 50 object câu hỏi, không bao gồm bất kỳ text nào khác (không có markdown code blocks, không có lời dặn dò, CHỈ CÓ mảng JSON).
 Ví dụ định dạng:
 [
   {
