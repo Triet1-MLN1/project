@@ -729,9 +729,10 @@ export default function Quiz() {
 ]
 
 Yêu cầu cụ thể:
-1. Trường "options" là một mảng chứa từ 2 đến 26 phương án lựa chọn, mỗi phương án bắt đầu bằng chữ cái tương ứng (ví dụ: "A. ...", "B. ...").
-2. Trường "answer" chứa chữ cái viết hoa đại diện cho phương án đúng. Nếu câu hỏi có 1 đáp án đúng thì để dạng chuỗi (ví dụ: "A"). Nếu có từ 2 đáp án đúng trở lên, để dưới dạng mảng các chuỗi (ví dụ: ["A", "C"]).
-3. Kết quả phản hồi của bạn CHỈ chứa duy nhất khối code JSON hợp lệ, không thêm bất kỳ văn bản giải thích, lời chào hay lời dặn dò nào khác.`;
+1. Hãy tạo bộ câu hỏi có tối đa 60 câu trắc nghiệm từ tài liệu được cung cấp (phù hợp làm bài thi trong thời gian giới hạn 60 phút).
+2. Trường "options" là một mảng chứa từ 2 đến 26 phương án lựa chọn, mỗi phương án bắt đầu bằng chữ cái tương ứng (ví dụ: "A. ...", "B. ...").
+3. Trường "answer" chứa chữ cái viết hoa đại diện cho phương án đúng. Nếu câu hỏi có 1 đáp án đúng thì để dạng chuỗi (ví dụ: "A"). Nếu có từ 2 đáp án đúng trở lên, để dưới dạng mảng các chuỗi (ví dụ: ["A", "C"]).
+4. Kết quả phản hồi của bạn CHỈ chứa duy nhất khối code JSON hợp lệ, không thêm bất kỳ văn bản giải thích, lời chào hay lời dặn dò nào khác.`;
                               navigator.clipboard.writeText(promptText);
                               alert("Đã sao chép Prompt chuẩn cho AI chat!");
                             }}
