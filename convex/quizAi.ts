@@ -39,16 +39,18 @@ async function generateBatch(
   genAI: GoogleGenerativeAI,
   modelName: string,
   textContent: string,
-  batchNum: number
+  batchNum: number,
+  numQuestions: number
 ): Promise<any[]> {
   const model = genAI.getGenerativeModel({ model: modelName });
   
-  const halfLength = Math.floor(textContent.length / 2);
-  const textSegment = batchNum === 1
-    ? textContent.substring(0, halfLength + 2000)
-    : textContent.substring(Math.max(0, halfLength - 2000));
+  const segmentLength = Math.floor(textContent.length / 4);
+  const textSegment = textContent.substring(
+    Math.max(0, (batchNum - 1) * segmentLength - 1000),
+    Math.min(textContent.length, batchNum * segmentLength + 1000)
+  );
 
-  const prompt = `Bạn là một giáo sư Triết học xuất sắc. Hãy đọc kỹ tài liệu văn bản dưới đây và tạo ra đúng 25 câu hỏi trắc nghiệm khách quan để kiểm tra kiến thức của sinh viên.
+  const prompt = `Bạn là một giáo sư Triết học xuất sắc. Hãy đọc kỹ tài liệu văn bản dưới đây và tạo ra đúng ${numQuestions} câu hỏi trắc nghiệm khách quan để kiểm tra kiến thức của sinh viên.
 
 YÊU CẦU ĐỀ THI:
 - Đảm bảo câu hỏi có tính học thuật cao, chính xác và bao quát đều các nội dung quan trọng trong tài liệu.
@@ -61,7 +63,7 @@ YÊU CẦU ĐỊNH DẠNG JSON (QUAN TRỌNG):
 - TUYỆT ĐỐI KHÔNG được sử dụng dấu ngoặc kép kép (") ở bên trong nội dung của câu hỏi hoặc nội dung các phương án. Nếu cần trích dẫn cụm từ hoặc câu nói, hãy dùng dấu ngoặc đơn (') thay thế để không làm hỏng cấu trúc JSON.
 
 TÀI LIỆU VĂN BẢN:
-${textSegment.substring(0, 30000)}
+${textSegment.substring(0, 20000)}
 `;
 
   const result = await model.generateContent({
@@ -113,12 +115,13 @@ async function generateBatchFromStorage(
   modelName: string,
   base64Data: string,
   contentType: string,
-  batchNum: number
+  batchNum: number,
+  numQuestions: number
 ): Promise<any[]> {
   const model = genAI.getGenerativeModel({ model: modelName });
   
-  const prompt = `Bạn là một giáo sư Triết học xuất sắc. Hãy đọc kỹ tài liệu đính kèm và tạo ra đúng 25 câu hỏi trắc nghiệm khách quan để kiểm tra kiến thức của sinh viên dựa trên tài liệu đó.
-Đảm bảo câu hỏi có tính học thuật cao, chính xác và bao quát nội dung phần ${batchNum === 1 ? "đầu" : "sau"} của tài liệu.
+  const prompt = `Bạn là một giáo sư Triết học xuất sắc. Hãy đọc kỹ tài liệu đính kèm và tạo ra đúng ${numQuestions} câu hỏi trắc nghiệm khách quan để kiểm tra kiến thức của sinh viên dựa trên tài liệu đó.
+Đảm bảo câu hỏi có tính học thuật cao, chính xác và bao quát nội dung phần thứ ${batchNum} của tài liệu.
 
 YÊU CẦU ĐỀ THI:
 - Mỗi câu hỏi PHẢI có đúng 4 phương án lựa chọn.
@@ -205,12 +208,15 @@ export const generateQuestions = action({
         throw new Error("Tài liệu trống hoặc không đủ nội dung để sinh câu hỏi.");
       }
 
-      // Call two batches independently with fallback to get 25 + 25 = 50 questions
-      const [batch1, batch2] = await Promise.all([
-        generateWithFallback((modelName) => generateBatch(genAI, modelName, args.textContent!, 1)),
-        generateWithFallback((modelName) => generateBatch(genAI, modelName, args.textContent!, 2))
+      // Call four small batches independently with fallback to get 13 + 13 + 12 + 12 = 50 questions
+      // This is extremely safe from token limits (2048 max output tokens) and prevents truncation.
+      const [b1, b2, b3, b4] = await Promise.all([
+        generateWithFallback((modelName) => generateBatch(genAI, modelName, args.textContent!, 1, 13)),
+        generateWithFallback((modelName) => generateBatch(genAI, modelName, args.textContent!, 2, 13)),
+        generateWithFallback((modelName) => generateBatch(genAI, modelName, args.textContent!, 3, 12)),
+        generateWithFallback((modelName) => generateBatch(genAI, modelName, args.textContent!, 4, 12))
       ]);
-      return [...batch1, ...batch2];
+      return [...b1, ...b2, ...b3, ...b4];
     } else {
       // Handle legacy client by downloading storageId
       const fileUrl = await ctx.storage.getUrl(args.storageId!);
@@ -227,11 +233,13 @@ export const generateQuestions = action({
       const base64Data = Buffer.from(arrayBuffer).toString("base64");
       const contentType = response.headers.get("content-type") || "application/pdf";
 
-      const [batch1, batch2] = await Promise.all([
-        generateWithFallback((modelName) => generateBatchFromStorage(genAI, modelName, base64Data, contentType, 1)),
-        generateWithFallback((modelName) => generateBatchFromStorage(genAI, modelName, base64Data, contentType, 2))
+      const [b1, b2, b3, b4] = await Promise.all([
+        generateWithFallback((modelName) => generateBatchFromStorage(genAI, modelName, base64Data, contentType, 1, 13)),
+        generateWithFallback((modelName) => generateBatchFromStorage(genAI, modelName, base64Data, contentType, 2, 13)),
+        generateWithFallback((modelName) => generateBatchFromStorage(genAI, modelName, base64Data, contentType, 3, 12)),
+        generateWithFallback((modelName) => generateBatchFromStorage(genAI, modelName, base64Data, contentType, 4, 12))
       ]);
-      return [...batch1, ...batch2];
+      return [...b1, ...b2, ...b3, ...b4];
     }
   },
 });
