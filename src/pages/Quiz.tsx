@@ -71,11 +71,34 @@ function normalizeImport(data: unknown): ExamQuestion[] {
     } else {
       answer = [String(rawAnswer ?? '').trim().toUpperCase()];
     }
-    for (const a of answer) {
-      if (!/^[A-Z]$/.test(a)) {
-        throw new Error(
-          `Câu ${i + 1}: giá trị "${a}" trong "answer" không hợp lệ — phải là một chữ cái (A–Z)`,
-        );
+
+    for (let idx = 0; idx < answer.length; idx++) {
+      const ansVal = answer[idx];
+      if (!/^[A-Z]$/.test(ansVal)) {
+        // Try to match against options
+        let matchedLetter = '';
+        for (let oIdx = 0; oIdx < options.length; oIdx++) {
+          const opt = options[oIdx];
+          const cleanOpt = opt.replace(/^[A-F]\.\s*/, '').trim().toUpperCase();
+          const cleanAns = ansVal.replace(/^[A-F]\.\s*/, '').trim().toUpperCase();
+          
+          if (cleanOpt === cleanAns || opt.trim().toUpperCase() === ansVal) {
+            const matchLetterPrefix = opt.trim().match(/^([A-F])\./);
+            if (matchLetterPrefix) {
+              matchedLetter = matchLetterPrefix[1].toUpperCase();
+            } else {
+              matchedLetter = String.fromCharCode(65 + oIdx);
+            }
+            break;
+          }
+        }
+        if (matchedLetter && /^[A-Z]$/.test(matchedLetter)) {
+          answer[idx] = matchedLetter;
+        } else {
+          throw new Error(
+            `Câu ${i + 1}: giá trị "${ansVal}" trong "answer" không hợp lệ — phải là một chữ cái (A–Z)`,
+          );
+        }
       }
     }
     if (answer.length === 0) throw new Error(`Câu ${i + 1}: thiếu trường "answer"`);

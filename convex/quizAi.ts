@@ -5,7 +5,6 @@ import { action } from "./_generated/server";
 import { GoogleGenerativeAI, SchemaType } from "@google/generative-ai";
 
 const MODELS = [
-  "gemini-3.5-flash",
   "gemini-2.5-flash-lite",
   "gemini-2.5-flash",
   "gemini-flash-latest"
@@ -53,12 +52,13 @@ async function generateBatch(
 
 YÊU CẦU ĐỀ THI:
 - Đảm bảo câu hỏi có tính học thuật cao, chính xác và bao quát đều các nội dung quan trọng trong tài liệu.
-- Mỗi câu hỏi PHẢI có đúng 4 phương án lựa chọn (A, B, C, D).
+- Mỗi câu hỏi PHẢI có đúng 4 phương án lựa chọn.
+- Các phương án phải bắt đầu bằng chữ cái và dấu chấm (ví dụ: "A. Quan hệ sản xuất", "B. Lực lượng sản xuất", ...).
 - Câu hỏi và phương án phải ngắn gọn, súc tích.
 
 YÊU CẦU ĐỊNH DẠNG JSON (QUAN TRỌNG):
-- TUYỆT ĐỐI KHÔNG được sử dụng dấu ngoặc kép kép (") ở bên trong nội dung của câu hỏi hoặc nội dung các phương án.
-- Nếu cần trích dẫn một từ, cụm từ hoặc câu nói, hãy dùng dấu ngoặc đơn (') thay thế để không làm hỏng cấu trúc JSON (Ví dụ: thay vì "định nghĩa "tồn tại xã hội"", hãy ghi "định nghĩa 'tồn tại xã hội'").
+- Trường "answer" PHẢI là đúng 1 chữ cái in hoa đại diện cho phương án đúng: "A", "B", "C", hoặc "D" (TUYỆT ĐỐI KHÔNG được ghi nội dung câu trả lời hoặc chữ thường vào trường này).
+- TUYỆT ĐỐI KHÔNG được sử dụng dấu ngoặc kép kép (") ở bên trong nội dung của câu hỏi hoặc nội dung các phương án. Nếu cần trích dẫn cụm từ hoặc câu nói, hãy dùng dấu ngoặc đơn (') thay thế để không làm hỏng cấu trúc JSON.
 
 TÀI LIỆU VĂN BẢN:
 ${textSegment.substring(0, 30000)}
@@ -121,12 +121,13 @@ async function generateBatchFromStorage(
 Đảm bảo câu hỏi có tính học thuật cao, chính xác và bao quát nội dung phần ${batchNum === 1 ? "đầu" : "sau"} của tài liệu.
 
 YÊU CẦU ĐỀ THI:
-- Mỗi câu hỏi PHẢI có đúng 4 phương án lựa chọn (A, B, C, D).
+- Mỗi câu hỏi PHẢI có đúng 4 phương án lựa chọn.
+- Các phương án phải bắt đầu bằng chữ cái và dấu chấm (ví dụ: "A. Quan hệ sản xuất", "B. Lực lượng sản xuất", ...).
 - Câu hỏi và phương án phải ngắn gọn, súc tích.
 
 YÊU CẦU ĐỊNH DẠNG JSON (QUAN TRỌNG):
-- TUYỆT ĐỐI KHÔNG được sử dụng dấu ngoặc kép kép (") ở bên trong nội dung của câu hỏi hoặc nội dung các phương án.
-- Nếu cần trích dẫn một từ, cụm từ hoặc câu nói, hãy dùng dấu ngoặc đơn (') thay thế để không làm hỏng cấu trúc JSON.
+- Trường "answer" PHẢI là đúng 1 chữ cái in hoa đại diện cho phương án đúng: "A", "B", "C", hoặc "D" (TUYỆT ĐỐI KHÔNG được ghi nội dung câu trả lời hoặc chữ thường vào trường này).
+- TUYỆT ĐỐI KHÔNG được sử dụng dấu ngoặc kép kép (") ở bên trong nội dung của câu hỏi hoặc nội dung các phương án. Nếu cần trích dẫn cụm từ hoặc câu nói, hãy dùng dấu ngoặc đơn (') thay thế để không làm hỏng cấu trúc JSON.
 `;
 
   const result = await model.generateContent({
