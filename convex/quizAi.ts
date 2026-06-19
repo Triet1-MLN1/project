@@ -8,7 +8,6 @@ const MODELS = [
   "gemini-3.5-flash",
   "gemini-2.5-flash-lite",
   "gemini-2.5-flash",
-  "gemini-1.5-flash",
   "gemini-flash-latest"
 ];
 
@@ -17,18 +16,23 @@ async function generateWithFallback(
 ): Promise<any[]> {
   let lastError: any = null;
   for (const modelName of MODELS) {
-    try {
-      console.log(`Đang thử gọi model AI: ${modelName}`);
-      const res = await fn(modelName);
-      console.log(`Gọi thành công model: ${modelName}`);
-      return res;
-    } catch (err: any) {
-      console.warn(`Model ${modelName} thất bại:`, err.message || err);
-      lastError = err;
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        console.log(`Đang thử gọi model AI: ${modelName} (Lần thử ${attempt})`);
+        const res = await fn(modelName);
+        console.log(`Gọi thành công model: ${modelName} ở lần thử ${attempt}`);
+        return res;
+      } catch (err: any) {
+        console.warn(`Model ${modelName} (Lần thử ${attempt}) thất bại:`, err.message || err);
+        lastError = err;
+        if (attempt < 2) {
+          await new Promise((resolve) => setTimeout(resolve, 1000));
+        }
+      }
     }
   }
   throw new Error(
-    `Tất cả các model AI đều thất bại hoặc hết giới hạn lượt dùng trong ngày (quota). Lỗi chi tiết: ${lastError?.message || lastError}`
+    `Tất cả các model AI đều thất bại sau nhiều lần thử. Lỗi chi tiết: ${lastError?.message || lastError}`
   );
 }
 
@@ -46,10 +50,18 @@ async function generateBatch(
     : textContent.substring(Math.max(0, halfLength - 2000));
 
   const prompt = `Bạn là một giáo sư Triết học xuất sắc. Hãy đọc kỹ tài liệu văn bản dưới đây và tạo ra đúng 25 câu hỏi trắc nghiệm khách quan để kiểm tra kiến thức của sinh viên.
-Đảm bảo câu hỏi có tính học thuật cao, chính xác và bao quát đều các nội dung quan trọng trong đoạn tài liệu được cung cấp.
+
+YÊU CẦU ĐỀ THI:
+- Đảm bảo câu hỏi có tính học thuật cao, chính xác và bao quát đều các nội dung quan trọng trong tài liệu.
+- Mỗi câu hỏi PHẢI có đúng 4 phương án lựa chọn (A, B, C, D).
+- Câu hỏi và phương án phải ngắn gọn, súc tích.
+
+YÊU CẦU ĐỊNH DẠNG JSON (QUAN TRỌNG):
+- TUYỆT ĐỐI KHÔNG được sử dụng dấu ngoặc kép kép (") ở bên trong nội dung của câu hỏi hoặc nội dung các phương án.
+- Nếu cần trích dẫn một từ, cụm từ hoặc câu nói, hãy dùng dấu ngoặc đơn (') thay thế để không làm hỏng cấu trúc JSON (Ví dụ: thay vì "định nghĩa "tồn tại xã hội"", hãy ghi "định nghĩa 'tồn tại xã hội'").
 
 TÀI LIỆU VĂN BẢN:
-${textSegment.substring(0, 50000)}
+${textSegment.substring(0, 30000)}
 `;
 
   const result = await model.generateContent({
@@ -107,6 +119,14 @@ async function generateBatchFromStorage(
   
   const prompt = `Bạn là một giáo sư Triết học xuất sắc. Hãy đọc kỹ tài liệu đính kèm và tạo ra đúng 25 câu hỏi trắc nghiệm khách quan để kiểm tra kiến thức của sinh viên dựa trên tài liệu đó.
 Đảm bảo câu hỏi có tính học thuật cao, chính xác và bao quát nội dung phần ${batchNum === 1 ? "đầu" : "sau"} của tài liệu.
+
+YÊU CẦU ĐỀ THI:
+- Mỗi câu hỏi PHẢI có đúng 4 phương án lựa chọn (A, B, C, D).
+- Câu hỏi và phương án phải ngắn gọn, súc tích.
+
+YÊU CẦU ĐỊNH DẠNG JSON (QUAN TRỌNG):
+- TUYỆT ĐỐI KHÔNG được sử dụng dấu ngoặc kép kép (") ở bên trong nội dung của câu hỏi hoặc nội dung các phương án.
+- Nếu cần trích dẫn một từ, cụm từ hoặc câu nói, hãy dùng dấu ngoặc đơn (') thay thế để không làm hỏng cấu trúc JSON.
 `;
 
   const result = await model.generateContent({
@@ -184,14 +204,12 @@ export const generateQuestions = action({
         throw new Error("Tài liệu trống hoặc không đủ nội dung để sinh câu hỏi.");
       }
 
-      // Call two batches in parallel to get 25 + 25 = 50 questions
-      return await generateWithFallback(async (modelName) => {
-        const [batch1, batch2] = await Promise.all([
-          generateBatch(genAI, modelName, args.textContent!, 1),
-          generateBatch(genAI, modelName, args.textContent!, 2)
-        ]);
-        return [...batch1, ...batch2];
-      });
+      // Call two batches independently with fallback to get 25 + 25 = 50 questions
+      const [batch1, batch2] = await Promise.all([
+        generateWithFallback((modelName) => generateBatch(genAI, modelName, args.textContent!, 1)),
+        generateWithFallback((modelName) => generateBatch(genAI, modelName, args.textContent!, 2))
+      ]);
+      return [...batch1, ...batch2];
     } else {
       // Handle legacy client by downloading storageId
       const fileUrl = await ctx.storage.getUrl(args.storageId!);
@@ -208,13 +226,11 @@ export const generateQuestions = action({
       const base64Data = Buffer.from(arrayBuffer).toString("base64");
       const contentType = response.headers.get("content-type") || "application/pdf";
 
-      return await generateWithFallback(async (modelName) => {
-        const [batch1, batch2] = await Promise.all([
-          generateBatchFromStorage(genAI, modelName, base64Data, contentType, 1),
-          generateBatchFromStorage(genAI, modelName, base64Data, contentType, 2)
-        ]);
-        return [...batch1, ...batch2];
-      });
+      const [batch1, batch2] = await Promise.all([
+        generateWithFallback((modelName) => generateBatchFromStorage(genAI, modelName, base64Data, contentType, 1)),
+        generateWithFallback((modelName) => generateBatchFromStorage(genAI, modelName, base64Data, contentType, 2))
+      ]);
+      return [...batch1, ...batch2];
     }
   },
 });
