@@ -144,8 +144,8 @@ export const nextRound = mutation({
       });
     }
 
-    // Kết thúc sau 5 câu hỏi
-    if (room.currentRound >= 5) {
+    // Kết thúc sau 9 câu hỏi
+    if (room.currentRound >= 9) {
       await ctx.db.patch(args.roomId, {
         status: "finished",
         phase: "results",

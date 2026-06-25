@@ -1,7 +1,6 @@
 import { motion, useScroll, useTransform, AnimatePresence } from 'motion/react';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import eosImg from '../public/eos.png';
 
 /* ─── Floating Particle Component ─── */
 function FloatingParticle({ delay, size, x, y, duration }: { delay: number; size: number; x: string; y: string; duration: number }) {
@@ -81,55 +80,60 @@ function RevealText({ text, className, highlightWords = [] }: { text: string; cl
   );
 }
 
-export const conceptData: Record<string, { title: string; explanation: string; realWorldExample: string; keyTakeaways: string[]; icon: string; color: string; colorValue: string; }> = {
-  "ton-tai": {
-    icon: "location_city", color: "text-primary", colorValue: "var(--color-primary)",
-    title: "Tồn tại xã hội",
-    explanation: "Là toàn bộ sinh hoạt vật chất và những điều kiện sinh hoạt vật chất của xã hội. Bao gồm: Điều kiện tự nhiên, dân số, và quan trọng nhất là phương thức sản xuất.",
-    realWorldExample: "Sinh viên mỗi tháng chỉ có 2 triệu đồng tiền tiêu vặt. 'Tồn tại xã hội' lúc đó là ăn mì tôm, săn sale, đi xe buýt. Mục tiêu duy nhất là 'sống sót qua tháng'.",
+export const conceptData: Record<string, { title: string; explanation: string; realWorldExample: string; keyTakeaways: string[]; icon: string; color: string; colorValue: string; path: string; }> = {
+  "vai-tro-tich-cuc": {
+    icon: "bolt", color: "text-primary", colorValue: "var(--color-primary)",
+    path: "/theory#s2",
+    title: "Thúc đẩy Lực lượng sản xuất",
+    explanation: "CNTB đóng vai trò lịch sử vĩ đại khi giải phóng sức sản xuất xã hội, thúc đẩy mạnh mẽ cuộc cách mạng công nghiệp và phát triển khoa học công nghệ vượt bậc.",
+    realWorldExample: "Sự ra đời của động cơ hơi nước ở thế kỷ 18, máy tính ở thế kỷ 20, và nay là Trí tuệ nhân tạo (AI) đều phát triển nhảy vọt dưới động lực cạnh tranh khốc liệt của CNTB.",
     keyTakeaways: [
-      "Là cái 'thực tế phũ phàng' bên ngoài.",
-      "Phương thức sản xuất đóng vai trò quyết định."
+      "Ứng dụng nhanh chóng thành tựu khoa học kỹ thuật.",
+      "Chuyển lao động thủ công sang tự động hóa và tin học."
     ]
   },
-  "y-thuc": {
-    icon: "psychology", color: "text-tertiary", colorValue: "var(--color-tertiary)",
-    title: "Ý thức xã hội",
-    explanation: "Là mặt tinh thần của đời sống xã hội, bao gồm tình cảm, tập quán, truyền thống, quan điểm, học thuyết... nảy sinh từ tồn tại xã hội và phản ánh tồn tại xã hội.",
-    realWorldExample: "Từ môi trường sống khó khăn (tồn tại xã hội), sinh viên nảy sinh tâm lý tiết kiệm, hay lo âu (ý thức xã hội).",
+  "san-xuat-lon": {
+    icon: "domain", color: "text-tertiary", colorValue: "var(--color-tertiary)",
+    path: "/theory#s2",
+    title: "Nền sản xuất lớn hiện đại",
+    explanation: "CNTB xóa bỏ nền sản xuất nhỏ manh mún thời phong kiến, thiết lập nền sản xuất hàng hóa lớn có tổ chức, tích tụ và tập trung tư bản cao độ.",
+    realWorldExample: "Thay thế các phường hội dệt thủ công gia đình nhỏ lẻ ngày xưa bằng hệ thống Siêu nhà máy (Gigafactories) sử dụng hàng nghìn robot tự động.",
     keyTakeaways: [
-      "Là thế giới tinh thần bên trong.",
-      "Chia làm Tâm lý xã hội (nông) và Hệ tư tưởng (sâu)."
+      "Mở rộng tối đa quy mô sản xuất và lưu thông hàng hóa.",
+      "Tối ưu năng suất lao động và đa dạng hóa sản phẩm."
     ]
   },
-  "doc-lap": {
-    icon: "update", color: "text-error", colorValue: "var(--color-error)",
-    title: "Tính độc lập tương đối",
-    explanation: "Ý thức xã hội không thụ động mà có tính độc lập. Có thể tụt hậu (đi chậm), hoặc vượt trước (dự báo tương lai) so với tồn tại xã hội.",
-    realWorldExample: "Phụ nữ hiện đại kiếm tiền giỏi (vật chất thay đổi) nhưng tư tưởng 'trọng nam khinh nữ' (ý thức tụt hậu) vẫn còn tồn tại ở nhiều gia đình.",
+  "xa-hoi-hoa": {
+    icon: "groups", color: "text-error", colorValue: "var(--color-error)",
+    path: "/theory#s2",
+    title: "Xã hội hóa sản xuất",
+    explanation: "Thúc đẩy phân công lao động xã hội, chuyên môn hóa sâu sắc và hợp tác lao động quốc tế, biến quá trình sản xuất thành sự liên kết của toàn thế giới.",
+    realWorldExample: "Chuỗi cung ứng toàn cầu: Một chiếc xe hơi hiện đại có linh kiện sản xuất ở 30 quốc gia khác nhau và được lắp ráp tự động tại một quốc gia thứ 31.",
     keyTakeaways: [
-      "Ý thức thường lạc hậu hơn tồn tại xã hội.",
-      "Ý thức khoa học có thể vượt trước thời đại."
+      "Liên kết chặt chẽ các doanh nghiệp, ngành kinh tế và quốc gia.",
+      "Phân công lao động diễn ra trên phạm vi toàn cầu."
     ]
   },
-  "thuc-tien": {
-    icon: "bolt", color: "text-secondary", colorValue: "var(--color-secondary)",
-    title: "Tác động thực tiễn",
-    explanation: "Ý thức xã hội có khả năng tác động ngược trở lại tồn tại xã hội. Tư tưởng tiến bộ thúc đẩy phát triển, tư tưởng lạc hậu kìm hãm xã hội.",
-    realWorldExample: "Từ việc cam chịu sống với 2 triệu/tháng, sinh viên nảy sinh tư tưởng 'phải khởi nghiệp'. Suy nghĩ đó biến thành hành động, thay đổi hoàn toàn hoàn cảnh sống.",
+  "gioi-han": {
+    icon: "trending_down", color: "text-secondary", colorValue: "var(--color-secondary)",
+    path: "/theory#s3",
+    title: "Những Giới hạn Lịch sử",
+    explanation: "Mục đích sản xuất chỉ vì lợi ích của giai cấp tư sản (bóc lột thặng dư) và xu hướng độc quyền kìm hãm tự do cạnh tranh, cản trở tiến bộ xã hội.",
+    realWorldExample: "Các tập đoàn dược lớn độc quyền nắm giữ bằng sáng chế thuốc đặc trị và bán với giá cực đắt để tối đa hóa lợi nhuận, bất chấp người nghèo không tiếp cận được.",
     keyTakeaways: [
-      "Tinh thần có thể cải tạo vật chất.",
-      "Đường lối Đổi mới 1986 là minh chứng rõ rệt nhất."
+      "Mâu thuẫn cơ bản giữa Lực lượng sản xuất xã hội hóa và Chế độ tư hữu tư bản.",
+      "Hiện tượng bóc lột và khủng hoảng thừa chu kỳ."
     ]
   },
   "center": {
     icon: "balance", color: "text-primary", colorValue: "var(--color-primary)",
-    title: "MỐI QUAN HỆ BIỆN CHỨNG",
-    explanation: "Tồn tại xã hội quyết định ý thức xã hội. Đời sống vật chất thay đổi thì tư tưởng thay đổi. Nhưng ý thức xã hội cũng tác động mạnh mẽ trở lại đời sống vật chất.",
-    realWorldExample: "Trào lưu 'chữa lành' là sản phẩm của một xã hội hiện đại nhiều áp lực (tồn tại xã hội tạo ra ý thức). Nếu quá lạm dụng, nó trở thành ảo tưởng tách rời thực tiễn.",
+    path: "/theory#s1",
+    title: "VAI TRÒ LỊCH SỬ CỦA CNTB",
+    explanation: "Đánh giá biện chứng về CNTB: Ghi nhận vai trò tích cực cách mạng hóa sản xuất nhân loại, đồng thời chỉ ra tính chất tự phủ định tất yếu để chuyển sang hình thái cao hơn.",
+    realWorldExample: "Mâu thuẫn kinh tế - xã hội tích tụ đòi hỏi một quan hệ sản xuất mới (công hữu) để giải phóng lực lượng sản xuất đã được xã hội hóa ở trình độ cực cao.",
     keyTakeaways: [
-      "Vật chất quyết định tinh thần.",
-      "Tinh thần có tính độc lập và tác động ngược lại."
+      "Chuẩn bị đầy đủ cơ sở vật chất kỹ thuật cho tương lai.",
+      "Tạo ra giai cấp vô sản có sứ mệnh lịch sử kiến tạo xã hội mới."
     ]
   }
 };
@@ -200,15 +204,15 @@ export default function Home() {
             initial="hidden"
             animate="visible"
           >
-            <motion.h1 className="text-[clamp(3rem,7vw,5rem)] font-headline font-bold leading-[1.1] tracking-tighter text-on-background mb-6">
+            <motion.h1 className="text-[clamp(2.5rem,6vw,4.5rem)] font-headline font-bold leading-[1.1] tracking-tighter text-on-background mb-6">
               <span className="block overflow-hidden">
                 <motion.span
-                  className="block"
+                  className="block text-on-background/90"
                   initial={{ y: '100%', opacity: 0 }}
                   animate={{ y: '0%', opacity: 1 }}
                   transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.3 }}
                 >
-                  Tồn tại xã hội &amp;{' '}
+                  Vai Trò Lịch Sử Của
                 </motion.span>
               </span>
               <span className="block overflow-hidden">
@@ -218,16 +222,16 @@ export default function Home() {
                   animate={{ y: '0%', opacity: 1 }}
                   transition={{ duration: 1, ease: [0.22, 1, 0.36, 1], delay: 0.55 }}
                 >
-                  Ý thức xã hội
+                  Chủ Nghĩa Tư Bản
                 </motion.span>
               </span>
             </motion.h1>
 
             <motion.p
-              className="text-xl md:text-2xl font-body text-on-surface-variant max-w-xl mb-10 leading-relaxed"
+              className="text-lg md:text-xl font-body text-on-surface-variant max-w-xl mb-10 leading-relaxed"
               variants={fadeInUp}
             >
-              Quy luật cốt lõi của Chủ nghĩa duy vật lịch sử. Từ đời sống vật chất phũ phàng đến thế giới tinh thần phức tạp, và giải mã trào lưu "chữa lành" hiện đại.
+              Phân tích biện chứng từ Triết học Mác-Lênin: Những đóng góp tích cực định hình văn minh công nghiệp hiện đại và những mâu thuẫn giới hạn lịch sử khách quan.
             </motion.p>
 
             <motion.div className="flex flex-wrap gap-4" variants={fadeInUp}>
@@ -243,7 +247,7 @@ export default function Home() {
                   whileHover={{ x: '100%' }}
                   transition={{ duration: 0.5 }}
                 />
-                <span className="relative z-10">Khám phá bài học</span>
+                <span className="relative z-10">Học Lý Thuyết Mới</span>
               </motion.button>
               <motion.button
                 className="px-8 py-4 border border-outline-variant text-on-surface font-bold tracking-wide backdrop-blur-md rounded-xl"
@@ -251,7 +255,7 @@ export default function Home() {
                 whileHover={{ scale: 1.05, backgroundColor: 'var(--color-surface-variant)' }}
                 whileTap={{ scale: 0.95 }}
               >
-                Chơi Game Ôn Tập
+                Chơi Đuổi Hình Bắt Chữ
               </motion.button>
             </motion.div>
           </motion.div>
@@ -269,7 +273,7 @@ export default function Home() {
             transition={{ duration: 2, repeat: Infinity, ease: 'easeInOut' }}
             onClick={() => window.scrollTo({ top: window.innerHeight, behavior: 'smooth' })}
           >
-            <span className="text-[10px] uppercase tracking-[0.3em] text-on-surface-variant/60 font-bold">Khám phá</span>
+            <span className="text-[10px] uppercase tracking-[0.3em] text-on-surface-variant/60 font-bold">Cuộn xuống</span>
             <span className="material-symbols-outlined text-on-surface-variant/40 text-lg">expand_more</span>
           </motion.div>
         </motion.div>
@@ -311,7 +315,7 @@ export default function Home() {
               {/* Central Node */}
               <div className="absolute z-30">
                 <motion.button
-                  className="w-44 h-44 md:w-52 md:h-52 rounded-full bg-surface-container-highest border-4 border-primary flex flex-col items-center justify-center p-6 text-center shadow-[0_0_40px_rgba(255,42,85,0.4)] group glitch-effect"
+                  className="w-44 h-44 md:w-52 md:h-52 rounded-full bg-surface-container-highest border-4 border-primary flex flex-col items-center justify-center p-6 text-center shadow-[0_0_40px_rgba(255,42,85,0.4)] group"
                   initial={{ scale: 0, opacity: 0 }}
                   whileInView={{ scale: 1, opacity: 1 }}
                   viewport={{ once: true }}
@@ -320,24 +324,24 @@ export default function Home() {
                   onClick={() => setActiveNode('center')}
                 >
                   <motion.span
-                    className="material-symbols-outlined text-primary text-5xl mb-3 glitch-effect"
+                    className="material-symbols-outlined text-primary text-5xl mb-3"
                     animate={activeNode === 'center' ? { rotate: 360 } : { rotate: 0 }}
                     transition={{ duration: 8, repeat: activeNode === 'center' ? Infinity : 0, ease: 'linear' }}
                   >
-                    science
+                    lan
                   </motion.span>
                   <span className="font-headline font-bold text-base md:text-lg leading-tight uppercase tracking-tight text-on-surface">
-                    Biện chứng<br/>Triết học
+                    Vai Trò Lịch Sử<br/>CNTB
                   </span>
                 </motion.button>
               </div>
 
               {/* Branch Nodes (Orbital Positions) */}
               {[
-                { pos: 'top-[8%] left-1/2 -translate-x-1/2', icon: 'location_city', label: 'Tồn tại xã hội', hoverBg: 'hover:bg-primary-container', iconColor: 'text-primary', nodeKey: 'ton-tai', delay: 0.4 },
-                { pos: 'top-1/2 right-[5%] -translate-y-1/2', icon: 'psychology', label: 'Ý thức xã hội', hoverBg: 'hover:bg-tertiary-container', iconColor: 'text-tertiary', nodeKey: 'y-thuc', delay: 0.6 },
-                { pos: 'bottom-[8%] left-1/2 -translate-x-1/2', icon: 'update', label: 'Độc lập tương đối', hoverBg: 'hover:bg-error-container', iconColor: 'text-error', nodeKey: 'doc-lap', delay: 0.8 },
-                { pos: 'top-1/2 left-[5%] -translate-y-1/2', icon: 'bolt', label: 'Tác động thực tiễn', hoverBg: 'hover:bg-secondary-container', iconColor: 'text-secondary', nodeKey: 'thuc-tien', delay: 1.0, isFeatured: true },
+                { pos: 'top-[8%] left-1/2 -translate-x-1/2', icon: 'bolt', label: 'Tích Cực: Lực lượng sản xuất', hoverBg: 'hover:bg-primary-container', iconColor: 'text-primary', nodeKey: 'vai-tro-tich-cuc', delay: 0.4 },
+                { pos: 'top-1/2 right-[5%] -translate-y-1/2', icon: 'domain', label: 'Sản xuất lớn hiện đại', hoverBg: 'hover:bg-tertiary-container', iconColor: 'text-tertiary', nodeKey: 'san-xuat-lon', delay: 0.6 },
+                { pos: 'bottom-[8%] left-1/2 -translate-x-1/2', icon: 'groups', label: 'Xã hội hóa sản xuất', hoverBg: 'hover:bg-error-container', iconColor: 'text-error', nodeKey: 'xa-hoi-hoa', delay: 0.8 },
+                { pos: 'top-1/2 left-[5%] -translate-y-1/2', icon: 'trending_down', label: 'Những Giới Hạn Lịch Sử', hoverBg: 'hover:bg-secondary-container', iconColor: 'text-secondary', nodeKey: 'gioi-han', delay: 1.0, isFeatured: true },
               ].map((node) => (
                 <div key={node.nodeKey} className={`absolute ${node.pos} z-20`}>
                   <motion.button
@@ -350,7 +354,7 @@ export default function Home() {
                     onClick={() => setActiveNode(node.nodeKey)}
                   >
                     <motion.span
-                      className={`material-symbols-outlined ${node.iconColor} group-hover:text-white mb-2 text-3xl glitch-effect`}
+                      className={`material-symbols-outlined ${node.iconColor} group-hover:text-white mb-2 text-3xl`}
                       style={node.isFeatured ? { fontVariationSettings: "'FILL' 1" } : undefined}
                       animate={activeNode === node.nodeKey ? { scale: [1, 1.2, 1] } : { scale: 1 }}
                       transition={{ duration: 1.5, repeat: activeNode === node.nodeKey ? Infinity : 0 }}
@@ -396,7 +400,7 @@ export default function Home() {
                       className="p-5 bg-surface rounded-2xl border-l-4 shadow-sm"
                       style={{ borderLeftColor: nodeData.colorValue }}
                     >
-                      <h4 className="text-xs uppercase tracking-widest font-bold text-on-surface mb-2">Ví dụ thực tiễn</h4>
+                      <h4 className="text-xs uppercase tracking-widest font-bold text-on-surface mb-2">Ví dụ thực tế</h4>
                       <p className="text-sm italic text-on-surface-variant leading-relaxed">
                         {nodeData.realWorldExample}
                       </p>
@@ -417,7 +421,7 @@ export default function Home() {
 
                   <motion.button
                     className="w-full mt-6 py-4 bg-primary text-on-primary font-bold uppercase tracking-widest rounded-xl hover:shadow-lg transition-shadow"
-                    onClick={() => navigate('/theory')}
+                    onClick={() => navigate(nodeData.path)}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
@@ -453,7 +457,7 @@ export default function Home() {
               Cấu trúc Bài giảng
             </motion.h2>
             <motion.p className="text-lg text-on-surface-variant max-w-2xl mx-auto leading-relaxed" variants={fadeInUp}>
-              Đi từ những lý luận nền tảng nhất của Các Mác đến việc áp dụng giải quyết các tình huống thực tiễn hiện đại.
+              Phân tích toàn diện và khách quan các mặt của Chủ nghĩa tư bản dưới góc nhìn duy vật biện chứng.
             </motion.p>
           </motion.div>
 
@@ -465,12 +469,12 @@ export default function Home() {
             variants={staggerContainer}
           >
             {[
-              { icon: 'domain', title: 'Tồn tại xã hội', subtitle: 'Phần 1', desc: 'Thực tế phũ phàng: Điều kiện tự nhiên, dân số và phương thức sản xuất vật chất.', tags: ['Vật chất', 'Khách quan'], color: 'primary', path: '/theory#s1' },
-              { icon: 'psychology_alt', title: 'Ý thức xã hội', subtitle: 'Phần 2', desc: 'Thế giới tinh thần bên trong: Tâm lý xã hội và hệ tư tưởng giai cấp.', tags: ['Tinh thần', 'Tâm lý'], color: 'tertiary', path: '/theory#s1' },
-              { icon: 'handshake', title: 'Mối quan hệ biện chứng', subtitle: 'Phần 3', desc: 'Sự tác động qua lại: Vật chất quyết định tinh thần, nhưng tinh thần có tính độc lập tương đối.', tags: ['Quyết định', 'Tác động'], color: 'secondary', path: '/theory#s2' },
-              { icon: 'compass_calibration', title: 'Ý nghĩa Phương pháp luận', subtitle: 'Phần 4', desc: 'Vận dụng triết học: Cải tạo xã hội từ gốc rễ và chú trọng giáo dục tư tưởng hiện đại.', tags: ['Thực tiễn', 'Nhận thức'], color: 'primary', path: '/theory#s3' },
-              { icon: 'self_improvement', title: 'Giải mã trào lưu "Chữa lành"', subtitle: 'Tình huống', desc: 'Phân tích trào lưu chữa lành dưới góc độ triết học: thuốc phiện tinh thần hay giải pháp?', tags: ['Thực tiễn', 'Phản biện'], color: 'error', path: '/theory#s4' },
-              { icon: 'quiz', title: 'Luyện tập Trắc nghiệm', subtitle: 'Ôn tập', desc: 'Hệ thống câu hỏi trắc nghiệm kiểm tra độ hiểu sâu của bài học.', tags: ['Quiz', 'Test'], color: 'secondary', path: '/quiz' },
+              { icon: 'bolt', title: 'Tích cực: Phát triển Lực lượng sản xuất', subtitle: 'Phần 1', desc: 'Sự vĩ đại của CNTB trong việc thúc đẩy khoa học công nghệ và cách mạng công nghiệp.', tags: ['Khoa học', 'Công nghệ'], color: 'primary', path: '/theory#s2' },
+              { icon: 'domain', title: 'Nền sản xuất lớn hiện đại', subtitle: 'Phần 2', desc: 'Xóa bỏ nền sản xuất nhỏ tự túc tự cấp, chuyển mình sang sản xuất hàng hóa lớn có tổ chức.', tags: ['Tích tụ', 'Quy mô'], color: 'tertiary', path: '/theory#s2' },
+              { icon: 'groups', title: 'Thực hiện xã hội hóa sản xuất', subtitle: 'Phần 3', desc: 'Hợp tác phân công lao động sâu sắc trên toàn thế giới, thiết lập chuỗi giá trị toàn cầu.', tags: ['Hợp tác', 'Toàn cầu'], color: 'secondary', path: '/theory#s2' },
+              { icon: 'trending_down', title: 'Mục đích bóc lột thặng dư', subtitle: 'Phần 4', desc: 'Bản chất giới hạn: Sản xuất vì lợi ích giai cấp tư sản, chiếm đoạt lao động thặng dư.', tags: ['Giá trị thặng dư', 'Bóc lột'], color: 'error', path: '/theory#s3' },
+              { icon: 'landslide', title: 'Độc quyền kìm hãm xã hội', subtitle: 'Phần 5', desc: 'Sự xuất hiện các tổ chức độc quyền lớn chèn ép cạnh tranh và cản trở sự phát triển.', tags: ['Độc quyền', 'Thâu tóm'], color: 'primary', path: '/theory#s3' },
+              { icon: 'quiz', title: 'Game Đuổi Hình Bắt Chữ', subtitle: 'Ôn tập', desc: 'Trò chơi tương tác ôn luyện các khái niệm cốt lõi của bài học.', tags: ['Game', 'Tương tác'], color: 'secondary', path: '/game' },
             ].map((chapter, i) => (
               <motion.div
                 key={i}
@@ -509,10 +513,10 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            TRIẾT HỌC KHÔNG CHỈ LÀ LÝ THUYẾT
+            TRIẾT HỌC LÀ SOIKÍNH HÀNH ĐỘNG
           </motion.span>
           <h2 className="text-4xl md:text-5xl font-headline font-bold tracking-tighter mb-8 text-on-background leading-snug">
-            <RevealText text={'"Vật chất quyết định tinh thần, nhưng một tinh thần tiến bộ sẽ cải tạo lại thế giới vật chất."'} />
+            <RevealText text={'"Sự phát triển của lực lượng sản xuất xã hội hóa cao độ là động lực tất yếu dẫn dắt loài người tiến tới một xã hội tốt đẹp hơn."'} />
           </h2>
           <motion.div
             className="w-24 h-1 bg-secondary mx-auto mb-10"
@@ -526,7 +530,7 @@ export default function Home() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            Đừng chỉ thay đổi suy nghĩ, hãy thay đổi môi trường sống của bạn trước.
+            Sự tự phủ định của chủ nghĩa tư bản là tất yếu khách quan của lịch sử.
           </motion.p>
         </div>
       </section>

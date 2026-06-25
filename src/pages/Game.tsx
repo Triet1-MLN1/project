@@ -80,8 +80,8 @@ function RulesModal({ show, onClose }: { show: boolean; onClose: () => void }) {
                   🎯 Cách chơi
                 </h3>
                 <ul className="list-disc pl-5 space-y-2 text-lg">
-                  <li>Trò chơi gồm có <strong>5 vòng chơi</strong>.</li>
-                  <li>Mỗi vòng, Host sẽ hiển thị một hình ảnh gợi ý.</li>
+                  <li>Trò chơi gồm có <strong>{SCENARIOS.length} vòng chơi</strong>.</li>
+                  <li>Mỗi vòng, Host sẽ hiển thị hình ảnh gợi ý.</li>
                   <li>Người chơi có <strong>60 giây</strong> để nhập đáp án chính xác.</li>
                   <li>Nhập sai có thể nhập lại cho đến khi hết giờ.</li>
                 </ul>
@@ -545,7 +545,7 @@ function GameplayView({
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="max-w-4xl w-full px-4 mx-auto">
       <div className="flex justify-between items-center mb-6 bg-surface p-4 rounded-2xl shadow-sm border border-outline-variant">
         <div className="flex items-center gap-3">
-          <span className="bg-primary text-on-primary px-4 py-1 rounded-full font-bold">Câu {room.currentRound}/5</span>
+          <span className="bg-primary text-on-primary px-4 py-1 rounded-full font-bold">Câu {room.currentRound}/{SCENARIOS.length}</span>
           {currentPlayer.isHost && (
             <div className="flex gap-2 flex-wrap">
               <button
@@ -573,9 +573,23 @@ function GameplayView({
         <div className="space-y-4 md:space-y-6">
           <motion.div
             key={room.currentRound}
-            className="bg-surface p-2 sm:p-4 rounded-2xl sm:rounded-3xl shadow-xl border-4 border-primary/20 h-44 sm:h-64 md:h-auto md:aspect-video flex items-center justify-center overflow-hidden"
+            className="bg-surface p-2 sm:p-4 rounded-2xl sm:rounded-3xl shadow-xl border-4 border-primary/20 h-44 sm:h-64 md:h-auto md:aspect-video flex items-center justify-center overflow-hidden w-full"
           >
-            <img src={scenario.image} alt="Quiz" className="max-h-full object-contain" />
+            {Array.isArray(scenario.image) ? (
+              <div className="flex items-center justify-center gap-4 w-full h-full">
+                <div className="flex-1 h-full flex items-center justify-center overflow-hidden rounded-xl border border-outline-variant bg-black/20 relative group">
+                  <img src={scenario.image[0]} alt="Gợi ý 1" className="max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105" />
+                  <div className="absolute top-2 left-2 bg-primary/80 backdrop-blur text-white text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">Hình 1</div>
+                </div>
+                <div className="text-3xl font-black text-primary px-2 animate-pulse shrink-0">+</div>
+                <div className="flex-1 h-full flex items-center justify-center overflow-hidden rounded-xl border border-outline-variant bg-black/20 relative group">
+                  <img src={scenario.image[1]} alt="Gợi ý 2" className="max-h-full max-w-full object-contain transition-transform duration-500 group-hover:scale-105" />
+                  <div className="absolute top-2 left-2 bg-amber-500/80 backdrop-blur text-white text-[10px] px-2 py-0.5 rounded font-bold uppercase tracking-wider">Hình 2</div>
+                </div>
+              </div>
+            ) : (
+              <img src={scenario.image} alt="Quiz" className="max-h-full object-contain" />
+            )}
           </motion.div>
 
           {!currentPlayer.isHost && !currentPlayer.hasSubmitted ? (
@@ -813,7 +827,7 @@ function FinalResultsView({ players, onPlayAgain }: { players: Doc<"players">[],
       <div className="bg-primary/10 p-10 rounded-[40px] border-4 border-primary/20 shadow-2xl">
         <Trophy className="w-20 h-20 text-amber-500 mx-auto mb-4" />
         <h1 className="text-4xl font-headline font-extrabold text-on-surface">BẢNG XẾP HẠNG</h1>
-        <p className="text-on-surface-variant mt-2">Những nhà thông thái đã hoàn thành 5 câu hỏi</p>
+        <p className="text-on-surface-variant mt-2">Những nhà thông thái đã hoàn thành {SCENARIOS.length} câu hỏi</p>
       </div>
 
       <div className="space-y-3">
