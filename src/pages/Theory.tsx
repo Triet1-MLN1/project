@@ -133,6 +133,7 @@ export default function Theory() {
   const [activeId, setActiveId] = useState('s1');
   const [openPos, setOpenPos] = useState<number | null>(null);
   const [openLimit, setOpenLimit] = useState<number | null>(null);
+  const [activeLightboxImg, setActiveLightboxImg] = useState<string | null>(null);
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const location = useLocation();
 
@@ -338,8 +339,8 @@ export default function Theory() {
             {/* Right Slide image card */}
             <div className="bg-surface border border-outline-variant rounded-3xl p-4 flex flex-col justify-center">
               <p className="text-xs font-bold uppercase tracking-widest text-outline mb-2 px-2">📺 Sơ đồ vai trò lịch sử</p>
-              <div className="rounded-2xl overflow-hidden border border-outline-variant bg-black flex items-center justify-center aspect-video shadow-inner">
-                <img src={IMG.slide1} alt="Slide 1: Tổng quan vai trò lịch sử của CNTB" className="max-h-full max-w-full object-contain" />
+              <div className="rounded-2xl overflow-hidden border border-outline-variant bg-black flex items-center justify-center aspect-video shadow-inner group cursor-zoom-in" onClick={() => setActiveLightboxImg(IMG.slide1)}>
+                <img src={IMG.slide1} alt="Slide 1: Tổng quan vai trò lịch sử của CNTB" className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]" />
               </div>
             </div>
           </div>
@@ -379,8 +380,8 @@ export default function Theory() {
 
             <div className="bg-surface border border-outline-variant rounded-3xl p-4 flex flex-col justify-center">
               <p className="text-xs font-bold uppercase tracking-widest text-outline mb-2 px-2">📺 Thúc đẩy lực lượng sản xuất</p>
-              <div className="rounded-2xl overflow-hidden border border-outline-variant bg-black flex items-center justify-center aspect-video">
-                <img src={IMG.slide2} alt="Slide 2: Thúc đẩy Lực lượng sản xuất" className="max-h-full max-w-full object-contain" />
+              <div className="rounded-2xl overflow-hidden border border-outline-variant bg-black flex items-center justify-center aspect-video group cursor-zoom-in" onClick={() => setActiveLightboxImg(IMG.slide2)}>
+                <img src={IMG.slide2} alt="Slide 2: Thúc đẩy Lực lượng sản xuất" className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]" />
               </div>
             </div>
           </div>
@@ -434,8 +435,8 @@ export default function Theory() {
                               <p className="text-xs font-bold text-emerald-600 dark:text-emerald-400 uppercase tracking-widest mb-1.5">🇻🇳 Minh Họa Thực Tế</p>
                               <p className="text-sm text-on-surface-variant italic leading-relaxed">"{item.example}"</p>
                             </div>
-                            <div className="rounded-xl overflow-hidden border border-outline-variant aspect-video bg-black flex items-center justify-center relative">
-                              <img src={item.img} alt={item.title} className="max-h-full max-w-full object-contain" />
+                            <div className="rounded-xl overflow-hidden border border-outline-variant aspect-video bg-black flex items-center justify-center relative group cursor-zoom-in" onClick={() => setActiveLightboxImg(item.img)}>
+                              <img src={item.img} alt={item.title} className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]" />
                             </div>
                           </div>
                         </div>
@@ -476,16 +477,16 @@ export default function Theory() {
             {/* Slide 4 card */}
             <div className="bg-surface border border-outline-variant rounded-3xl p-4 flex flex-col justify-center">
               <p className="text-xs font-bold uppercase tracking-widest text-outline mb-2 px-2">📺 Mục đích vì lợi ích tư sản</p>
-              <div className="rounded-2xl overflow-hidden border border-outline-variant bg-black flex items-center justify-center aspect-video">
-                <img src={IMG.slide4} alt="Slide 4: Mục đích vì lợi ích tư sản" className="max-h-full max-w-full object-contain" />
+              <div className="rounded-2xl overflow-hidden border border-outline-variant bg-black flex items-center justify-center aspect-video group cursor-zoom-in" onClick={() => setActiveLightboxImg(IMG.slide4)}>
+                <img src={IMG.slide4} alt="Slide 4: Mục đích vì lợi ích tư sản" className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]" />
               </div>
             </div>
 
             {/* Slide 5 card */}
             <div className="bg-surface border border-outline-variant rounded-3xl p-4 flex flex-col justify-center">
               <p className="text-xs font-bold uppercase tracking-widest text-outline mb-2 px-2">📺 Độc quyền kìm hãm</p>
-              <div className="rounded-2xl overflow-hidden border border-outline-variant bg-black flex items-center justify-center aspect-video">
-                <img src={IMG.slide5} alt="Slide 5: Độc quyền kìm hãm phát triển" className="max-h-full max-w-full object-contain" />
+              <div className="rounded-2xl overflow-hidden border border-outline-variant bg-black flex items-center justify-center aspect-video group cursor-zoom-in" onClick={() => setActiveLightboxImg(IMG.slide5)}>
+                <img src={IMG.slide5} alt="Slide 5: Độc quyền kìm hãm phát triển" className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]" />
               </div>
             </div>
 
@@ -550,8 +551,8 @@ export default function Theory() {
                               <p className="text-xs font-bold text-rose-600 dark:text-rose-400 uppercase tracking-widest mb-1.5">🇻🇳 Biểu Hiện Đời Thực</p>
                               <p className="text-sm text-on-surface-variant italic leading-relaxed">"{item.example}"</p>
                             </div>
-                            <div className="rounded-xl overflow-hidden border border-outline-variant aspect-video bg-black flex items-center justify-center relative">
-                              <img src={item.img} alt={item.title} className="max-h-full max-w-full object-contain" />
+                            <div className="rounded-xl overflow-hidden border border-outline-variant aspect-video bg-black flex items-center justify-center relative group cursor-zoom-in" onClick={() => setActiveLightboxImg(item.img)}>
+                              <img src={item.img} alt={item.title} className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]" />
                             </div>
                           </div>
                         </div>
@@ -622,6 +623,41 @@ export default function Theory() {
         </motion.section>
 
       </main>
+
+      {/* Lightbox Modal */}
+      <AnimatePresence>
+        {activeLightboxImg && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setActiveLightboxImg(null)}
+            className="fixed inset-0 bg-black/90 backdrop-blur-md z-[200] flex items-center justify-center p-4 md:p-8 cursor-zoom-out"
+          >
+            <button
+              onClick={() => setActiveLightboxImg(null)}
+              className="absolute top-6 right-6 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 p-3 rounded-full transition-all border border-white/10"
+              title="Đóng"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+            </button>
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+              className="relative max-w-full max-h-[90vh] flex items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={activeLightboxImg}
+                alt="Phóng to hình ảnh"
+                className="max-w-full max-h-[90vh] object-contain rounded-2xl border border-white/10 shadow-2xl bg-black"
+              />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
