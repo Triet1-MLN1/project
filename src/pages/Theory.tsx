@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useLocation } from 'react-router-dom';
 import { Brain, ChevronDown, Compass, Globe, Scale, TrendingUp, Users, Zap } from 'lucide-react';
@@ -187,7 +187,7 @@ export default function Theory() {
       <SectionBridge text="Từ hai mặt tích cực và giới hạn, rút ra mâu thuẫn cơ bản và xu thế vận động của chủ nghĩa tư bản." />
       <motion.section id="s4" className="scroll-mt-28" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
         <SectionHeading icon={Compass} color="bg-violet-500/10 text-violet-600" label="Phần 4" title="IV. Kết luận & Xu thế vận động" />
-        
+
         {/* Mâu thuẫn cơ bản */}
         <div className="bg-violet-500/5 border border-violet-500/20 rounded-3xl p-6 md:p-8 mb-6 space-y-6">
           <h4 className="text-xl font-bold text-violet-600 dark:text-violet-400 flex items-center gap-2">
@@ -196,7 +196,7 @@ export default function Theory() {
           <p className="text-base text-on-surface leading-relaxed">
             Những hạn chế của chủ nghĩa tư bản bắt nguồn từ mâu thuẫn cơ bản: <strong>mâu thuẫn giữa trình độ xã hội hóa ngày càng cao của lực lượng sản xuất với quan hệ sản xuất dựa trên quan hệ chiếm hữu tư nhân tư bản chủ nghĩa về tư liệu sản xuất.</strong>
           </p>
-          
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
             <div className="p-5 bg-surface border border-outline-variant rounded-2xl border-l-4 border-l-emerald-500 space-y-3">
               <span className="text-xs font-bold text-emerald-500 tracking-wider uppercase block">Lực lượng sản xuất xã hội hóa</span>
@@ -211,7 +211,7 @@ export default function Theory() {
               </p>
             </div>
           </div>
-          
+
           <div className="p-5 bg-surface border border-outline-variant rounded-2xl text-sm text-on-surface-variant leading-relaxed">
             Những điều chỉnh trên giúp chủ nghĩa tư bản có sự thích ứng và phát triển nhất định. Mặc dù vậy, trong xã hội tư bản hiện đại, mâu thuẫn cơ bản này vẫn tồn tại và không thể tự giải quyết được.
           </div>
