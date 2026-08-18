@@ -125,16 +125,20 @@ const scaleIn = {
 /* ─── Daily quotes pool ──────────────────────────────────────────── */
 const quotes = [
   {
-    text: '"Tồn tại xã hội quyết định ý thức xã hội, nhưng ý thức xã hội có tính độc lập tương đối và tác động trở lại tồn tại xã hội."',
-    author: '— Nguyên lý cơ bản của Chủ nghĩa duy vật lịch sử',
+    text: '"Nước ta là nước dân chủ, địa vị cao nhất là dân, vì dân là chủ... Việc gì có lợi cho dân phải hết sức làm, việc gì có hại cho dân phải hết sức tránh."',
+    author: '— Chủ tịch Hồ Chí Minh',
   },
   {
-    text: '"Không phải ý thức của con người quyết định tồn tại của họ; trái lại, tồn tại xã hội của họ quyết định ý thức của họ."',
-    author: '— C. Mác',
+    text: '"Muốn xây dựng chủ nghĩa xã hội, trước hết cần có những con người xã hội chủ nghĩa."',
+    author: '— Chủ tịch Hồ Chí Minh (1961)',
   },
   {
-    text: '"Sự phát triển của phương thức sản xuất là cội nguồn sâu xa của mọi sự biến đổi xã hội."',
-    author: '— Ph. Ăng-ghen',
+    text: '"Đoàn kết, đoàn kết, đại đoàn kết. Thành công, thành công, đại thành công."',
+    author: '— Chủ tịch Hồ Chí Minh',
+  },
+  {
+    text: '"Chủ nghĩa xã hội là làm sao cho dân giàu, nước mạnh, làm cho mọi người được ấm no, tự do, hạnh phúc."',
+    author: '— Chủ tịch Hồ Chí Minh',
   },
 ];
 

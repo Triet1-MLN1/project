@@ -20,7 +20,7 @@ export default function ChatBot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
-      text: "Chào đồng chí! Tôi là Lenin 2.0 🚩. Tôi đã sẵn sàng hỗ trợ đồng chí về chủ đề **Tồn tại xã hội và Ý thức xã hội**. Đồng chí cần tra cứu lý luận hay ví dụ thực tiễn nào không?",
+      text: "Chào bạn! Tôi là Trợ lý Học tập Tư tưởng Hồ Chí Minh 🚩. Tôi đã sẵn sàng hỗ trợ bạn về chủ đề **Mục tiêu và Động lực của Chủ nghĩa xã hội ở Việt Nam** (Chương III - HCM202). Bạn cần tra cứu lý luận hay ôn tập câu hỏi trắc nghiệm nào không?",
       isBot: true,
     },
   ]);
