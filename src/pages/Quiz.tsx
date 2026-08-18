@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useQuery, useMutation, useAction } from 'convex/react';
 import { api } from '../../convex/_generated/api';
+import { Sparkles } from 'lucide-react';
 
 /* ─── Types ─────────────────────────────────────────────────────── */
 interface ExamQuestion {
@@ -510,34 +511,25 @@ export default function Quiz() {
       <section className="pb-20 md:pb-28">
         <div className="container mx-auto px-6">
           <motion.div
-            className="max-w-5xl mx-auto relative rounded-3xl overflow-hidden shadow-xl"
+            className="max-w-5xl mx-auto relative rounded-3xl overflow-hidden shadow-xl border border-primary/20 bg-surface"
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.8 }}
           >
-            <div className="relative h-64 md:h-80 overflow-hidden border border-outline-variant/30">
-              <motion.img
-                className="absolute inset-0 w-full h-full object-cover"
-                alt="Chủ tịch Hồ Chí Minh cùng nhân dân"
-                src="/images/real_hcm_doan_ket_1946.jpg"
-                initial={{ scale: 1.08 }}
-                whileInView={{ scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 1.5, ease: 'easeOut' }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/30" />
-              <div className="absolute inset-0 bg-gradient-to-r from-red-950/80 via-black/70 to-transparent" />
-              <div className="absolute bottom-0 left-0 p-8 md:p-12 z-10 max-w-2xl">
-                <motion.span
-                  className="inline-block px-3 py-1 bg-secondary-fixed text-on-secondary-fixed text-[11px] font-bold uppercase tracking-[0.2em] rounded-md mb-4"
+            <div className="relative bg-gradient-to-r from-red-950 via-red-900/90 to-zinc-950 p-8 sm:p-10 lg:p-12 grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
+              {/* Text Quote Column */}
+              <div className="md:col-span-7 space-y-4 z-10">
+                <motion.div
+                  className="inline-flex items-center gap-2 px-3 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/30 text-[11px] font-bold uppercase tracking-[0.2em] rounded-md"
                   initial={{ opacity: 0, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: 0.4 }}
                 >
-                  Trích dẫn hôm nay
-                </motion.span>
+                  <Sparkles className="w-3.5 h-3.5" /> Trích dẫn hôm nay
+                </motion.div>
+                
                 <motion.p
                   className="text-xl md:text-2xl text-white font-headline font-medium leading-relaxed italic"
                   initial={{ opacity: 0, y: 20 }}
@@ -547,8 +539,9 @@ export default function Quiz() {
                 >
                   {todayQuote.text}
                 </motion.p>
+
                 <motion.span
-                  className="block mt-3 text-sm text-white/70 font-body"
+                  className="block text-sm font-bold text-amber-300 tracking-wider uppercase"
                   initial={{ opacity: 0 }}
                   whileInView={{ opacity: 1 }}
                   viewport={{ once: true }}
@@ -556,6 +549,20 @@ export default function Quiz() {
                 >
                   {todayQuote.author}
                 </motion.span>
+              </div>
+
+              {/* Authentic Photo Frame Column - Preserves full faces without cropping */}
+              <div className="md:col-span-5 flex flex-col items-center justify-center">
+                <div className="relative group rounded-2xl overflow-hidden border-2 border-amber-400/40 shadow-2xl bg-black/60 w-full max-w-[320px]">
+                  <img
+                    src="/images/real_hcm_doan_ket_1946.jpg"
+                    alt="Chủ tịch Hồ Chí Minh cùng khối Đại đoàn kết toàn dân (1946)"
+                    className="w-full h-auto max-h-[220px] object-contain mx-auto"
+                  />
+                  <div className="bg-black/80 backdrop-blur-sm p-2 text-center text-[10px] text-zinc-300 font-medium border-t border-white/10">
+                    Bác Hồ & khối Đại đoàn kết toàn dân (1946)
+                  </div>
+                </div>
               </div>
             </div>
           </motion.div>

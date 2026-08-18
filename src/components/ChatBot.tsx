@@ -108,7 +108,7 @@ export default function ChatBot() {
         <img
           src={botAvatar}
           alt="Trợ lý Tư tưởng HCM"
-          className="w-full h-full object-cover rounded-full"
+          className="w-full h-full object-cover object-top rounded-full"
           style={{ imageRendering: "auto" }}
           onError={(e) => {
             e.currentTarget.style.display = "none";
@@ -135,7 +135,7 @@ export default function ChatBot() {
                   <img
                     src={botAvatar}
                     alt="Trợ lý Tư tưởng HCM"
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-top"
                     onError={(e) => {
                       e.currentTarget.style.display = "none";
                       e.currentTarget.nextElementSibling?.classList.remove("hidden");
@@ -169,7 +169,7 @@ export default function ChatBot() {
                 >
                   {msg.isBot && (
                     <div className="w-7 h-7 rounded-full overflow-hidden border border-outline-variant mr-2 shrink-0 self-end">
-                      <img src={botAvatar} alt="bot" className="w-full h-full object-cover" />
+                      <img src={botAvatar} alt="bot" className="w-full h-full object-cover object-top" />
                     </div>
                   )}
                   <motion.div
