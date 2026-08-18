@@ -2,6 +2,8 @@ import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from 'motion/react';
+import { Sparkles, Sun, Moon, Menu, X, BookOpen, Trophy, GraduationCap, Info, Home } from 'lucide-react';
+
 export default function TopNavBar() {
   const location = useLocation();
   const { theme, toggleTheme } = useTheme();
@@ -20,11 +22,11 @@ export default function TopNavBar() {
   });
 
   const navLinks = [
-    { path: '/', label: 'Home' },
-    { path: '/theory', label: 'Theory' },
-    { path: '/game', label: 'Game' },
-    { path: '/quiz', label: 'Quiz' },
-    { path: '/about', label: 'About' },
+    { path: '/', label: 'Trang Chủ', icon: Home },
+    { path: '/theory', label: 'Lý Luận', icon: BookOpen },
+    { path: '/game', label: 'Đấu Trường Game', icon: Trophy },
+    { path: '/quiz', label: 'Quiz', icon: GraduationCap },
+    { path: '/about', label: 'Giới Thiệu', icon: Info },
   ];
 
   return (
@@ -36,67 +38,62 @@ export default function TopNavBar() {
         }}
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: 0.35, ease: "easeInOut" }}
-        className="fixed top-0 w-full z-50 tonal-shift bg-surface-container/80 backdrop-blur-xl border-b border-outline-variant/20"
+        className="fixed top-0 w-full z-50 bg-surface/90 backdrop-blur-xl border-b border-outline-variant/30 shadow-sm"
       >
-        <div className="flex justify-between items-center px-8 py-4 w-full max-w-full">
-          <Link to="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
-            <img src="/triet_hoc_logo.png" alt="Logo" className="w-8 h-8 md:w-10 md:h-10 object-contain drop-shadow-lg" />
-            <span className="text-xl md:text-2xl font-bold uppercase tracking-tighter text-primary font-headline glitch-continuous">
-              Marxist Hub
-            </span>
+        <div className="flex justify-between items-center px-6 lg:px-12 py-3.5 w-full max-w-full">
+          <Link to="/" className="flex items-center gap-3 hover:opacity-85 transition-opacity">
+            <div className="w-9 h-9 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shadow-sm">
+              <Sparkles className="w-5 h-5" />
+            </div>
+            <div>
+              <span className="text-lg md:text-xl font-bold uppercase tracking-tight text-primary font-headline block leading-tight">
+                Tư Tưởng HCM
+              </span>
+              <span className="text-[10px] uppercase tracking-widest text-on-surface-variant block font-bold">
+                HCM202 · Chương III
+              </span>
+            </div>
           </Link>
-          <div className="hidden md:flex items-center gap-8">
+
+          <div className="hidden md:flex items-center gap-2">
             {navLinks.map((link) => {
+              const Icon = link.icon;
               const isActive = location.pathname === link.path;
               return (
                 <Link
-                  key={link.label}
+                  key={link.path}
                   to={link.path}
-                  className={`font-headline tracking-tight transition-all duration-300 px-3 py-1.5 rounded-lg border uppercase text-sm font-bold ${isActive
-                    ? 'text-primary bg-primary/10 border-primary/50 shadow-[0_0_15px_rgba(255,42,85,0.3)]'
-                    : 'text-on-surface-variant border-transparent hover:text-primary hover:bg-primary/5 hover:border-primary/20 hover:shadow-[0_0_10px_rgba(255,42,85,0.1)]'
-                    }`}
+                  className={`flex items-center gap-2 font-headline tracking-tight transition-all px-4 py-2 rounded-xl text-sm font-bold ${
+                    isActive
+                      ? 'text-primary bg-primary/10 border border-primary/30 shadow-sm'
+                      : 'text-on-surface-variant border border-transparent hover:text-on-surface hover:bg-surface-variant/50'
+                  }`}
                 >
-                  {link.label}
+                  <Icon className="w-4 h-4" />
+                  <span>{link.label}</span>
                 </Link>
               );
             })}
           </div>
+
           <div className="flex items-center gap-3">
             {/* Theme Toggle */}
             <button
               onClick={toggleTheme}
-              className="relative w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface transition-all"
+              className="w-10 h-10 flex items-center justify-center rounded-xl bg-surface-variant/50 hover:bg-surface-variant text-on-surface-variant hover:text-on-surface transition-all border border-outline-variant/40"
               aria-label={theme === 'dark' ? 'Chuyển sang chế độ sáng' : 'Chuyển sang chế độ tối'}
               title={theme === 'dark' ? 'Chế độ sáng' : 'Chế độ tối'}
             >
-              <span
-                className="material-symbols-outlined text-xl"
-                style={{ fontVariationSettings: "'FILL' 1" }}
-              >
-                {theme === 'dark' ? 'light_mode' : 'dark_mode'}
-              </span>
+              {theme === 'dark' ? <Sun className="w-5 h-5 text-amber-400" /> : <Moon className="w-5 h-5 text-slate-700" />}
             </button>
-            {/* Settings */}
-            <button
-              className="relative w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant hover:text-primary transition-all"
-              aria-label="Cài đặt"
-              title="Cài đặt"
-            >
-              <span className="material-symbols-outlined text-xl">
-                settings
-              </span>
-            </button>
+
             {/* Mobile Hamburger Menu */}
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden relative w-10 h-10 flex items-center justify-center rounded-full bg-surface-container-high hover:bg-surface-container-highest text-on-surface-variant hover:text-on-surface transition-all"
+              className="md:hidden w-10 h-10 flex items-center justify-center rounded-xl bg-surface-variant/50 hover:bg-surface-variant text-on-surface-variant transition-all border border-outline-variant/40"
               aria-label="Menu"
-              title="Menu"
             >
-              <span className="material-symbols-outlined text-2xl">
-                {mobileMenuOpen ? 'close' : 'menu'}
-              </span>
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
@@ -109,27 +106,27 @@ export default function TopNavBar() {
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="fixed top-[73px] left-0 w-full bg-surface-container/95 backdrop-blur-xl border-b border-outline-variant/20 z-40 md:hidden shadow-lg"
+            className="fixed inset-x-0 top-[65px] bg-surface/98 backdrop-blur-2xl border-b border-outline-variant z-40 p-6 md:hidden shadow-2xl flex flex-col gap-3"
           >
-            <div className="flex flex-col p-6 gap-3">
-              {navLinks.map((link) => {
-                const isActive = location.pathname === link.path;
-                return (
-                  <Link
-                    key={link.label}
-                    to={link.path}
-                    onClick={() => setMobileMenuOpen(false)}
-                    className={`font-headline tracking-tight transition-all duration-300 px-4 py-3 rounded-xl border uppercase text-sm font-bold text-center ${isActive
-                      ? 'text-primary bg-primary/10 border-primary/50'
-                      : 'text-on-surface-variant border-transparent hover:text-primary hover:bg-primary/5'
-                      }`}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
-            </div>
+            {navLinks.map((link) => {
+              const Icon = link.icon;
+              const isActive = location.pathname === link.path;
+              return (
+                <Link
+                  key={link.path}
+                  to={link.path}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-base transition-all ${
+                    isActive
+                      ? 'bg-primary text-on-primary shadow-sm'
+                      : 'text-on-surface-variant hover:bg-surface-variant'
+                  }`}
+                >
+                  <Icon className="w-5 h-5" />
+                  <span>{link.label}</span>
+                </Link>
+              );
+            })}
           </motion.div>
         )}
       </AnimatePresence>

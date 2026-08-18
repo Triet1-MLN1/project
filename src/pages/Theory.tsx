@@ -1,239 +1,907 @@
-﻿import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'motion/react';
 import { useLocation } from 'react-router-dom';
-import { Brain, ChevronDown, Compass, Globe, Scale, TrendingUp, Users, Zap } from 'lucide-react';
+import {
+  Brain,
+  ChevronDown,
+  Users,
+  Zap,
+  Target,
+  Flame,
+  GraduationCap,
+  ShieldCheck,
+  Building2,
+  Palette,
+  Scale,
+  Sparkles,
+  CheckCircle2,
+  AlertTriangle,
+  ExternalLink,
+  BookOpen,
+  Maximize2,
+  X,
+  Camera
+} from 'lucide-react';
 
-const IMG = {
-  heroBg: '/theory_hero_bg.jpg',
-  productionForce: '/images/image18.png',
-  modernProduction: '/images/image7.png',
-  socializedProduction: '/images/image3.png',
-  slide3: '/images/image20.png',
-  slide4: '/images/image9.png',
-  slide5: '/images/image12.png',
-  angghen: '/angghen.png',
-  lennin: '/lennin2.0.png',
+const HISTORIC_DOCS = {
+  hcmPortrait: '/images/hcm_1946.jpg',
+  quocHoi1946: '/images/real_hcm_quoc_hoi_1946.jpg',
+  cangHaiPhong: '/images/real_hcm_cang_hai_phong_1957.jpg',
+  binhDanHocVu: '/images/real_lop_binh_dan_hoc_vu.jpg',
+  thieuNhi: '/images/real_hcm_thieu_nhi.jpg',
+  doanKet1946: '/images/real_hcm_doan_ket_1946.jpg',
+  dangCamLai: '/images/real_hcm_1950s.jpg',
+  conNguoiMoi: '/images/real_hcm_1964.jpg',
 };
 
 const SECTIONS = [
-  { id: 's1', title: 'I. Tổng quan', icon: Brain },
-  { id: 's2', title: 'II. Vai trò tích cực của CNTB', icon: TrendingUp },
-  { id: 's3', title: 'III. Giới hạn phát triển của CNTB', icon: Scale },
-  { id: 's4', title: 'IV. Kết luận & Xu thế vận động', icon: Compass },
+  { id: 's1', title: 'I. Tổng quan & Bản chất cốt lõi', icon: Brain },
+  { id: 's2', title: 'II. Hệ thống Mục tiêu của CNXH', icon: Target },
+  { id: 's3', title: 'III. Hệ thống Động lực của CNXH', icon: Flame },
+  { id: 's4', title: 'IV. Phép biện chứng Xây & Chống', icon: ShieldCheck },
+  { id: 's5', title: 'V. Trách nhiệm của Sinh viên', icon: GraduationCap },
 ];
 
-const POSITIVE_ROLES = [
+const TARGETS_DATA = [
   {
-    num: '01', icon: Zap,
-    title: 'Thúc đẩy lực lượng sản xuất phát triển nhanh chóng',
-    desc: 'Quá trình phát triển của chủ nghĩa tư bản thúc đẩy lực lượng sản xuất phát triển mạnh mẽ: chuyển từ lao động thủ công lên kỹ thuật cơ khí, tự động hóa và tin học hóa.',
+    num: '01',
+    icon: Users,
+    title: 'Mục tiêu Chính trị: Xây dựng chế độ dân chủ, nhân dân làm chủ',
+    quote: '"Chế độ ta là chế độ dân chủ. Tức là nhân dân làm chủ... Nước ta là nước dân chủ, địa vị cao nhất là dân, vì dân là chủ."',
+    desc: 'Hồ Chí Minh khẳng định quyền lực không thuộc về một cá nhân hay một nhóm thiểu số bóc lột, mà toàn bộ quyền hạn, lợi ích và lực lượng đều ở nơi dân.',
     bullets: [
-      'Giải phóng sức lao động và nâng cao hiệu quả khám phá, chinh phục tự nhiên của con người.',
-      'Đóng vai trò chủ chốt trong các cuộc cách mạng công nghiệp, đặc biệt là Cách mạng công nghiệp lần thứ tư và thời đại kinh tế tri thức.'
+      'Kế thừa và phát triển vượt bậc tư tưởng "Lấy dân làm gốc" trong truyền thống hàng nghìn năm dựng nước và giữ nước.',
+      'Thấm nhuần bài học lịch sử của danh nhân Nguyễn Trãi: "Đẩy thuyền cũng là dân, lật thuyền cũng là dân".',
+      'Nhà nước là công cụ của nhân dân, do nhân dân ủy quyền để phục vụ lợi ích tối cao của dân tộc.'
     ],
-    img: IMG.productionForce,
-    headerCls: 'text-emerald-600 dark:text-emerald-400', borderCls: 'border-l-emerald-500', bgCls: 'bg-emerald-500/5 border border-emerald-500/20',
+    badge: 'Chính trị',
+    badgeColor: 'bg-red-500/10 text-red-600 dark:text-red-400 border-red-500/30',
+    img: HISTORIC_DOCS.quocHoi1946,
+    imgCaption: 'Chủ tịch Hồ Chí Minh cùng các đại biểu tại Quốc hội khóa I (năm 1946) — Minh chứng lịch sử cho quyền làm chủ của nhân dân.',
+    sourceLink: 'https://cadn.com.vn/lay-dan-lam-goc-va-suc-manh-cua-nhan-dan-post249161.html',
+    sourceTitle: 'Lấy dân làm gốc và sức mạnh của nhân dân'
   },
   {
-    num: '02', icon: Globe,
-    title: 'Chuyển nền sản xuất nhỏ thành nền sản xuất lớn hiện đại',
-    desc: 'Chuyển kinh tế hàng hóa giản đơn lên kinh tế hàng hóa tư bản chủ nghĩa, thúc đẩy sản xuất tập trung quy mô lớn, hiện đại và năng suất cao.',
+    num: '02',
+    icon: Building2,
+    title: 'Mục tiêu Kinh tế: Lực lượng sản xuất hiện đại & QHSX tiến bộ',
+    quote: '"Nền kinh tế phát triển cao gắn liền với công nghiệp và nông nghiệp hiện đại, khoa học và kỹ thuật tiên tiến."',
+    desc: 'Xây dựng một nền kinh tế thuần nhất dựa trên hai hình thức sở hữu cơ bản: sở hữu toàn dân và sở hữu tập thể, không ngừng nâng cao đời sống nhân dân.',
     bullets: [
-      'Kích thích cải tiến kỹ thuật, tăng năng suất lao động dưới tác động của quy luật thị trường.',
-      'Tạo ra khối lượng sản phẩm hàng hóa khổng lồ và phong phú cho xã hội.'
+      'Lực lượng sản xuất: Phát triển cơ khí hóa, hiện đại hóa nông nghiệp và công nghiệp, ứng dụng khoa học kỹ thuật hàng đầu.',
+      'Kinh tế quốc doanh (Sở hữu toàn dân): Giữ vai trò chủ đạo, dẫn dắt toàn bộ nền kinh tế quốc dân, được Nhà nước ưu tiên phát triển.',
+      'Kinh tế hợp tác xã (Sở hữu tập thể): Được Nhà nước đặc biệt khuyến khích, hướng dẫn và tạo điều kiện hỗ trợ phát triển mạnh mẽ.'
     ],
-    img: IMG.modernProduction,
-    headerCls: 'text-blue-600 dark:text-blue-400', borderCls: 'border-l-blue-500', bgCls: 'bg-blue-500/5 border border-blue-500/20',
+    badge: 'Kinh tế',
+    badgeColor: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30',
+    img: HISTORIC_DOCS.cangHaiPhong,
+    imgCaption: 'Bác Hồ thăm Cảng Hải Phòng (1957), động viên giai cấp công nhân đẩy mạnh sản xuất xây dựng cơ sở vật chất CNXH.'
   },
   {
-    num: '03', icon: Users,
-    title: 'Thực hiện xã hội hóa sản xuất',
-    desc: 'Thúc đẩy xã hội hóa sản xuất cả về chiều rộng và chiều sâu, đưa sản xuất hàng hóa đạt tới mức điển hình nhất trong lịch sử.',
+    num: '03',
+    icon: Palette,
+    title: 'Mục tiêu Văn hóa: Xã hội chủ nghĩa về nội dung, Dân tộc về hình thức',
+    quote: '"Trình độ văn hóa của nhân dân nâng cao sẽ giúp chúng ta đẩy mạnh công cuộc khôi phục kinh tế, phát triển dân chủ..."',
+    desc: 'Xây dựng nền văn hóa mang tính dân tộc, khoa học, đại chúng, kế thừa truyền thống tốt đẹp của dân tộc và tiếp thu có chọn lọc tinh hoa văn hóa nhân loại.',
     bullets: [
-      'Phát triển phân công lao động xã hội, chuyên môn hóa sản xuất và hợp tác lao động sâu sắc.',
-      'Liên kết các quá trình sản xuất phân tán thành một hệ thống sản xuất xã hội thống nhất, thúc đẩy sản xuất phát triển cao hơn.'
+      'Mối quan hệ biện chứng giữa Kinh tế và Văn hóa: Kinh tế phải đi trước một bước để làm tiền đề vật chất ("Có thực mới vực được đạo").',
+      'Tính năng động của Văn hóa: Văn hóa không thụ động mà soi đường cho quốc dân đi, thúc đẩy phát triển kinh tế và bồi dưỡng nhân cách con người.',
+      'Phương châm phát triển: Đậm đà bản sắc dân tộc, phụng sự Tổ quốc và nhân dân một cách thiết thực nhất.'
     ],
-    img: IMG.socializedProduction,
-    headerCls: 'text-violet-600 dark:text-violet-400', borderCls: 'border-l-violet-500', bgCls: 'bg-violet-500/5 border border-violet-500/20',
-  },
-];
-
-const LIMITATIONS = [
-  {
-    num: '01', icon: Scale,
-    title: 'Mục đích của nền sản xuất tư bản chủ nghĩa vẫn tập trung chủ yếu vì lợi ích của thiểu số giai cấp tư sản',
-    desc: 'Mục đích của nền sản xuất tư bản chủ nghĩa không phải vì lợi ích của đông đảo quần chúng nhân dân lao động một cách tự giác, mà chủ yếu vì lợi ích của thiểu số giai cấp tư sản, của bọn tư bản độc quyền, nhất là tư bản tài chính.',
-    bullets: [
-      'Mục đích này không phù hợp với thời đại phát triển của cách mạng công nghiệp hiện đại, không phù hợp với yêu cầu của trình độ xã hội hóa cao của lực lượng sản xuất.',
-      'Cơ sở kinh tế là chế độ chiếm hữu tư nhân về tư liệu sản xuất; người lao động không có tư liệu sản xuất nên phải bán sức lao động và bị bóc lột giá trị thặng dư.',
-      'Trong chủ nghĩa tư bản hiện đại, tư liệu sản xuất tập trung vào các tập đoàn độc quyền; vì lợi nhuận độc quyền cao, các tập đoàn áp đặt giá bán cao, giá mua thấp, hạn chế sản lượng và kìm hãm phát triển.'
-    ],
-    img: IMG.slide4,
-    headerCls: 'text-rose-600 dark:text-rose-400', borderCls: 'border-l-rose-500', bgCls: 'bg-rose-500/5 border border-rose-500/20',
+    badge: 'Văn hóa',
+    badgeColor: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30',
+    img: HISTORIC_DOCS.binhDanHocVu,
+    imgCaption: 'Lớp Bình dân học vụ (1945 - 1946) — Phong trào diệt giặc dốt, nâng cao dân trí và xây dựng nền văn hóa mới phục vụ nhân dân.'
   },
   {
-    num: '02', icon: Globe,
-    title: 'Chủ nghĩa tư bản đã và đang tiếp tục tham gia gây ra chiến tranh và xung đột ở nhiều nơi trên thế giới',
-    desc: 'Vì sự tồn tại và phát triển của mình, các cường quốc tư bản ra sức chiếm lĩnh thuộc địa, chiếm lĩnh thị trường.',
+    num: '04',
+    icon: Scale,
+    title: 'Mục tiêu Quan hệ Xã hội: Dân chủ, công bằng, văn minh',
+    quote: '"Làm nhiều hưởng nhiều, làm ít hưởng ít, không làm không hưởng. Những người già yếu hoặc tàn tật sẽ được Nhà nước giúp đỡ."',
+    desc: 'Xây dựng một xã hội tôn trọng con người, bảo đảm quyền tự do dân chủ và thỏa mãn các lợi ích cá nhân chính đáng, hài hòa với lợi ích tập thể.',
     bullets: [
-      'Sự phân chia thị trường thế giới dựa trên sức mạnh và sự phát triển không đều tất yếu dẫn đến các cuộc xung đột để phân chia lại thị trường.',
-      'Là nguyên nhân chính dẫn đến Chiến tranh thế giới thứ nhất (1914–1918) và thứ hai (1939–1945), chạy đua vũ trang và chiến tranh lạnh.',
-      'Trong thế kỷ XXI, chiến tranh cục bộ, sắc tộc, thương mại vẫn xảy ra và đều có sự can thiệp trực tiếp hoặc gián tiếp của các cường quốc tư bản.'
+      'Bình đẳng mọi mặt: Mọi công dân đều bình đẳng trước pháp luật, có quyền học tập, lao động, nghỉ ngơi và tự do ngôn luận.',
+      'Thực hiện nguyên tắc phân phối công bằng theo lao động, kết hợp với các chính sách an sinh xã hội nhân văn.',
+      'Gắn kết chặt chẽ giữa quyền lợi và nghĩa vụ của mỗi thành viên trong xã hội.'
     ],
-    img: IMG.slide3,
-    headerCls: 'text-orange-600 dark:text-orange-400', borderCls: 'border-l-orange-500', bgCls: 'bg-orange-500/5 border border-orange-500/20',
-  },
-  {
-    num: '03', icon: Users,
-    title: 'Sự phân hóa giàu - nghèo trong lòng các nước tư bản và có xu hướng ngày càng sâu sắc',
-    desc: 'Tích tụ và tập trung tư bản cao độ làm gia tăng giá trị thặng dư của các tập đoàn độc quyền, khiến thu nhập của giai cấp công nhân giảm tương đối trong khi thu nhập của giai cấp tư sản tăng lên.',
-    bullets: [
-      'Các cường quốc tư bản thi hành chính sách thực dân mới, sử dụng viện trợ và "chiến lược biên giới mềm" để duy trì sự lệ thuộc của các nước đang phát triển.',
-      'Một nhóm nhỏ cường quốc giàu lên nhanh chóng trong khi nhiều quốc gia chậm phát triển chìm sâu trong nghèo đói; lợi nhuận tập đoàn Mỹ vượt quá GDP một số quốc gia.'
-    ],
-    img: IMG.slide5,
-    headerCls: 'text-pink-600 dark:text-pink-400', borderCls: 'border-l-pink-500', bgCls: 'bg-pink-500/5 border border-pink-500/20',
+    badge: 'Xã hội',
+    badgeColor: 'bg-sky-500/10 text-sky-600 dark:text-sky-400 border-sky-500/30',
+    img: HISTORIC_DOCS.thieuNhi,
+    imgCaption: 'Chủ tịch Hồ Chí Minh cùng các cháu thiếu nhi — Biểu tượng của xã hội nhân văn, yêu thương và chăm lo tương lai thế hệ trẻ.'
   },
 ];
 
-type TheoryItem = (typeof POSITIVE_ROLES)[number] | (typeof LIMITATIONS)[number];
-
-function SectionBridge({ text }: { text: string }) {
-  return <div className="flex items-center gap-4 py-2"><div className="flex-1 h-px bg-gradient-to-r from-transparent via-outline-variant to-transparent" /><p className="text-base text-on-surface-variant italic text-center px-2 shrink-0 max-w-xl">{text}</p><div className="flex-1 h-px bg-gradient-to-r from-transparent via-outline-variant to-transparent" /></div>;
-}
+const MOTIVATION_DATA = [
+  {
+    num: '01',
+    icon: Users,
+    title: 'Động lực trực tiếp hàng đầu: Lợi ích của dân - Dân chủ của dân - Đại đoàn kết',
+    desc: 'Hồ Chí Minh khẳng định ba yếu tố này gắn bó hữu cơ, là tiền đề tạo nên sức mạnh vô địch của cách mạng xã hội chủ nghĩa.',
+    subItems: [
+      {
+        title: 'Lợi ích của nhân dân',
+        content: 'Phải chăm lo cả đời sống vật chất và tinh thần của dân. Người răn dạy: "Việc gì có lợi cho dân phải hết sức làm, việc gì có hại cho dân phải hết sức tránh", luôn đặt quyền lợi của dân lên trên hết thảy.'
+      },
+      {
+        title: 'Dân chủ của nhân dân',
+        content: '"Dân chủ là của quý báu nhất của nhân dân". Khi dân chủ thực sự được phát huy, tính chủ động và sức sáng tạo của hàng triệu quần chúng mới được giải phóng triệt để.'
+      },
+      {
+        title: 'Đại đoàn kết toàn dân',
+        content: '"Đoàn kết, đoàn kết, đại đoàn kết. Thành công, thành công, đại thành công". Đại đoàn kết dựa trên sự tự giác, ý thức trách nhiệm và sự liên minh công - nông - trí thức.'
+      }
+    ],
+    img: HISTORIC_DOCS.doanKet1946,
+    imgCaption: 'Chủ tịch Hồ Chí Minh cùng Phái đoàn đại diện khối đại đoàn kết toàn dân tộc (năm 1946).'
+  },
+  {
+    num: '02',
+    icon: Zap,
+    title: 'Động lực tổ chức: Sự vận hành nhịp nhàng của Hệ thống Chính trị',
+    desc: 'Sức mạnh của quần chúng chỉ phát huy tối đa khi được tổ chức và dẫn dắt bởi đường lối khoa học.',
+    subItems: [
+      {
+        title: 'Vai trò lãnh đạo của Đảng Cộng sản',
+        content: 'Hồ Chí Minh ví von: "Đảng như người cầm lái, người cầm lái có vững thì thuyền mới chạy". Đảng lãnh đạo bằng đường lối đúng đắn, giữ vững đạo đức, văn minh và liên hệ máu thịt với quần chúng.'
+      },
+      {
+        title: 'Vai trò quản lý của Nhà nước pháp quyền',
+        content: 'Nhà nước của dân, do dân, vì dân; quản lý xã hội bằng hệ thống pháp luật dân chủ, nghiêm minh, biến chủ trương của Đảng thành hiện thực sinh động trong đời sống.'
+      },
+      {
+        title: 'Mặt trận & các đoàn thể nhân dân',
+        content: 'Là cầu nối vững chắc tập hợp mọi giai tầng xã hội, tạo nên sức mạnh tổng hợp bảo vệ và xây dựng Tổ quốc.'
+      }
+    ],
+    img: HISTORIC_DOCS.dangCamLai,
+    imgCaption: 'Bác Hồ chủ trì Hội nghị Trung ương Đảng — Định hướng vai trò "Người cầm lái" vững vàng đưa cách mạng tiến lên.'
+  },
+  {
+    num: '03',
+    icon: GraduationCap,
+    title: 'Động lực con người mới: Nhân tố quyết định thành bại',
+    desc: 'Luận điểm cốt lõi của Hồ Chí Minh: "Muốn xây dựng chủ nghĩa xã hội, trước hết cần có những con người xã hội chủ nghĩa".',
+    subItems: [
+      {
+        title: 'Bồi dưỡng thế hệ con người mới',
+        content: 'Có ý thức làm chủ, tinh thần tập thể "mình vì mọi người, mọi người vì mình", có quan điểm lao động sáng tạo và cần kiệm xây dựng đất nước.'
+      },
+      {
+        title: 'Trình độ & Bản lĩnh',
+        content: 'Vừa có đạo đức cách mạng trong sáng (Hồng), vừa có trình độ chuyên môn, khoa học kỹ thuật vững vàng (Chuyên).'
+      },
+      {
+        title: 'Ý chí cách mạng',
+        content: 'Có chí khí tiến nhanh, tiến mạnh, tiến vững chắc lên chủ nghĩa xã hội, không lùi bước trước khó khăn gian khổ.'
+      }
+    ],
+    img: HISTORIC_DOCS.conNguoiMoi,
+    imgCaption: 'Chủ tịch Hồ Chí Minh tại Đại hội thi đua (1964) — Bồi dưỡng con người mới XHCN "vừa hồng vừa chuyên".'
+  }
+];
 
 function SectionHeading({ icon: Icon, color, label, title }: { icon: React.ElementType; color: string; label: string; title: string }) {
-  return <div className="flex items-center gap-4 mb-10 border-b border-outline-variant pb-5"><div className={`w-14 h-14 rounded-2xl ${color} flex items-center justify-center flex-shrink-0`}><Icon className="w-7 h-7" /></div><div><span className="text-xs font-bold tracking-widest uppercase text-outline block mb-1">{label}</span><h2 className="text-3xl md:text-4xl font-headline font-bold text-on-surface leading-tight">{title}</h2></div></div>;
-}
-
-function BulletList({ bullets, tone }: { bullets: string[]; tone: string }) {
-  return <ul className="space-y-2">{bullets.map((bullet) => <li key={bullet} className="flex items-start gap-2.5 text-sm text-on-surface-variant"><span className={`${tone} mt-1 shrink-0`}>•</span><span>{bullet}</span></li>)}</ul>;
-}
-
-function AccordionItem({ item, idx, open, setOpen, tone, onImageClick, extraContent }: { item: TheoryItem; idx: number; open: number | null; setOpen: (value: number | null) => void; tone: 'emerald' | 'rose'; onImageClick: (img: string) => void; extraContent?: React.ReactNode }) {
-  const Icon = item.icon;
-  const isOpen = open === idx;
-  const bulletTone = tone === 'emerald' ? 'text-emerald-500' : 'text-rose-500';
-
-  return <div className={`rounded-2xl border-l-4 ${item.borderCls} ${item.bgCls} overflow-hidden transition-all`}>
-    <button onClick={() => setOpen(isOpen ? null : idx)} className="w-full flex items-center gap-4 p-5 text-left hover:bg-white/5 transition-colors">
-      <span className={`text-2xl font-black opacity-30 w-8 shrink-0 ${item.headerCls}`}>{item.num}</span>
-      <Icon className={`w-5 h-5 shrink-0 ${item.headerCls}`} />
-      <div className="flex-1 min-w-0">
-        <p className={`font-bold text-lg md:text-xl ${item.headerCls}`}>{item.title}</p>
-        {!isOpen && <p className="text-sm text-on-surface-variant mt-1 line-clamp-1">{item.desc}</p>}
+  return (
+    <div className="flex items-center gap-4 mb-8 border-b border-outline-variant/60 pb-5">
+      <div className={`w-14 h-14 rounded-2xl ${color} flex items-center justify-center flex-shrink-0 shadow-sm border border-outline-variant/30`}>
+        <Icon className="w-7 h-7" />
       </div>
-      <ChevronDown className={`w-5 h-5 text-outline shrink-0 transition-transform ${isOpen ? 'rotate-180' : ''}`} />
-    </button>
-
-    <AnimatePresence>
-      {isOpen && <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.25 }} className="overflow-hidden">
-        <div className="grid md:grid-cols-2 gap-4 border-t border-outline-variant/30 p-5 bg-surface/50">
-          <div className="space-y-4">
-            <p className="text-base text-on-surface leading-relaxed">{item.desc}</p>
-            <BulletList bullets={item.bullets} tone={bulletTone} />
-          </div>
-          <div className="space-y-4">
-            <button className="rounded-xl overflow-hidden border border-outline-variant aspect-video bg-black flex items-center justify-center group cursor-zoom-in" onClick={() => onImageClick(item.img)}>
-              <img src={item.img} alt={item.title} className="max-h-full max-w-full object-contain transition-transform duration-300 group-hover:scale-[1.02]" />
-            </button>
-          </div>
-        </div>
-        {extraContent}
-      </motion.div>}
-    </AnimatePresence>
-  </div>;
+      <div>
+        <span className="text-xs font-bold tracking-widest uppercase text-primary block mb-1">
+          {label}
+        </span>
+        <h2 className="text-2xl md:text-3xl lg:text-4xl font-headline font-bold text-on-surface leading-tight">
+          {title}
+        </h2>
+      </div>
+    </div>
+  );
 }
+
 export default function Theory() {
   const [activeId, setActiveId] = useState('s1');
-  const [openPos, setOpenPos] = useState<number | null>(0);
-  const [openLimit, setOpenLimit] = useState<number | null>(0);
-  const [activeLightboxImg, setActiveLightboxImg] = useState<string | null>(null);
+  const [openTarget, setOpenTarget] = useState<number | null>(0);
   const [sidebarOpen, setSidebarOpen] = useState(true);
+  const [activeLightboxImg, setActiveLightboxImg] = useState<{ url: string; title: string; caption?: string } | null>(null);
   const location = useLocation();
 
   const scrollTo = (id: string) => {
     const element = document.getElementById(id);
-    if (element) window.scrollTo({ top: element.getBoundingClientRect().top + window.scrollY - 100, behavior: 'smooth' });
+    if (element) {
+      window.scrollTo({
+        top: element.getBoundingClientRect().top + window.scrollY - 100,
+        behavior: 'smooth'
+      });
+    }
   };
 
-  useEffect(() => { if (location.hash) setTimeout(() => scrollTo(location.hash.replace('#', '')), 100); }, [location.hash]);
   useEffect(() => {
-    const observer = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) setActiveId(entry.target.id); }), { rootMargin: '-20% 0px -70% 0px' });
-    SECTIONS.forEach((section) => { const element = document.getElementById(section.id); if (element) observer.observe(element); });
+    if (location.hash) {
+      setTimeout(() => scrollTo(location.hash.replace('#', '')), 100);
+    }
+  }, [location.hash]);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) setActiveId(entry.target.id);
+        });
+      },
+      { rootMargin: '-20% 0px -70% 0px' }
+    );
+    SECTIONS.forEach((sec) => {
+      const el = document.getElementById(sec.id);
+      if (el) observer.observe(el);
+    });
     return () => observer.disconnect();
   }, []);
 
-  return <div className="max-w-[1440px] mx-auto px-4 lg:px-8 xl:px-12 pt-24 pb-8 md:pt-28 md:pb-12 flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
-    <motion.aside animate={{ width: sidebarOpen ? 280 : 48 }} transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }} className="flex-shrink-0 lg:sticky lg:top-24 z-10 hidden lg:block" style={{ minWidth: sidebarOpen ? 280 : 48 }}>
-      <div className="relative bg-surface rounded-2xl border border-outline-variant shadow-sm overflow-hidden h-full"><button onClick={() => setSidebarOpen(!sidebarOpen)} title={sidebarOpen ? 'Ẩn mục lục' : 'Hiện mục lục'} className="absolute top-3 right-3 z-20 w-7 h-7 rounded-lg bg-surface-variant hover:bg-primary/10 hover:text-primary text-outline flex items-center justify-center transition-all border border-outline-variant hover:border-primary/30"><motion.span animate={{ rotate: sidebarOpen ? 0 : 180 }} transition={{ duration: 0.3 }} className="flex items-center justify-center text-xs font-bold">◀</motion.span></button>
-        <AnimatePresence mode="wait">{sidebarOpen ? <motion.div key="open" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="p-5"><h3 className="font-headline font-bold text-base mb-4 text-on-surface px-2 border-b pb-3 pr-10">Mục lục bài học</h3><nav className="flex flex-col gap-2">{SECTIONS.map((sec) => { const Icon = sec.icon; const isActive = activeId === sec.id; return <button key={sec.id} onClick={() => scrollTo(sec.id)} className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all text-sm font-medium text-left ${isActive ? 'bg-primary-container text-on-primary-container shadow-sm' : 'text-on-surface hover:bg-surface-variant'}`}><Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-primary' : 'text-outline'}`} /><span className="truncate">{sec.title}</span></button>; })}</nav></motion.div> : <motion.div key="closed" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2, delay: 0.1 }} className="flex flex-col items-center pt-14 pb-5 gap-4 h-full">{SECTIONS.map((sec) => { const Icon = sec.icon; const isActive = activeId === sec.id; return <button key={sec.id} onClick={() => scrollTo(sec.id)} title={sec.title} className={`w-8 h-8 rounded-lg flex items-center justify-center transition-all ${isActive ? 'bg-primary/15 text-primary' : 'text-outline hover:bg-surface-variant hover:text-on-surface'}`}><Icon className="w-4 h-4" /></button>; })}</motion.div>}</AnimatePresence>
+  return (
+    <div className="max-w-[1440px] mx-auto px-4 lg:px-8 xl:px-12 pt-24 pb-16 flex flex-col lg:flex-row gap-8 lg:gap-12 items-start">
+      {/* ============================================================ */}
+      {/* DESKTOP SIDEBAR NAVIGATION                                   */}
+      {/* ============================================================ */}
+      <motion.aside
+        animate={{ width: sidebarOpen ? 300 : 54 }}
+        transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
+        className="flex-shrink-0 lg:sticky lg:top-24 z-10 hidden lg:block"
+        style={{ minWidth: sidebarOpen ? 300 : 54 }}
+      >
+        <div className="relative bg-surface rounded-3xl border border-outline-variant shadow-sm overflow-hidden h-full">
+          <button
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            title={sidebarOpen ? 'Ẩn mục lục' : 'Hiện mục lục'}
+            className="absolute top-4 right-4 z-20 w-8 h-8 rounded-xl bg-surface-variant/80 hover:bg-primary/10 hover:text-primary text-outline flex items-center justify-center transition-all border border-outline-variant"
+          >
+            <motion.span
+              animate={{ rotate: sidebarOpen ? 0 : 180 }}
+              transition={{ duration: 0.3 }}
+              className="flex items-center justify-center text-xs font-bold"
+            >
+              ◀
+            </motion.span>
+          </button>
+
+          <AnimatePresence mode="wait">
+            {sidebarOpen ? (
+              <motion.div
+                key="open"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2 }}
+                className="p-6"
+              >
+                <div className="flex items-center gap-2 mb-4 pb-3 border-b border-outline-variant pr-8">
+                  <BookOpen className="w-5 h-5 text-primary" />
+                  <h3 className="font-headline font-bold text-base text-on-surface">Mục lục lý luận</h3>
+                </div>
+
+                <nav className="flex flex-col gap-2">
+                  {SECTIONS.map((sec) => {
+                    const Icon = sec.icon;
+                    const isActive = activeId === sec.id;
+                    return (
+                      <button
+                        key={sec.id}
+                        onClick={() => scrollTo(sec.id)}
+                        className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-all text-sm font-medium text-left ${
+                          isActive
+                            ? 'bg-primary text-on-primary shadow-md font-bold'
+                            : 'text-on-surface hover:bg-surface-variant/70'
+                        }`}
+                      >
+                        <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-on-primary' : 'text-primary'}`} />
+                        <span className="truncate">{sec.title}</span>
+                      </button>
+                    );
+                  })}
+                </nav>
+
+                <div className="mt-8 pt-4 border-t border-outline-variant/50 text-xs text-on-surface-variant space-y-1">
+                  <p className="font-bold text-primary">Tư tưởng Hồ Chí Minh</p>
+                  <p>Chương III · Nhóm 1 (HCM202)</p>
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="closed"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.2, delay: 0.1 }}
+                className="flex flex-col items-center pt-16 pb-6 gap-4 h-full"
+              >
+                {SECTIONS.map((sec) => {
+                  const Icon = sec.icon;
+                  const isActive = activeId === sec.id;
+                  return (
+                    <button
+                      key={sec.id}
+                      onClick={() => scrollTo(sec.id)}
+                      title={sec.title}
+                      className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all ${
+                        isActive
+                          ? 'bg-primary text-on-primary shadow-md'
+                          : 'text-outline hover:bg-surface-variant hover:text-on-surface'
+                      }`}
+                    >
+                      <Icon className="w-4 h-4" />
+                    </button>
+                  );
+                })}
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </motion.aside>
+
+      {/* ============================================================ */}
+      {/* MOBILE HORIZONTAL NAV BAR                                    */}
+      {/* ============================================================ */}
+      <div className="w-full lg:hidden bg-surface rounded-2xl p-3 border border-outline-variant shadow-sm sticky top-20 z-20">
+        <nav className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+          {SECTIONS.map((sec) => {
+            const Icon = sec.icon;
+            const isActive = activeId === sec.id;
+            return (
+              <button
+                key={sec.id}
+                onClick={() => scrollTo(sec.id)}
+                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all text-xs font-bold flex-shrink-0 ${
+                  isActive
+                    ? 'bg-primary text-on-primary shadow-sm'
+                    : 'text-on-surface hover:bg-surface-variant'
+                }`}
+              >
+                <Icon className="w-3.5 h-3.5" />
+                <span>{sec.title}</span>
+              </button>
+            );
+          })}
+        </nav>
       </div>
-    </motion.aside>
 
-    <div className="w-full lg:hidden bg-surface rounded-2xl p-4 border border-outline-variant shadow-sm"><nav className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">{SECTIONS.map((sec) => { const Icon = sec.icon; const isActive = activeId === sec.id; return <button key={sec.id} onClick={() => scrollTo(sec.id)} className={`flex items-center gap-2 px-3 py-2.5 rounded-xl transition-all text-sm font-medium flex-shrink-0 ${isActive ? 'bg-primary-container text-on-primary-container shadow-sm' : 'text-on-surface hover:bg-surface-variant'}`}><Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-primary' : 'text-outline'}`} /><span>{sec.title}</span></button>; })}</nav></div>
+      {/* ============================================================ */}
+      {/* MAIN THEORY CONTENT STREAM                                   */}
+      {/* ============================================================ */}
+      <main className="flex-1 min-w-0 pb-16 space-y-16">
+        {/* HERO SECTION WITH AUTHENTIC HISTORICAL PORTRAIT */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="relative rounded-3xl overflow-hidden border border-primary/20 shadow-2xl bg-surface"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-red-950/90 via-red-900/80 to-zinc-950/95 z-0" />
+          
+          <div className="relative z-10 p-8 sm:p-10 lg:p-12 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+            <div className="md:col-span-2 space-y-4">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 font-bold text-xs uppercase tracking-widest">
+                <Sparkles className="w-3.5 h-3.5" /> Chương III · Tư tưởng Hồ Chí Minh
+              </div>
+              <h1 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
+                Mục Tiêu & Động Lực Của Chủ Nghĩa Xã Hội Ở Việt Nam
+              </h1>
+              <p className="text-zinc-200 text-base md:text-lg leading-relaxed">
+                Hệ thống quan điểm toàn diện, sâu sắc của Chủ tịch Hồ Chí Minh về bản chất xã hội mới mà nhân dân ta hướng tới và nguồn sức mạnh vô địch để hiện thực hóa lý tưởng độc lập dân tộc gắn liền với chủ nghĩa xã hội.
+              </p>
 
-    <main className="flex-1 min-w-0 pb-16 space-y-14">
-      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="relative rounded-3xl overflow-hidden border border-primary/20 shadow-2xl min-h-[320px] md:min-h-[380px]"><img src={IMG.heroBg} alt="Nền bài học" className="absolute inset-0 w-full h-full object-cover object-center scale-105" /><div className="absolute inset-0 bg-gradient-to-r from-[#060812]/95 via-[#0a0a1a]/85 to-[#060812]/50" /><div className="absolute bottom-0 right-0 h-full flex items-end justify-end gap-0 pointer-events-none"><img src={IMG.lennin} alt="Lênin" className="h-[80%] object-contain object-bottom opacity-20 mix-blend-luminosity select-none" /><img src={IMG.angghen} alt="Ăngghen" className="h-[85%] object-contain object-bottom opacity-30 mix-blend-luminosity select-none" /></div><div className="relative z-10 p-8 lg:p-12"><span className="inline-block text-xs font-bold tracking-widest uppercase text-primary bg-primary/10 border border-primary/25 px-3 py-1.5 rounded-full mb-6">Triết học Mác - Lênin · Chương 4</span><h1 className="font-headline text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight mb-5">Vai Trò Lịch Sử<br className="hidden md:block" /> Của Chủ Nghĩa Tư Bản</h1><p className="text-blue-100/70 text-base md:text-lg leading-relaxed max-w-2xl mb-3">Bài trình bày tóm tắt hai mặt cơ bản của chủ nghĩa tư bản: những đóng góp tích cực đối với lực lượng sản xuất và những giới hạn phát triển bắt nguồn từ mâu thuẫn nội tại của nó.</p><p className="text-amber-300/80 text-sm md:text-base leading-relaxed max-w-2xl mb-6 italic border-l-2 border-amber-400/50 pl-3">Trọng tâm: CNTB không tồn tại vĩnh viễn; đến một trình độ nhất định, quan hệ sản xuất tư bản chủ nghĩa sẽ bị thay thế bởi hình thái kinh tế - xã hội tiến bộ hơn.</p></div></motion.div>
+              <div className="bg-white/10 backdrop-blur-md border-l-4 border-amber-400 p-4 rounded-r-2xl">
+                <p className="text-amber-200 italic text-sm md:text-base leading-relaxed">
+                  "Nước ta là nước dân chủ, địa vị cao nhất là dân, vì dân là chủ... Việc gì có lợi cho dân phải hết sức làm, việc gì có hại cho dân phải hết sức tránh."
+                </p>
+                <span className="block text-right text-xs font-bold text-amber-300 mt-2 uppercase tracking-wider">
+                  — Chủ tịch Hồ Chí Minh
+                </span>
+              </div>
+            </div>
 
-      <motion.section id="s1" className="scroll-mt-28" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}><SectionHeading icon={Brain} color="bg-primary/10 text-primary" label="Phần 1" title="Tổng quan nội dung" /><div className="bg-surface border border-outline-variant rounded-3xl p-7 md:p-8 grid grid-cols-1 lg:grid-cols-3 gap-6 items-center"><div className="bg-surface border border-outline-variant rounded-2xl p-3 flex flex-col items-center justify-center"><button className="rounded-xl overflow-hidden border border-outline-variant bg-transparent flex items-center justify-center group cursor-zoom-in max-w-[280px]" onClick={() => setActiveLightboxImg('/images/image21.png')}><img src="/images/image21.png" alt="Tổng quan vai trò lịch sử" className="w-full h-auto object-contain transition-transform duration-300 group-hover:scale-[1.02]" /></button></div><div className="lg:col-span-2 space-y-4"><h3 className="text-2xl font-bold text-primary flex items-center gap-2"><Brain className="w-6 h-6" /> Luận điểm chính</h3><p className="text-on-surface-variant text-base md:text-lg leading-relaxed">Khi nhìn dưới góc độ lịch sử, chủ nghĩa tư bản vừa là một bước tiến lớn của nhân loại, vừa là một hình thái kinh tế - xã hội chứa đựng nhiều mâu thuẫn bên trong.</p><p className="text-on-surface-variant text-base md:text-lg leading-relaxed">Ở mặt tích cực, nó thúc đẩy lực lượng sản xuất, mở rộng sản xuất lớn hiện đại và làm quá trình sản xuất ngày càng mang tính xã hội. Nhưng ở mặt giới hạn, mục tiêu lợi nhuận và quan hệ chiếm hữu tư nhân lại làm nảy sinh bất bình đẳng, xung đột và phân hóa giàu nghèo.</p></div></div></motion.section>
+            {/* Authentic Historical Photo Portrait */}
+            <div className="flex flex-col items-center justify-center">
+              <div
+                className="relative group rounded-3xl overflow-hidden border-4 border-amber-400/40 shadow-2xl bg-black/40 max-w-[260px] cursor-zoom-in"
+                onClick={() => setActiveLightboxImg({
+                  url: HISTORIC_DOCS.hcmPortrait,
+                  title: 'Chân dung Chủ tịch Hồ Chí Minh',
+                  caption: 'Chân dung Chủ tịch Hồ Chí Minh năm 1946 — Người sáng lập và rèn luyện Đảng Cộng sản Việt Nam.'
+                })}
+              >
+                <img
+                  src={HISTORIC_DOCS.hcmPortrait}
+                  alt="Chân dung Chủ tịch Hồ Chí Minh năm 1946"
+                  className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+                <div className="absolute bottom-0 inset-x-0 bg-black/70 backdrop-blur-sm p-2 text-center text-[11px] text-zinc-300 font-medium border-t border-white/10">
+                  Chủ tịch Hồ Chí Minh (1890 - 1969)
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
 
-      <SectionBridge text="Trước hết, hãy nhìn vào ba đóng góp tích cực mà CNTB tạo ra trong tiến trình phát triển của sản xuất xã hội." />
-      <motion.section id="s2" className="scroll-mt-28" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}><SectionHeading icon={TrendingUp} color="bg-emerald-500/10 text-emerald-600" label="Phần 2" title="Vai trò tích cực của chủ nghĩa tư bản" /><div className="bg-emerald-500/5 border border-emerald-500/20 rounded-3xl p-7 md:p-8 mb-8"><h3 className="text-2xl font-bold text-emerald-600 dark:text-emerald-400 mb-4 flex items-center gap-2"><Zap className="w-6 h-6" /> Ba ý chính cần nhớ</h3><p className="text-on-surface-variant text-base md:text-lg leading-relaxed mb-6">Chủ nghĩa tư bản thúc đẩy kỹ thuật - công nghệ, chuyển sản xuất nhỏ thành sản xuất lớn và làm cho quá trình sản xuất ngày càng mang tính xã hội rộng hơn, sâu hơn.</p><div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-sm"><div className="p-3 bg-surface rounded-xl border border-emerald-500/10 flex items-center gap-2 font-medium"><span className="text-emerald-500">→</span> Thúc đẩy lực lượng sản xuất</div><div className="p-3 bg-surface rounded-xl border border-emerald-500/10 flex items-center gap-2 font-medium"><span className="text-emerald-500">→</span> Phát triển sản xuất lớn hiện đại</div><div className="p-3 bg-surface rounded-xl border border-emerald-500/10 flex items-center gap-2 font-medium"><span className="text-emerald-500">→</span> Thực hiện xã hội hóa sản xuất</div></div></div><div className="space-y-4"><h4 className="text-lg font-bold uppercase tracking-wider text-outline mb-2">Phân tích 3 vai trò tích cực cốt lõi</h4>{POSITIVE_ROLES.map((item, idx) => <AccordionItem key={item.title} item={item} idx={idx} open={openPos} setOpen={setOpenPos} tone="emerald" onImageClick={setActiveLightboxImg} />)}</div></motion.section>
+        {/* ============================================================ */}
+        {/* SECTION 1: TỔNG QUAN & BẢN CHẤT CỐT LÕI                       */}
+        {/* ============================================================ */}
+        <motion.section
+          id="s1"
+          className="scroll-mt-28"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <SectionHeading
+            icon={Brain}
+            color="bg-primary/10 text-primary"
+            label="Phần I"
+            title="Tổng Quan & Bản Chất Cốt Lõi"
+          />
 
-      <SectionBridge text="Bên cạnh vai trò tích cực, CNTB vẫn chứa những giới hạn phát triển xuất phát từ chính cơ sở kinh tế và mục đích lợi nhuận của nó." />
-      <motion.section id="s3" className="scroll-mt-28" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}><SectionHeading icon={Scale} color="bg-rose-500/10 text-rose-600" label="Phần 3" title="Những giới hạn phát triển của chủ nghĩa tư bản" /><div className="relative bg-gradient-to-br from-rose-950/40 via-[#121421] to-[#0a0a14] border border-rose-500/20 rounded-3xl p-8 mb-8 overflow-hidden"><div className="absolute top-4 left-6 text-rose-500/10 font-serif text-[120px] leading-none select-none pointer-events-none">"</div><div className="relative z-10"><span className="text-xs font-bold tracking-widest uppercase text-rose-400/80 mb-2 block">Nguyên nhân sâu xa</span><p className="text-lg md:text-xl font-medium text-white/95 leading-relaxed mb-4">Mâu thuẫn cơ bản của CNTB là mâu thuẫn giữa trình độ xã hội hóa ngày càng cao của lực lượng sản xuất với quan hệ sản xuất dựa trên chiếm hữu tư nhân tư bản chủ nghĩa về tư liệu sản xuất.</p><p className="text-rose-300/70 font-bold text-sm">Đây là điểm nối giữa các biểu hiện giới hạn cụ thể.</p></div></div><div className="space-y-4">{LIMITATIONS.map((item, idx) => <AccordionItem key={item.title} item={item} idx={idx} open={openLimit} setOpen={setOpenLimit} tone="rose" onImageClick={setActiveLightboxImg} extraContent={idx === 2 ? <div className="mx-5 mb-5 p-5 bg-red-500/10 border border-red-500/20 rounded-2xl relative overflow-hidden"><div className="absolute top-2 right-4 text-red-500/5 font-serif text-[100px] leading-none select-none pointer-events-none">"</div><span className="text-xs font-bold tracking-widest uppercase text-red-500 dark:text-red-400 block mb-2">💬 Hộp 4.2. Tổng thống thứ 45 của Hoa Kỳ Donald J. Trump nói về bất bình đẳng tại Mỹ:</span><p className="text-sm text-on-surface-variant leading-relaxed italic mb-3">"Tôi rất quan ngại về con số 46,5 triệu người đang sống trong cảnh nghèo đói, và về việc đại đa số người Mỹ trung lưu khó lòng mua nổi căn nhà cho họ (hoặc đã mất nhà). Tôi rất quan ngại về những người không thể trả tiền học cho con cái họ. Nói ngắn gọn, tôi quan ngại cho những ai không thể tin tưởng vào giấc mơ Mỹ vì những chương trình tài chính của đất nước này quá thiên vị lợi ích của người giàu. Không ngạc nhiên khi sự căng thẳng trong xã hội chúng ta đang ở mức cao nhất chưa từng có."</p><p className="text-xs text-outline font-semibold text-right">— Nguồn: Donald J. Trump: Nước Mỹ nhìn từ bên trong, Nxb. Thế giới, Hà Nội, 2016, tr.106, 108</p></div> : undefined} />)}</div></motion.section>
-
-      <SectionBridge text="Từ hai mặt tích cực và giới hạn, rút ra mâu thuẫn cơ bản và xu thế vận động của chủ nghĩa tư bản." />
-      <motion.section id="s4" className="scroll-mt-28" initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-        <SectionHeading icon={Compass} color="bg-violet-500/10 text-violet-600" label="Phần 4" title="IV. Kết luận & Xu thế vận động" />
-
-        {/* Mâu thuẫn cơ bản */}
-        <div className="bg-violet-500/5 border border-violet-500/20 rounded-3xl p-6 md:p-8 mb-6 space-y-6">
-          <h4 className="text-xl font-bold text-violet-600 dark:text-violet-400 flex items-center gap-2">
-            ⚡ Mâu thuẫn cơ bản của chủ nghĩa tư bản
-          </h4>
-          <p className="text-base text-on-surface leading-relaxed">
-            Những hạn chế của chủ nghĩa tư bản bắt nguồn từ mâu thuẫn cơ bản: <strong>mâu thuẫn giữa trình độ xã hội hóa ngày càng cao của lực lượng sản xuất với quan hệ sản xuất dựa trên quan hệ chiếm hữu tư nhân tư bản chủ nghĩa về tư liệu sản xuất.</strong>
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-2">
-            <div className="p-5 bg-surface border border-outline-variant rounded-2xl border-l-4 border-l-emerald-500 space-y-3">
-              <span className="text-xs font-bold text-emerald-500 tracking-wider uppercase block">Lực lượng sản xuất xã hội hóa</span>
-              <p className="text-sm text-on-surface-variant leading-relaxed">
-                Vì mục đích lợi nhuận, nhà tư bản cải tiến kỹ thuật, ứng dụng công nghệ hiện đại và hợp lý hóa sản xuất. Do đó, chủ nghĩa tư bản càng phát triển, trình độ xã hội hóa của lực lượng sản xuất ngày càng cao.
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="bg-surface border border-outline-variant p-6 rounded-3xl space-y-4 shadow-sm">
+              <div className="w-12 h-12 rounded-2xl bg-red-500/10 text-red-600 flex items-center justify-center">
+                <Target className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold text-on-surface">Mục tiêu: Vì Ai?</h3>
+              <p className="text-on-surface-variant text-sm leading-relaxed">
+                Mục tiêu của CNXH là giải phóng con người, mang lại độc lập tự do cho Tổ quốc, ấm no hạnh phúc thực sự cho toàn thể nhân dân lao động.
               </p>
             </div>
-            <div className="p-5 bg-surface border border-outline-variant rounded-2xl border-l-4 border-l-rose-500 space-y-3">
-              <span className="text-xs font-bold text-rose-500 tracking-wider uppercase block">Quan hệ sản xuất thích ứng hình thức</span>
-              <p className="text-sm text-on-surface-variant leading-relaxed">
-                Quan hệ sản xuất không ngừng điều chỉnh để mang tính xã hội hơn về hình thức (từ sở hữu cá nhân sang sở hữu tập thể và nhà nước), nhưng bản chất chiếm hữu tư nhân tư bản chủ nghĩa vẫn giữ nguyên.
+
+            <div className="bg-surface border border-outline-variant p-6 rounded-3xl space-y-4 shadow-sm">
+              <div className="w-12 h-12 rounded-2xl bg-amber-500/10 text-amber-600 flex items-center justify-center">
+                <Flame className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold text-on-surface">Động lực: Dựa vào Đâu?</h3>
+              <p className="text-on-surface-variant text-sm leading-relaxed">
+                Động lực quyết định nhất là nội lực dân tộc, là nhân dân. Kết hợp hài hòa giữa lợi ích vật chất, quyền làm chủ và khối đại đoàn kết toàn dân.
+              </p>
+            </div>
+
+            <div className="bg-surface border border-outline-variant p-6 rounded-3xl space-y-4 shadow-sm">
+              <div className="w-12 h-12 rounded-2xl bg-emerald-500/10 text-emerald-600 flex items-center justify-center">
+                <ShieldCheck className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-bold text-on-surface">Biện chứng Xây & Chống</h3>
+              <p className="text-on-surface-variant text-sm leading-relaxed">
+                Xây dựng con người mới, đạo đức cách mạng đi đôi với quyết liệt chống chủ nghĩa cá nhân, quan liêu, tham ô, lãng phí.
               </p>
             </div>
           </div>
+        </motion.section>
 
-          <div className="p-5 bg-surface border border-outline-variant rounded-2xl text-sm text-on-surface-variant leading-relaxed">
-            Những điều chỉnh trên giúp chủ nghĩa tư bản có sự thích ứng và phát triển nhất định. Mặc dù vậy, trong xã hội tư bản hiện đại, mâu thuẫn cơ bản này vẫn tồn tại và không thể tự giải quyết được.
-          </div>
-        </div>
+        {/* ============================================================ */}
+        {/* SECTION 2: HỆ THỐNG MỤC TIÊU CỦA CNXH Ở VIỆT NAM              */}
+        {/* ============================================================ */}
+        <motion.section
+          id="s2"
+          className="scroll-mt-28"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <SectionHeading
+            icon={Target}
+            color="bg-red-500/10 text-red-600"
+            label="Phần II"
+            title="Hệ Thống Mục Tiêu Của Chủ Nghĩa Xã Hội"
+          />
 
-        {/* Kết luận lịch sử */}
-        <div className="bg-gradient-to-br from-[#1a1c2e] to-[#0a0a14] border border-violet-500/20 rounded-3xl p-6 md:p-8 space-y-4">
-          <h3 className="text-xl font-bold text-violet-300 flex items-center gap-2">
-            🔄 Kết luận về xu thế tất yếu lịch sử
-          </h3>
-          <p className="text-sm text-violet-100/80 leading-relaxed">
-            Do chủ nghĩa tư bản không tự giải quyết được mâu thuẫn cơ bản của mình, nên theo quy luật khách quan, quan hệ sản xuất tư bản chủ nghĩa tất yếu sẽ bị thay thế bằng một quan hệ sản xuất khác dựa trên sở hữu xã hội để tương thích với lực lượng sản xuất xã hội hóa cao.
+          <p className="text-on-surface-variant text-base md:text-lg mb-8 leading-relaxed">
+            Hồ Chí Minh thiết lập một hệ thống mục tiêu đồng bộ, bao trùm mọi lĩnh vực đời sống xã hội, trong đó các mục tiêu có mối quan hệ biện chứng chặt chẽ với nhau:
           </p>
-          <div className="border-t border-violet-500/20 pt-4">
-            <p className="text-base text-violet-200 font-bold leading-relaxed">
-              👉 Chủ nghĩa tư bản không tồn tại vĩnh viễn, mà phát triển đến một trình độ nhất định sẽ tất yếu bị thay thế bởi một hình thái kinh tế - xã hội mới tiến bộ hơn.
+
+          <div className="space-y-6">
+            {TARGETS_DATA.map((target, idx) => {
+              const Icon = target.icon;
+              const isOpen = openTarget === idx;
+
+              return (
+                <div
+                  key={target.num}
+                  className="bg-surface rounded-3xl border border-outline-variant shadow-sm overflow-hidden transition-all"
+                >
+                  <button
+                    onClick={() => setOpenTarget(isOpen ? null : idx)}
+                    className="w-full flex items-center gap-4 p-6 text-left hover:bg-surface-variant/30 transition-colors"
+                  >
+                    <span className="text-2xl font-black text-primary/40 font-mono w-8 shrink-0">
+                      {target.num}
+                    </span>
+                    <div className="w-10 h-10 rounded-xl bg-primary/10 text-primary flex items-center justify-center shrink-0">
+                      <Icon className="w-5 h-5" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-3 mb-1">
+                        <span className={`text-xs font-bold px-2.5 py-0.5 rounded-full border ${target.badgeColor}`}>
+                          {target.badge}
+                        </span>
+                      </div>
+                      <h3 className="font-bold text-lg md:text-xl text-on-surface leading-tight">
+                        {target.title}
+                      </h3>
+                    </div>
+                    <ChevronDown className={`w-5 h-5 text-outline shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 text-primary' : ''}`} />
+                  </button>
+
+                  <AnimatePresence>
+                    {isOpen && (
+                      <motion.div
+                        initial={{ height: 0, opacity: 0 }}
+                        animate={{ height: 'auto', opacity: 1 }}
+                        exit={{ height: 0, opacity: 0 }}
+                        transition={{ duration: 0.25 }}
+                        className="overflow-hidden"
+                      >
+                        <div className="p-6 md:p-8 border-t border-outline-variant/40 bg-surface-variant/10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                          <div className="lg:col-span-7 space-y-4">
+                            <div className="bg-primary/5 border-l-4 border-primary p-4 rounded-r-2xl">
+                              <p className="text-on-surface italic font-medium text-base">
+                                {target.quote}
+                              </p>
+                            </div>
+                            <p className="text-on-surface-variant text-base leading-relaxed">
+                              {target.desc}
+                            </p>
+
+                            <ul className="space-y-2.5 pt-2">
+                              {target.bullets.map((b, i) => (
+                                <li key={i} className="flex items-start gap-3 text-sm md:text-base text-on-surface-variant">
+                                  <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+                                  <span>{b}</span>
+                                </li>
+                              ))}
+                            </ul>
+
+                            {target.sourceLink && (
+                              <div className="pt-3">
+                                <a
+                                  href={target.sourceLink}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:underline bg-primary/5 px-3 py-1.5 rounded-lg border border-primary/20"
+                                >
+                                  <ExternalLink className="w-3.5 h-3.5" /> Nguồn tư liệu: {target.sourceTitle}
+                                </a>
+                              </div>
+                            )}
+                          </div>
+
+                          {/* Authentic Documentary Photo */}
+                          <div className="lg:col-span-5 flex flex-col items-center bg-surface p-4 rounded-2xl border border-outline-variant shadow-sm space-y-3">
+                            <div
+                              className="relative group rounded-xl overflow-hidden border border-outline-variant/50 w-full aspect-[4/3] bg-black/30 flex items-center justify-center cursor-zoom-in"
+                              onClick={() => setActiveLightboxImg({
+                                url: target.img,
+                                title: target.title,
+                                caption: target.imgCaption
+                              })}
+                            >
+                              <img
+                                src={target.img}
+                                alt={target.title}
+                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                              />
+                              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold gap-1">
+                                <Maximize2 className="w-4 h-4" /> Phóng to ảnh
+                              </div>
+                              <div className="absolute top-2 left-2 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded text-[10px] text-amber-300 font-bold uppercase tracking-wider flex items-center gap-1">
+                                <Camera className="w-3 h-3" /> Ảnh tư liệu
+                              </div>
+                            </div>
+                            <p className="text-xs text-on-surface-variant italic text-center leading-relaxed px-2">
+                              {target.imgCaption}
+                            </p>
+                          </div>
+                        </div>
+                      </motion.div>
+                    )}
+                  </AnimatePresence>
+                </div>
+              );
+            })}
+          </div>
+        </motion.section>
+
+        {/* ============================================================ */}
+        {/* SECTION 3: HỆ THỐNG ĐỘNG LỰC CỦA CNXH Ở VIỆT NAM             */}
+        {/* ============================================================ */}
+        <motion.section
+          id="s3"
+          className="scroll-mt-28"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <SectionHeading
+            icon={Flame}
+            color="bg-amber-500/10 text-amber-600"
+            label="Phần III"
+            title="Hệ Thống Động Lực Của Chủ Nghĩa Xã Hội"
+          />
+
+          <p className="text-on-surface-variant text-base md:text-lg mb-8 leading-relaxed">
+            Hồ Chí Minh chỉ rõ hệ thống động lực thúc đẩy CNXH rất phong phú, bao hàm cả vật chất và tinh thần, nội lực và ngoại lực, trong đó giữ vai trò quyết định là nội lực dân tộc, là nhân dân:
+          </p>
+
+          <div className="space-y-8">
+            {MOTIVATION_DATA.map((item) => {
+              return (
+                <div
+                  key={item.num}
+                  className="bg-surface rounded-3xl border border-outline-variant p-6 md:p-8 shadow-sm"
+                >
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    <div className="lg:col-span-8 space-y-4">
+                      <div className="flex items-center gap-3">
+                        <span className="w-8 h-8 rounded-lg bg-amber-500/10 text-amber-600 flex items-center justify-center font-bold text-sm">
+                          {item.num}
+                        </span>
+                        <h3 className="text-xl md:text-2xl font-bold text-on-surface">
+                          {item.title}
+                        </h3>
+                      </div>
+                      <p className="text-on-surface-variant text-base leading-relaxed">
+                        {item.desc}
+                      </p>
+
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 pt-2">
+                        {item.subItems.map((sub, sIdx) => (
+                          <div
+                            key={sIdx}
+                            className="bg-surface-variant/30 border border-outline-variant/50 p-4 rounded-2xl space-y-2"
+                          >
+                            <h4 className="font-bold text-primary text-base flex items-center gap-2">
+                              <Sparkles className="w-4 h-4" /> {sub.title}
+                            </h4>
+                            <p className="text-on-surface-variant text-xs md:text-sm leading-relaxed">
+                              {sub.content}
+                            </p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Authentic Documentary Photo for Motivation Section */}
+                    <div className="lg:col-span-4 flex flex-col items-center bg-surface-variant/20 p-4 rounded-2xl border border-outline-variant/40 space-y-3">
+                      <div
+                        className="relative group rounded-xl overflow-hidden border border-outline-variant/50 w-full aspect-[4/3] bg-black/30 flex items-center justify-center cursor-zoom-in"
+                        onClick={() => setActiveLightboxImg({
+                          url: item.img,
+                          title: item.title,
+                          caption: item.imgCaption
+                        })}
+                      >
+                        <img
+                          src={item.img}
+                          alt={item.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold gap-1">
+                          <Maximize2 className="w-4 h-4" /> Phóng to ảnh
+                        </div>
+                        <div className="absolute top-2 left-2 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded text-[10px] text-amber-300 font-bold uppercase tracking-wider flex items-center gap-1">
+                          <Camera className="w-3 h-3" /> Ảnh tư liệu
+                        </div>
+                      </div>
+                      <p className="text-xs text-on-surface-variant italic text-center leading-relaxed px-2">
+                        {item.imgCaption}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </motion.section>
+
+        {/* ============================================================ */}
+        {/* SECTION 4: PHÉP BIỆN CHỨNG XÂY & CHỐNG                         */}
+        {/* ============================================================ */}
+        <motion.section
+          id="s4"
+          className="scroll-mt-28"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <SectionHeading
+            icon={ShieldCheck}
+            color="bg-emerald-500/10 text-emerald-600"
+            label="Phần IV"
+            title="Phép Biện Chứng Giữa 'Xây' & 'Chống'"
+          />
+
+          <div className="bg-surface rounded-3xl border border-outline-variant p-6 md:p-8 shadow-sm space-y-6">
+            <div className="bg-amber-500/10 border-l-4 border-amber-500 p-4 rounded-r-2xl">
+              <p className="text-on-surface italic text-base md:text-lg">
+                "Muốn xây dựng chủ nghĩa xã hội, trước hết cần có những con người xã hội chủ nghĩa... Xây phải đi đôi với chống, xây là nhiệm vụ chính, chống là nhiệm vụ rất quan trọng."
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* CẦN XÂY */}
+              <div className="bg-emerald-500/5 border-2 border-emerald-500/30 p-6 rounded-3xl space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold">
+                    <CheckCircle2 className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <span className="text-xs uppercase font-extrabold tracking-wider text-emerald-600 block">Nhiệm Vụ Cơ Bản</span>
+                    <h3 className="text-xl font-bold text-emerald-950 dark:text-emerald-300">Phẩm Chất Cần "XÂY"</h3>
+                  </div>
+                </div>
+
+                <ul className="space-y-3 text-sm md:text-base text-on-surface-variant">
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-emerald-500 font-bold">•</span>
+                    <span>Có ý thức làm chủ Nhà nước, tinh thần tập thể: <strong>"Mình vì mọi người, mọi người vì mình"</strong>.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-emerald-500 font-bold">•</span>
+                    <span>Có quan điểm lao động đúng đắn: <strong>"Tất cả phục vụ sản xuất"</strong>, kỷ luật và năng suất cao.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-emerald-500 font-bold">•</span>
+                    <span>Có ý thức <strong>cần kiệm xây dựng nước nhà</strong>, giữ gìn của công.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-emerald-500 font-bold">•</span>
+                    <span>Có chí khí tiến nhanh, tiến mạnh, tiến vững chắc lên chủ nghĩa xã hội.</span>
+                  </li>
+                </ul>
+              </div>
+
+              {/* CẦN CHỐNG */}
+              <div className="bg-rose-500/5 border-2 border-rose-500/30 p-6 rounded-3xl space-y-4">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-xl bg-rose-500 text-white flex items-center justify-center font-bold">
+                    <AlertTriangle className="w-6 h-6" />
+                  </div>
+                  <div>
+                    <span className="text-xs uppercase font-extrabold tracking-wider text-rose-600 block">Triệt Tiêu Lực Cản</span>
+                    <h3 className="text-xl font-bold text-rose-950 dark:text-rose-300">Những Tệ Nạn Cần "CHỐNG"</h3>
+                  </div>
+                </div>
+
+                <ul className="space-y-3 text-sm md:text-base text-on-surface-variant">
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-rose-500 font-bold">•</span>
+                    <span><strong>Chủ nghĩa cá nhân:</strong> Kẻ thù hung ác của CNXH, là thứ "vi trùng độc hại" sinh ra các bệnh tham lam, kiêu ngạo, danh vọng.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-rose-500 font-bold">•</span>
+                    <span><strong>Bệnh quan liêu, mệnh lệnh, độc đoán:</strong> Xa rời thực tế, xa rời nhân dân.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-rose-500 font-bold">•</span>
+                    <span><strong>Tham ô, lãng phí:</strong> Tội lỗi ăn cắp của công, phá hoại công sức lao động của nhân dân.</span>
+                  </li>
+                  <li className="flex items-start gap-2.5">
+                    <span className="text-rose-500 font-bold">•</span>
+                    <span>Tư tưởng trì trệ, bảo thủ, rụt rè, ngại khó, ngại khổ.</span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+
+        {/* ============================================================ */}
+        {/* SECTION 5: TRÁCH NHIỆM CỦA SINH VIÊN                          */}
+        {/* ============================================================ */}
+        <motion.section
+          id="s5"
+          className="scroll-mt-28"
+          initial={{ opacity: 0, y: 24 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+        >
+          <SectionHeading
+            icon={GraduationCap}
+            color="bg-emerald-500/10 text-emerald-600"
+            label="Phần V"
+            title="Liên Hệ Thực Tiễn & Trách Nhiệm Của Sinh Viên"
+          />
+
+          <div className="bg-surface rounded-3xl border border-outline-variant p-6 md:p-8 shadow-sm space-y-6">
+            <p className="text-on-surface-variant text-base md:text-lg leading-relaxed">
+              Vận dụng tư tưởng Hồ Chí Minh vào kỷ nguyên vươn mình của dân tộc, sinh viên hôm nay cần ý thức rõ vai trò và trách nhiệm tiên phong của mình:
             </p>
-          </div>
-        </div>
-      </motion.section>
-    </main>
 
-    <AnimatePresence>{activeLightboxImg && <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setActiveLightboxImg(null)} className="fixed inset-0 bg-black/90 backdrop-blur-md z-[200] flex items-center justify-center p-4 md:p-8 cursor-zoom-out"><button onClick={() => setActiveLightboxImg(null)} className="absolute top-6 right-6 text-white/70 hover:text-white bg-white/10 hover:bg-white/20 p-3 rounded-full transition-all border border-white/10" title="Đóng"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-x"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></svg></button><motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} exit={{ scale: 0.9, opacity: 0 }} transition={{ type: 'spring', stiffness: 300, damping: 25 }} className="relative max-w-full max-h-[90vh] flex items-center justify-center" onClick={(e) => e.stopPropagation()}><img src={activeLightboxImg} alt="Phóng to hình ảnh" className="max-w-full max-h-[90vh] object-contain rounded-2xl border border-white/10 shadow-2xl bg-black" /></motion.div></motion.div>}</AnimatePresence>
-  </div>;
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="p-5 rounded-2xl bg-surface-variant/30 border border-outline-variant/50 space-y-2">
+                <h4 className="font-bold text-primary text-base flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-500" /> 1. Học tập và Đổi mới sáng tạo
+                </h4>
+                <p className="text-on-surface-variant text-sm leading-relaxed">
+                  Chủ động chiếm lĩnh tri thức khoa học, công nghệ hiện đại, nâng cao năng lực chuyên môn để đóng góp vào sự nghiệp công nghiệp hóa, hiện đại hóa đất nước.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-surface-variant/30 border border-outline-variant/50 space-y-2">
+                <h4 className="font-bold text-primary text-base flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-500" /> 2. Rèn luyện Đạo đức Cách mạng
+                </h4>
+                <p className="text-on-surface-variant text-sm leading-relaxed">
+                  Tu dưỡng cần, kiệm, liêm, chính; kiên quyết đấu tranh chống lối sống thực dụng, ích kỷ và chủ nghĩa cá nhân trong học đường và đời sống.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-surface-variant/30 border border-outline-variant/50 space-y-2">
+                <h4 className="font-bold text-primary text-base flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-500" /> 3. Tinh thần Phụng sự Cộng đồng
+                </h4>
+                <p className="text-on-surface-variant text-sm leading-relaxed">
+                  Tích cực tham gia các hoạt động tình nguyện, xây dựng tinh thần đại đoàn kết, giúp đỡ bạn bè và cộng đồng xung quanh.
+                </p>
+              </div>
+
+              <div className="p-5 rounded-2xl bg-surface-variant/30 border border-outline-variant/50 space-y-2">
+                <h4 className="font-bold text-primary text-base flex items-center gap-2">
+                  <CheckCircle2 className="w-5 h-5 text-emerald-500" /> 4. Bản lĩnh Chính trị vững vàng
+                </h4>
+                <p className="text-on-surface-variant text-sm leading-relaxed">
+                  Kiên định mục tiêu độc lập dân tộc gắn liền với chủ nghĩa xã hội, tỉnh táo trước các luận điệu xuyên tạc của các thế lực thù địch trên không gian mạng.
+                </p>
+              </div>
+            </div>
+          </div>
+        </motion.section>
+      </main>
+
+      {/* ============================================================ */}
+      {/* PHOTO LIGHTBOX MODAL                                         */}
+      {/* ============================================================ */}
+      <AnimatePresence>
+        {activeLightboxImg && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/85 backdrop-blur-md z-[120] flex items-center justify-center p-4"
+            onClick={() => setActiveLightboxImg(null)}
+          >
+            <motion.div
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-surface rounded-3xl p-6 max-w-3xl w-full border border-outline-variant shadow-2xl flex flex-col items-center relative"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setActiveLightboxImg(null)}
+                className="absolute top-4 right-4 text-on-surface-variant hover:text-on-surface hover:bg-surface-variant p-2 rounded-full transition-colors z-10"
+              >
+                <X className="w-6 h-6" />
+              </button>
+
+              <div className="w-full text-center mb-4 pr-8">
+                <div className="inline-flex items-center gap-1.5 text-xs font-bold text-amber-500 uppercase tracking-widest mb-1">
+                  <Camera className="w-3.5 h-3.5" /> Tư liệu Lịch sử Chính thống
+                </div>
+                <h3 className="font-headline text-lg md:text-xl font-bold text-on-surface">
+                  {activeLightboxImg.title}
+                </h3>
+              </div>
+
+              <div className="rounded-2xl overflow-hidden border border-outline-variant/40 bg-black max-h-[60vh] flex items-center justify-center w-full">
+                <img
+                  src={activeLightboxImg.url}
+                  alt={activeLightboxImg.title}
+                  className="max-h-[60vh] w-auto object-contain"
+                />
+              </div>
+
+              {activeLightboxImg.caption && (
+                <p className="text-xs md:text-sm text-on-surface-variant italic text-center mt-4 max-w-xl">
+                  {activeLightboxImg.caption}
+                </p>
+              )}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
 }
