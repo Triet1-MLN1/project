@@ -127,7 +127,7 @@ export default function Review() {
 
   /* ─── Setup Screen ─── */
   if (screen === 'setup') {
-    const total = rawQuestions?.length ?? 131;
+    const total = rawQuestions?.length ?? 100;
     return (
       <div style={{
         position: 'fixed',
@@ -205,7 +205,7 @@ export default function Review() {
             <input
               type="range"
               min={5}
-              max={total || 131}
+              max={total || 100}
               value={questionCount}
               onChange={e => setQuestionCount(Number(e.target.value))}
               style={{ width: '100%', accentColor: 'var(--color-primary, #2d5a27)' }}

@@ -70,7 +70,7 @@ export const seedCatchphrases = mutation({
 export const list = query({
   args: {},
   handler: async (ctx) => {
-    return await ctx.db.query("quizQuestions").take(131);
+    return await ctx.db.query("quizQuestions").collect();
   },
 });
 
@@ -115,7 +115,7 @@ export const explain = action({
     const optionsText = args.options.join("\n");
     const isCorrect = args.selectedAnswer === args.correctAnswer;
 
-    const prompt = `Bạn là trợ lý AI về Triết học Mác-Lênin (đặc biệt: Tồn tại xã hội và Ý thức xã hội). Hãy giải thích ngắn gọn (3-5 câu) câu hỏi trắc nghiệm sau:
+    const prompt = `Bạn là trợ lý AI về môn Tư tưởng Hồ Chí Minh. Hãy giải thích ngắn gọn (3-5 câu) câu hỏi trắc nghiệm sau:
 
 CÂU HỎI:
 ${args.question}
@@ -127,7 +127,7 @@ ${optionsText}
 ${!isCorrect ? `ĐÁP ÁN ĐÃ CHỌN: ${args.selectedAnswer} (SAI)` : `ĐÁP ÁN ĐÃ CHỌN: ${args.selectedAnswer} (ĐÚNG)`}
 
 Yêu cầu:
-1. Giải thích tại sao đáp án ${args.correctAnswer} là đúng (dựa trên kiến thức Triết học Mác-Lênin)
+1. Giải thích tại sao đáp án ${args.correctAnswer} là đúng (dựa trên kiến thức Tư tưởng Hồ Chí Minh)
 ${!isCorrect ? `2. Giải thích tại sao đáp án ${args.selectedAnswer} là sai` : ""}
 3. Ngắn gọn, dễ hiểu, dùng tiếng Việt
 4. Có thể dùng markdown để format`;

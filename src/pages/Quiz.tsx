@@ -176,7 +176,7 @@ export default function Quiz() {
   const handleSystemBank = () => {
     if (!rawQuestions || rawQuestions.length === 0) return;
     const selected = shuffleArr(rawQuestions)
-      .slice(0, 50)
+      .slice(0, 60)
       .map(q => ({
         _id: q._id,
         questionId: q.questionId,
@@ -462,9 +462,8 @@ export default function Quiz() {
                   Ôn tập
                 </h2>
                 <p className="text-on-surface-variant leading-relaxed mb-8 flex-grow">
-                  {/* Đã đổi sang nội dung Triết học */}
-                  Làm bài và xem đáp án ngay, có AI hỗ trợ giải thích các khái niệm Triết học và
-                  xã hội phức tạp một cách trực quan.
+                  Làm bài và xem đáp án ngay, có AI hỗ trợ giải thích các khái niệm Tư tưởng Hồ Chí Minh
+                  và cách mạng Việt Nam một cách trực quan.
                 </p>
 
                 <Link to="/quiz/review">
@@ -629,10 +628,10 @@ export default function Quiz() {
 
                     <div>
                       <h3 className="font-headline font-bold text-lg text-on-surface">
-                        Ngân hàng câu hỏi Triết học
+                        Ngân hàng câu hỏi Tư tưởng Hồ Chí Minh
                       </h3>
                       <p className="text-sm text-on-surface-variant mt-1 leading-relaxed">
-                        50 câu ngẫu nhiên từ ngân hàng đề. Phù hợp ôn thi Triết học Mác-Lênin.
+                        60 câu ngẫu nhiên từ ngân hàng 100 câu. Phù hợp ôn thi Tư tưởng Hồ Chí Minh.
                       </p>
                     </div>
 
