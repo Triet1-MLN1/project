@@ -516,19 +516,18 @@ export default function Quiz() {
             viewport={{ once: true, margin: '-60px' }}
             transition={{ duration: 0.8 }}
           >
-            <div className="relative h-64 md:h-80 overflow-hidden">
+            <div className="relative h-64 md:h-80 overflow-hidden border border-outline-variant/30">
               <motion.img
                 className="absolute inset-0 w-full h-full object-cover"
-                alt="Cyberpunk Marxist Background"
-                src="/quote_marxist_cyberpunk.png"
-                referrerPolicy="no-referrer"
-                initial={{ scale: 1.1 }}
+                alt="Chủ tịch Hồ Chí Minh cùng nhân dân"
+                src="/images/real_hcm_doan_ket_1946.jpg"
+                initial={{ scale: 1.08 }}
                 whileInView={{ scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 1.5, ease: 'easeOut' }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/30 to-transparent" />
-              <div className="absolute inset-0 bg-gradient-to-r from-black/50 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/30" />
+              <div className="absolute inset-0 bg-gradient-to-r from-red-950/80 via-black/70 to-transparent" />
               <div className="absolute bottom-0 left-0 p-8 md:p-12 z-10 max-w-2xl">
                 <motion.span
                   className="inline-block px-3 py-1 bg-secondary-fixed text-on-secondary-fixed text-[11px] font-bold uppercase tracking-[0.2em] rounded-md mb-4"

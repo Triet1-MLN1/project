@@ -4,7 +4,6 @@ import { motion, AnimatePresence } from "motion/react";
 import { MessageSquare, X, Send, Bot, Loader2 } from "lucide-react";
 import { useAction } from "convex/react";
 import { api } from "../../convex/_generated/api";
-import lenninLogo from "../public/lennin2.0.png";
 import ReactMarkdown from "react-markdown";
 
 interface Message {
@@ -90,6 +89,8 @@ export default function ChatBot() {
   const allowedPaths = ["/", "/quiz", "/theory"];
   if (!allowedPaths.includes(location.pathname)) return null;
 
+  const botAvatar = "/images/hcm_1946.jpg";
+
   return (
     <>
       {/* Floating Action Button */}
@@ -102,11 +103,11 @@ export default function ChatBot() {
         className={`fixed bottom-6 right-6 w-16 h-16 rounded-full shadow-lg shadow-primary/30 flex items-center justify-center z-50 overflow-hidden border-2 border-primary bg-surface p-0 ${isOpen ? "hidden" : "flex"
           }`}
         style={{ borderRadius: "9999px" }}
-        aria-label="Mở chat Lenin 2.0"
+        aria-label="Mở Trợ lý Học tập Tư tưởng HCM"
       >
         <img
-          src={lenninLogo}
-          alt="Lenin Assistant"
+          src={botAvatar}
+          alt="Trợ lý Tư tưởng HCM"
           className="w-full h-full object-cover rounded-full"
           style={{ imageRendering: "auto" }}
           onError={(e) => {
@@ -132,8 +133,8 @@ export default function ChatBot() {
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-full bg-surface/20 flex items-center justify-center overflow-hidden border-2 border-surface shrink-0">
                   <img
-                    src={lenninLogo}
-                    alt="Lenin 2.0"
+                    src={botAvatar}
+                    alt="Trợ lý Tư tưởng HCM"
                     className="w-full h-full object-cover"
                     onError={(e) => {
                       e.currentTarget.style.display = "none";
@@ -143,10 +144,10 @@ export default function ChatBot() {
                   <Bot className="w-6 h-6 hidden" />
                 </div>
                 <div>
-                  <h3 className="font-bold text-lg leading-tight tracking-tight">Lenin 2.0</h3>
+                  <h3 className="font-bold text-lg leading-tight tracking-tight">Trợ Lý Tư Tưởng HCM</h3>
                   <p className="text-xs opacity-90 flex items-center gap-1.5 font-medium mt-0.5">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]"></span>
-                    Trợ lý AI · Triết học Mác-Lênin
+                    AI Đồng Hành · Chương III (HCM202)
                   </p>
                 </div>
               </div>
@@ -168,7 +169,7 @@ export default function ChatBot() {
                 >
                   {msg.isBot && (
                     <div className="w-7 h-7 rounded-full overflow-hidden border border-outline-variant mr-2 shrink-0 self-end">
-                      <img src={lenninLogo} alt="bot" className="w-full h-full object-cover" />
+                      <img src={botAvatar} alt="bot" className="w-full h-full object-cover" />
                     </div>
                   )}
                   <motion.div
@@ -239,7 +240,7 @@ export default function ChatBot() {
               {isLoading && (
                 <div className="flex justify-start items-end gap-2">
                   <div className="w-7 h-7 rounded-full overflow-hidden border border-outline-variant shrink-0">
-                    <img src={lenninLogo} alt="bot" className="w-full h-full object-cover" />
+                    <img src={botAvatar} alt="bot" className="w-full h-full object-cover" />
                   </div>
                   <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
