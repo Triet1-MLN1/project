@@ -380,10 +380,10 @@ export default function Theory() {
                 <Sparkles className="w-3.5 h-3.5" /> Chương III · Tư tưởng Hồ Chí Minh
               </div>
               <h1 className="font-headline text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
-                Mục Tiêu & Động Lực Của Chủ Nghĩa Xã Hội Ở Việt Nam
+                Tư tưởng Hồ Chí Minh về xây dựng chủ nghĩa xã hội ở Việt Nam
               </h1>
               <p className="text-zinc-200 text-base md:text-lg leading-relaxed">
-                Hệ thống quan điểm toàn diện, sâu sắc của Chủ tịch Hồ Chí Minh về bản chất xã hội mới mà nhân dân ta hướng tới và nguồn sức mạnh vô địch để hiện thực hóa lý tưởng độc lập dân tộc gắn liền với chủ nghĩa xã hội.
+                Mục Tiêu & Động Lực Của Chủ Nghĩa Xã Hội Ở Việt Nam
               </p>
 
               <div className="bg-white/10 backdrop-blur-md border-l-4 border-amber-400 p-4 rounded-r-2xl">
