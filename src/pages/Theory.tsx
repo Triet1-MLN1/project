@@ -32,6 +32,8 @@ const HISTORIC_DOCS = {
   doanKet1946: '/images/real_hcm_doan_ket_1946.jpg',
   dangCamLai: '/images/real_hcm_1950s.jpg',
   conNguoiMoi: '/images/real_hcm_1964.jpg',
+  evnLogo: '/evn.png',
+  htxLogo: '/htx.png',
 };
 
 const SECTIONS = [
@@ -74,6 +76,7 @@ const TARGETS_DATA = [
     ],
     badge: 'Kinh tế',
     badgeColor: 'bg-amber-500/10 text-amber-600 dark:text-amber-400 border-amber-500/30',
+    dualLogos: true,
     img: HISTORIC_DOCS.cangHaiPhong,
     imgCaption: 'Bác Hồ thăm Cảng Hải Phòng (1957), động viên giai cấp công nhân đẩy mạnh sản xuất xây dựng cơ sở vật chất CNXH.'
   },
@@ -84,9 +87,8 @@ const TARGETS_DATA = [
     quote: '"Trình độ văn hóa của nhân dân nâng cao sẽ giúp chúng ta đẩy mạnh công cuộc khôi phục kinh tế, phát triển dân chủ..."',
     desc: 'Xây dựng nền văn hóa mang tính dân tộc, khoa học, đại chúng, kế thừa truyền thống tốt đẹp của dân tộc và tiếp thu có chọn lọc tinh hoa văn hóa nhân loại.',
     bullets: [
-      'Mối quan hệ biện chứng giữa Kinh tế và Văn hóa: Kinh tế phải đi trước một bước để làm tiền đề vật chất ("Có thực mới vực được đạo").',
-      'Tính năng động của Văn hóa: Văn hóa không thụ động mà soi đường cho quốc dân đi, thúc đẩy phát triển kinh tế và bồi dưỡng nhân cách con người.',
-      'Phương châm phát triển: Đậm đà bản sắc dân tộc, phụng sự Tổ quốc và nhân dân một cách thiết thực nhất.'
+      'Mối quan hệ giữa Kinh tế và Văn hóa: Kinh tế phải đi trước một bước để làm tiền đề vật chất ("Có thực mới vực được đạo").',
+      'Văn hóa không đứng yên mà cũng phát triển song song với kinh tế, thúc đẩy phát triển kinh tế và bồi dưỡng nhân cách con người.',
     ],
     badge: 'Văn hóa',
     badgeColor: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/30',
@@ -286,11 +288,10 @@ export default function Theory() {
                       <button
                         key={sec.id}
                         onClick={() => scrollTo(sec.id)}
-                        className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-all text-sm font-medium text-left ${
-                          isActive
-                            ? 'bg-primary text-on-primary shadow-md font-bold'
-                            : 'text-on-surface hover:bg-surface-variant/70'
-                        }`}
+                        className={`flex items-center gap-3 px-4 py-3 rounded-2xl transition-all text-sm font-medium text-left ${isActive
+                          ? 'bg-primary text-on-primary shadow-md font-bold'
+                          : 'text-on-surface hover:bg-surface-variant/70'
+                          }`}
                       >
                         <Icon className={`w-4 h-4 shrink-0 ${isActive ? 'text-on-primary' : 'text-primary'}`} />
                         <span className="truncate">{sec.title}</span>
@@ -321,11 +322,10 @@ export default function Theory() {
                       key={sec.id}
                       onClick={() => scrollTo(sec.id)}
                       title={sec.title}
-                      className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all ${
-                        isActive
-                          ? 'bg-primary text-on-primary shadow-md'
-                          : 'text-outline hover:bg-surface-variant hover:text-on-surface'
-                      }`}
+                      className={`w-9 h-9 rounded-xl flex items-center justify-center transition-all ${isActive
+                        ? 'bg-primary text-on-primary shadow-md'
+                        : 'text-outline hover:bg-surface-variant hover:text-on-surface'
+                        }`}
                     >
                       <Icon className="w-4 h-4" />
                     </button>
@@ -349,11 +349,10 @@ export default function Theory() {
               <button
                 key={sec.id}
                 onClick={() => scrollTo(sec.id)}
-                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all text-xs font-bold flex-shrink-0 ${
-                  isActive
-                    ? 'bg-primary text-on-primary shadow-sm'
-                    : 'text-on-surface hover:bg-surface-variant'
-                }`}
+                className={`flex items-center gap-2 px-3.5 py-2 rounded-xl transition-all text-xs font-bold flex-shrink-0 ${isActive
+                  ? 'bg-primary text-on-primary shadow-sm'
+                  : 'text-on-surface hover:bg-surface-variant'
+                  }`}
               >
                 <Icon className="w-3.5 h-3.5" />
                 <span>{sec.title}</span>
@@ -374,7 +373,7 @@ export default function Theory() {
           className="relative rounded-3xl overflow-hidden border border-primary/20 shadow-2xl bg-surface"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-red-950/90 via-red-900/80 to-zinc-950/95 z-0" />
-          
+
           <div className="relative z-10 p-8 sm:p-10 lg:p-12 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
             <div className="md:col-span-2 space-y-4">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-500/20 border border-amber-500/30 text-amber-300 font-bold text-xs uppercase tracking-widest">
@@ -534,7 +533,7 @@ export default function Theory() {
                         className="overflow-hidden"
                       >
                         <div className="p-6 md:p-8 border-t border-outline-variant/40 bg-surface-variant/10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
-                          <div className="lg:col-span-7 space-y-4">
+                          <div className={`${target.dualLogos ? 'lg:col-span-7' : 'lg:col-span-7'} space-y-4`}>
                             <div className="bg-primary/5 border-l-4 border-primary p-4 rounded-r-2xl">
                               <p className="text-on-surface italic font-medium text-base">
                                 {target.quote}
@@ -567,32 +566,87 @@ export default function Theory() {
                             )}
                           </div>
 
-                          {/* Authentic Documentary Photo */}
-                          <div className="lg:col-span-5 flex flex-col items-center bg-surface p-4 rounded-2xl border border-outline-variant shadow-sm space-y-3">
-                            <div
-                              className="relative group rounded-xl overflow-hidden border border-outline-variant/50 w-full aspect-[4/3] bg-black/30 flex items-center justify-center cursor-zoom-in"
-                              onClick={() => setActiveLightboxImg({
-                                url: target.img,
-                                title: target.title,
-                                caption: target.imgCaption
-                              })}
-                            >
-                              <img
-                                src={target.img}
-                                alt={target.title}
-                                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                              />
-                              <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold gap-1">
-                                <Maximize2 className="w-4 h-4" /> Phóng to ảnh
+                          {target.dualLogos ? (
+                            <div className="lg:col-span-5 flex flex-col gap-4">
+                              <div className="bg-white rounded-2xl p-3 border border-outline-variant shadow-sm space-y-2">
+                                <div
+                                  className="relative group rounded-xl overflow-hidden bg-white p-6 flex items-center justify-center cursor-zoom-in"
+                                  onClick={() => setActiveLightboxImg({
+                                    url: HISTORIC_DOCS.evnLogo,
+                                    title: 'Kinh tế Quốc doanh',
+                                    caption: 'Biểu tượng EVN — Đại diện cho Kinh tế Quốc doanh (Sở hữu toàn dân) giữ vai trò chủ đạo nền kinh tế.'
+                                  })}
+                                >
+                                  <div className="absolute top-2 left-2 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded text-[10px] text-amber-300 font-bold uppercase tracking-wider flex items-center gap-1 z-10">
+                                    <Camera className="w-3 h-3" /> Ảnh tư liệu
+                                  </div>
+                                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold gap-1">
+                                    <Maximize2 className="w-4 h-4" /> Phóng to ảnh
+                                  </div>
+                                  <img
+                                    src={HISTORIC_DOCS.evnLogo}
+                                    alt="EVN Logo"
+                                    className="h-32 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+                                  />
+                                </div>
+                                <p className="text-xs text-on-surface-variant italic text-center leading-relaxed px-2">
+                                  Biểu tượng EVN — Đại diện cho Kinh tế Quốc doanh (Sở hữu toàn dân) giữ vai trò chủ đạo nền kinh tế.
+                                </p>
                               </div>
-                              <div className="absolute top-2 left-2 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded text-[10px] text-amber-300 font-bold uppercase tracking-wider flex items-center gap-1">
-                                <Camera className="w-3 h-3" /> Ảnh tư liệu
+                              <div className="bg-white rounded-2xl p-3 border border-outline-variant shadow-sm space-y-2">
+                                <div
+                                  className="relative group rounded-xl overflow-hidden bg-white p-6 flex items-center justify-center cursor-zoom-in"
+                                  onClick={() => setActiveLightboxImg({
+                                    url: HISTORIC_DOCS.htxLogo,
+                                    title: 'Kinh tế Hợp tác xã',
+                                    caption: 'Biểu tượng Hợp tác xã Vận Tải — Đại diện cho Kinh tế Hợp tác xã (Sở hữu tập thể) được Nhà nước khuyến khích phát triển.'
+                                  })}
+                                >
+                                  <div className="absolute top-2 left-2 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded text-[10px] text-amber-300 font-bold uppercase tracking-wider flex items-center gap-1 z-10">
+                                    <Camera className="w-3 h-3" /> Ảnh tư liệu
+                                  </div>
+                                  <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold gap-1">
+                                    <Maximize2 className="w-4 h-4" /> Phóng to ảnh
+                                  </div>
+                                  <img
+                                    src={HISTORIC_DOCS.htxLogo}
+                                    alt="HTX Logo"
+                                    className="h-32 w-auto object-contain transition-transform duration-500 group-hover:scale-105"
+                                  />
+                                </div>
+                                <p className="text-xs text-on-surface-variant italic text-center leading-relaxed px-2">
+                                  Biểu tượng HTX — Đại diện cho Kinh tế Hợp tác xã (Sở hữu tập thể) được Nhà nước khuyến khích phát triển.
+                                </p>
                               </div>
                             </div>
-                            <p className="text-xs text-on-surface-variant italic text-center leading-relaxed px-2">
-                              {target.imgCaption}
-                            </p>
-                          </div>
+                          ) : (
+                            /* Authentic Documentary Photo */
+                            <div className="lg:col-span-5 flex flex-col items-center bg-surface p-4 rounded-2xl border border-outline-variant shadow-sm space-y-3">
+                              <div
+                                className="relative group rounded-xl overflow-hidden border border-outline-variant/50 w-full aspect-[4/3] bg-black/30 flex items-center justify-center cursor-zoom-in"
+                                onClick={() => setActiveLightboxImg({
+                                  url: target.img,
+                                  title: target.title,
+                                  caption: target.imgCaption
+                                })}
+                              >
+                                <img
+                                  src={target.img}
+                                  alt={target.title}
+                                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                                />
+                                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-white text-xs font-bold gap-1">
+                                  <Maximize2 className="w-4 h-4" /> Phóng to ảnh
+                                </div>
+                                <div className="absolute top-2 left-2 bg-black/70 backdrop-blur-md px-2 py-0.5 rounded text-[10px] text-amber-300 font-bold uppercase tracking-wider flex items-center gap-1">
+                                  <Camera className="w-3 h-3" /> Ảnh tư liệu
+                                </div>
+                              </div>
+                              <p className="text-xs text-on-surface-variant italic text-center leading-relaxed px-2">
+                                {target.imgCaption}
+                              </p>
+                            </div>
+                          )}
                         </div>
                       </motion.div>
                     )}
