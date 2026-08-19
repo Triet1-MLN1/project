@@ -50,7 +50,7 @@ const TARGETS_DATA = [
     icon: Users,
     title: 'Mục tiêu Chính trị: Xây dựng chế độ dân chủ, nhân dân làm chủ',
     quote: '"Chế độ ta là chế độ dân chủ. Tức là nhân dân làm chủ... Nước ta là nước dân chủ, địa vị cao nhất là dân, vì dân là chủ."',
-    desc: 'Hồ Chí Minh khẳng định quyền lực không thuộc về một cá nhân hay một nhóm thiểu số bóc lột, mà toàn bộ quyền hạn, lợi ích và lực lượng đều ở nơi dân.',
+    desc: 'Hồ Chí Minh khẳng định quyền lực không thuộc về một cá nhân hay một nhóm thiểu số, mà toàn bộ quyền hạn, lợi ích và lực lượng đều ở nơi dân.',
     bullets: [
       'Kế thừa và phát triển vượt bậc tư tưởng "Lấy dân làm gốc" trong truyền thống hàng nghìn năm dựng nước và giữ nước.',
       'Thấm nhuần bài học lịch sử của danh nhân Nguyễn Trãi: "Đẩy thuyền cũng là dân, lật thuyền cũng là dân".',
@@ -148,7 +148,7 @@ const MOTIVATION_DATA = [
       },
       {
         title: 'Vai trò quản lý của Nhà nước pháp quyền',
-        content: 'Nhà nước của dân, do dân, vì dân; quản lý xã hội bằng hệ thống pháp luật dân chủ, nghiêm minh, biến chủ trương của Đảng thành hiện thực sinh động trong đời sống.'
+        content: 'Nhà nước của dân, do dân, vì dân; quản lý xã hội bằng hệ thống pháp luật dân chủ, nghiêm minh, cụ thể hóa chủ trương của Đảng thành hiện thực sinh động trong đời sống.'
       },
       {
         title: 'Mặt trận & các đoàn thể nhân dân',
@@ -388,7 +388,7 @@ export default function Theory() {
 
               <div className="bg-white/10 backdrop-blur-md border-l-4 border-amber-400 p-4 rounded-r-2xl">
                 <p className="text-amber-200 italic text-sm md:text-base leading-relaxed">
-                  "Nước ta là nước dân chủ, địa vị cao nhất là dân, vì dân là chủ... Việc gì có lợi cho dân phải hết sức làm, việc gì có hại cho dân phải hết sức tránh."
+                  “Nước ta là nước dân chủ, địa vị cao nhất là dân, vì dân là chủ. Trong bộ máy cách mạng, từ người quét nhà, nấu ăn cho đến Chủ tịch một nước đều là phân công làm đày tớ cho dân”
                 </p>
                 <span className="block text-right text-xs font-bold text-amber-300 mt-2 uppercase tracking-wider">
                   — Chủ tịch Hồ Chí Minh
@@ -487,7 +487,7 @@ export default function Theory() {
           />
 
           <p className="text-on-surface-variant text-base md:text-lg mb-8 leading-relaxed">
-            Hồ Chí Minh thiết lập một hệ thống mục tiêu đồng bộ, bao trùm mọi lĩnh vực đời sống xã hội, trong đó các mục tiêu có mối quan hệ biện chứng chặt chẽ với nhau:
+            Tư Tưởng Hồ Chí Minh thiết lập một hệ thống mục tiêu đồng bộ, bao trùm mọi lĩnh vực đời sống xã hội, trong đó các mục tiêu có mối quan hệ biện chứng chặt chẽ với nhau:
           </p>
 
           <div className="space-y-6">
