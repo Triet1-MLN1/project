@@ -769,7 +769,7 @@ export default function Theory() {
           <div className="bg-surface rounded-3xl border border-outline-variant p-6 md:p-8 shadow-sm space-y-6">
             <div className="bg-amber-500/10 border-l-4 border-amber-500 p-4 rounded-r-2xl">
               <p className="text-on-surface italic text-base md:text-lg">
-                "Muốn xây dựng chủ nghĩa xã hội, trước hết cần có những con người xã hội chủ nghĩa... Xây phải đi đôi với chống, xây là nhiệm vụ chính, chống là nhiệm vụ rất quan trọng."
+                "Muốn xây dựng chủ nghĩa xã hội, trước hết cần có những con người xã hội chủ nghĩa". Xây phải đi đôi với chống, xây là nhiệm vụ chính, chống là nhiệm vụ rất quan trọng.
               </p>
             </div>
 
