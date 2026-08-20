@@ -12,7 +12,12 @@ import {
   Scale,
   Award,
   Layers,
-  Code2
+  Code2,
+  Bot,
+  Terminal,
+  FileCheck2,
+  Sliders,
+  Cpu
 } from 'lucide-react';
 
 const fadeInUp = {
@@ -28,8 +33,35 @@ const staggerContainer = {
   }
 };
 
+const AI_USAGE_ITEMS = [
+  {
+    category: "1. Trợ lý Ôn tập & Hỏi đáp Lý luận",
+    tool: "Google Gemini 2.5 Flash + Convex Vector Search (RAG)",
+    purpose: "Hỗ trợ sinh viên tra cứu nhanh các khái niệm, phân tích trích dẫn và giải thích câu hỏi trong phòng ôn tập.",
+    prompt: '"Dựa trên giáo trình chuẩn Tư tưởng Hồ Chí Minh Chương III, giải thích luận điểm: Nước ta là nước dân chủ, địa vị cao nhất là dân, vì dân là chủ..."',
+    result: "Cung cấp câu trả lời phân tích sơ bộ, trích dẫn văn kiện và gợi ý liên hệ thực tiễn.",
+    humanEdit: "Nhóm đã kiểm duyệt lại 100% ngữ cảnh lịch sử, chuẩn hóa thuật ngữ chính trị và loại bỏ các diễn đạt chưa sát với văn phong giáo trình."
+  },
+  {
+    category: "2. Ngân hàng Câu hỏi & Đấu trường Game",
+    tool: "Google Generative AI SDK",
+    purpose: "Hỗ trợ soạn thảo và phân loại độ khó cho ngân hàng câu hỏi trắc nghiệm đối chứng.",
+    prompt: '"Tạo 10 câu hỏi trắc nghiệm 4 lựa chọn về phép biện chứng Xây và Chống trong tư tưởng đạo đức Hồ Chí Minh, có đáp án và giải thích..."',
+    result: "Sinh ra bộ câu hỏi thô dạng JSON với các phương án lựa chọn A, B, C, D.",
+    humanEdit: "Đối chiếu từng câu hỏi với giáo trình BGD&ĐT, chỉnh sửa các phương án gây nhiễu để đảm bảo tính phân hóa và độ chính xác học thuật."
+  },
+  {
+    category: "3. Tối ưu Giao diện & Trải nghiệm Người dùng",
+    tool: "Antigravity AI Agent & Vite/React Tooling",
+    purpose: "Hỗ trợ chuyển đổi sơ đồ tư duy logic thành các thành phần giao diện tương tác mượt mà.",
+    prompt: '"Thiết kế Component Mindmap tương tác và bảng so sánh Xây - Chống theo phong cách hiện đại, trang trọng, chuẩn màu đỏ - vàng kim..."',
+    result: "Khung giao diện React + Tailwind CSS với hiệu ứng chuyển động Framer Motion.",
+    humanEdit: "Thay thế toàn bộ ảnh minh họa do AI tạo bằng ảnh tư liệu lịch sử chụp thực tế 100% từ kho tư liệu quốc gia và Wikimedia Commons."
+  }
+];
+
 export default function About() {
-  const [activeTab, setActiveTab] = useState(0);
+  const [activeAiTab, setActiveAiTab] = useState(0);
 
   const pillars = [
     {
@@ -90,7 +122,7 @@ export default function About() {
         className="max-w-6xl mx-auto px-6 lg:px-12 mb-20 w-full"
       >
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {pillars.map((p, idx) => {
+          {pillars.map((p) => {
             const Icon = p.icon;
             return (
               <motion.div
@@ -118,7 +150,7 @@ export default function About() {
         whileInView="visible"
         viewport={{ once: true }}
         variants={staggerContainer}
-        className="max-w-6xl mx-auto px-6 lg:px-12 mb-16 w-full"
+        className="max-w-6xl mx-auto px-6 lg:px-12 mb-20 w-full"
       >
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {/* Academic Integrity */}
@@ -153,6 +185,119 @@ export default function About() {
             </div>
           </motion.div>
         </div>
+      </motion.section>
+
+      {/* ═══ AI USAGE DISCLOSURE / PHỤ LỤC MINH BẠCH SỬ DỤNG AI ═══ */}
+      <motion.section
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true }}
+        variants={staggerContainer}
+        className="max-w-6xl mx-auto px-6 lg:px-12 mb-16 w-full"
+      >
+        <motion.div
+          variants={fadeInUp}
+          className="bg-surface rounded-3xl p-8 md:p-10 border-2 border-primary/20 shadow-lg space-y-8"
+        >
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-outline-variant/60 pb-6">
+            <div className="space-y-1">
+              <div className="inline-flex items-center gap-2 px-3 py-1 bg-purple-500/10 text-purple-600 dark:text-purple-400 rounded-lg text-xs font-bold uppercase tracking-wider">
+                <Bot className="w-4 h-4" /> Phụ Lục Học Thuật
+              </div>
+              <h2 className="text-2xl md:text-3xl font-headline font-bold text-on-surface">
+                Báo Cáo Minh Bạch Sử Dụng AI (AI Usage Disclosure)
+              </h2>
+            </div>
+            <span className="text-xs font-bold text-on-surface-variant bg-surface-variant/40 px-3.5 py-2 rounded-xl border border-outline-variant/50 self-start md:self-auto">
+              Tuân thủ chuẩn mực liêm chính học thuật
+            </span>
+          </div>
+
+          <p className="text-on-surface-variant text-sm md:text-base leading-relaxed">
+            Nhóm thực hiện cam kết minh bạch 100% về việc ứng dụng Trí tuệ Nhân tạo (AI) trong quá trình nghiên cứu, phát triển công cụ học tập và thiết kế hệ thống. AI chỉ đóng vai trò trợ lý kỹ thuật và tăng tốc quy trình; toàn bộ nội dung học thuật, kết luận lý luận và hình ảnh lịch sử đều do sinh viên trực tiếp rà soát, kiểm duyệt và chịu trách nhiệm.
+          </p>
+
+          {/* AI Usage Tabs / Selector */}
+          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide">
+            {AI_USAGE_ITEMS.map((item, idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveAiTab(idx)}
+                className={`px-4 py-2.5 rounded-2xl text-xs md:text-sm font-bold shrink-0 transition-all ${
+                  activeAiTab === idx
+                    ? 'bg-primary text-white shadow-md'
+                    : 'bg-surface-variant/40 hover:bg-surface-variant text-on-surface-variant'
+                }`}
+              >
+                {item.category}
+              </button>
+            ))}
+          </div>
+
+          {/* Selected AI Usage Details Card */}
+          <motion.div
+            key={activeAiTab}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="bg-surface-variant/15 border border-outline-variant rounded-3xl p-6 md:p-8 space-y-6"
+          >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Tool & Purpose */}
+              <div className="space-y-4">
+                <div className="space-y-1.5">
+                  <span className="text-xs font-extrabold uppercase tracking-wider text-outline flex items-center gap-1.5">
+                    <Cpu className="w-3.5 h-3.5 text-primary" /> Công cụ AI sử dụng
+                  </span>
+                  <p className="text-base font-bold text-on-surface">
+                    {AI_USAGE_ITEMS[activeAiTab].tool}
+                  </p>
+                </div>
+
+                <div className="space-y-1.5">
+                  <span className="text-xs font-extrabold uppercase tracking-wider text-outline flex items-center gap-1.5">
+                    <Target className="w-3.5 h-3.5 text-primary" /> Mục đích ứng dụng
+                  </span>
+                  <p className="text-sm text-on-surface-variant leading-relaxed">
+                    {AI_USAGE_ITEMS[activeAiTab].purpose}
+                  </p>
+                </div>
+              </div>
+
+              {/* Prompt */}
+              <div className="space-y-1.5 bg-background/60 p-4 rounded-2xl border border-outline-variant/40">
+                <span className="text-xs font-extrabold uppercase tracking-wider text-amber-600 dark:text-amber-400 flex items-center gap-1.5">
+                  <Terminal className="w-3.5 h-3.5" /> Prompt / Yêu cầu tiêu biểu
+                </span>
+                <p className="text-xs md:text-sm font-mono text-on-surface italic leading-relaxed pt-1">
+                  {AI_USAGE_ITEMS[activeAiTab].prompt}
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-outline-variant/40">
+              {/* AI Output */}
+              <div className="p-4 rounded-2xl bg-primary/5 border border-primary/20 space-y-2">
+                <span className="text-xs font-extrabold uppercase tracking-wider text-primary flex items-center gap-1.5">
+                  <Bot className="w-3.5 h-3.5" /> Kết quả do AI tạo
+                </span>
+                <p className="text-xs md:text-sm text-on-surface-variant leading-relaxed">
+                  {AI_USAGE_ITEMS[activeAiTab].result}
+                </p>
+              </div>
+
+              {/* Human Editing & Verification */}
+              <div className="p-4 rounded-2xl bg-emerald-500/5 border border-emerald-500/20 space-y-2">
+                <span className="text-xs font-extrabold uppercase tracking-wider text-emerald-600 dark:text-emerald-400 flex items-center gap-1.5">
+                  <FileCheck2 className="w-3.5 h-3.5" /> Kiểm duyệt & Chỉnh sửa của sinh viên
+                </span>
+                <p className="text-xs md:text-sm text-on-surface-variant leading-relaxed">
+                  {AI_USAGE_ITEMS[activeAiTab].humanEdit}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
       </motion.section>
     </main>
   );
